@@ -23,11 +23,16 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXBuildFile section */
+		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		42E352C22E543E390008A8CD /* JapaneseBuddyProj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JapaneseBuddyProj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E352D02E543E3B0008A8CD /* JapaneseBuddyProjTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JapaneseBuddyProjTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E352DA2E543E3B0008A8CD /* JapaneseBuddyProjUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JapaneseBuddyProjUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -88,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				6A1A9C7A2F0F000000000001 /* .gitkeep */,
+				6A1A9C7C2F0F000000000003 /* WiringTests.swift */,
 			);
 			name = JapaneseBuddyTests;
 			path = ../JapaneseBuddyTests;
@@ -254,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
