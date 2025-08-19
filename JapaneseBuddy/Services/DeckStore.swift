@@ -8,6 +8,7 @@ final class DeckStore: ObservableObject {
     @Published var dailyGoal = DailyGoal()
     @Published var notificationsEnabled = false
     @Published var reminderTime: DateComponents?
+    @Published var showStrokeHints = true
     @Published private(set) var sessionLog: [SessionLogEntry] = []
 
     private let url: URL
@@ -19,6 +20,7 @@ final class DeckStore: ObservableObject {
         var notificationsEnabled: Bool = false
         var reminderTime: ReminderTime?
         var sessionLog: [SessionLogEntry] = []
+        var showStrokeHints: Bool = true
 
         struct ReminderTime: Codable {
             var hour: Int
@@ -34,6 +36,7 @@ final class DeckStore: ObservableObject {
         load()
         saveTask = Publishers.CombineLatest4($cards, $dailyGoal, $notificationsEnabled, $reminderTime)
             .combineLatest($sessionLog)
+            .combineLatest($showStrokeHints)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in self?.save() }
     }
@@ -50,6 +53,7 @@ final class DeckStore: ObservableObject {
             notificationsEnabled = state.notificationsEnabled
             reminderTime = state.reminderTime?.components
             sessionLog = state.sessionLog
+            showStrokeHints = state.showStrokeHints
         } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
             cards = decoded
         } else {
@@ -59,7 +63,7 @@ final class DeckStore: ObservableObject {
 
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
-        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog)
+        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints)
         guard let data = try? JSONEncoder().encode(state) else { return }
         try? data.write(to: url, options: .atomic)
     }

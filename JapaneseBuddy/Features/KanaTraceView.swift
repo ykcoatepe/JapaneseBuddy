@@ -8,6 +8,7 @@ struct KanaTraceView: View {
     @State private var current: Card?
     @State private var canvas: PKCanvasView?
     @State private var showHint = true
+    @State private var playing = false
     private let speaker = Speaker()
 
     var body: some View {
@@ -25,8 +26,17 @@ struct KanaTraceView: View {
                                 .font(.system(size: side * 0.75))
                                 .foregroundColor(.gray.opacity(0.3))
                         }
+                        if store.showStrokeHints {
+                            StrokePreviewView(strokes: StrokeData.strokes(for: card.front), playing: $playing)
+                                .frame(width: side, height: side)
+                                .allowsHitTesting(false)
+                                .id(card.front)
+                        }
                     }
                     HStack(spacing: 16) {
+                        if store.showStrokeHints {
+                            Button(playing ? "Pause" : "Play") { playing.toggle() }
+                        }
                         Button("Clear") { canvas?.drawing = PKDrawing() }
                         Button(showHint ? "Hide" : "Hint") { showHint.toggle() }
                         Button("Speak") { speaker.speak(card.front) }
@@ -46,6 +56,7 @@ struct KanaTraceView: View {
         current = store.dueCards(type: store.currentType).first
         canvas?.drawing = PKDrawing()
         showHint = true
+        playing = false
     }
 
     private func check() {
@@ -54,7 +65,9 @@ struct KanaTraceView: View {
         let drawn = TraceEvaluator.snapshot(canvas, size: size)
         let template = TemplateRenderer.image(for: card.front, size: size)
         let score = TraceEvaluator.overlapScore(drawing: drawn, template: template)
-        if score > 0.6 {
+        let strokeCount = canvas.drawing.strokes.count
+        let expected = StrokeData.expectedCount(for: card.front)
+        if score > 0.6 && strokeCount >= expected && strokeCount <= expected + 1 {
             var updated = card
             let wasNew = updated.interval == 0
             SRS.apply(.good, to: &updated)
