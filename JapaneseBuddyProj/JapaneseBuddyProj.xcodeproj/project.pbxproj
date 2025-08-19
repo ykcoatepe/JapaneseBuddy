@@ -25,6 +25,7 @@
 
 /* Begin PBXBuildFile section */
 		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
+		6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		42E352DA2E543E3B0008A8CD /* JapaneseBuddyProjUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JapaneseBuddyProjUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
+		6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRSProgressionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -94,6 +96,7 @@
 			children = (
 				6A1A9C7A2F0F000000000001 /* .gitkeep */,
 				6A1A9C7C2F0F000000000003 /* WiringTests.swift */,
+				6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */,
 			);
 			name = JapaneseBuddyTests;
 			path = ../JapaneseBuddyTests;
@@ -261,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
+				6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
