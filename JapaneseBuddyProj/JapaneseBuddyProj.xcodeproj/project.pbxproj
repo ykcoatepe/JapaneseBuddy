@@ -26,6 +26,21 @@
 /* Begin PBXBuildFile section */
 		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
 		6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */; };
+		6A1AA0012F0F200000000001 /* GoalProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1AA0002F0F200000000000 /* GoalProgressTests.swift */; };
+		6A1ABF102F0F210000000010 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF012F0F210000000001 /* Card.swift */; };
+		6A1ABF112F0F210000000011 /* SRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF022F0F210000000002 /* SRS.swift */; };
+		6A1ABF122F0F210000000012 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF032F0F210000000003 /* Goal.swift */; };
+		6A1ABF132F0F210000000013 /* DeckStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF042F0F210000000004 /* DeckStore.swift */; };
+		6A1ABF142F0F210000000014 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF052F0F210000000005 /* Speaker.swift */; };
+		6A1ABF152F0F210000000015 /* TraceCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF062F0F210000000006 /* TraceCanvas.swift */; };
+		6A1ABF162F0F210000000016 /* TemplateRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF072F0F210000000007 /* TemplateRenderer.swift */; };
+		6A1ABF172F0F210000000017 /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF0C2F0F21000000000C /* LocalNotifications.swift */; };
+		6A1ABF182F0F210000000018 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF082F0F210000000008 /* HomeView.swift */; };
+		6A1ABF192F0F210000000019 /* DailyGoalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF0A2F0F21000000000A /* DailyGoalCard.swift */; };
+		6A1ABF1A2F0F21000000001A /* SRSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF092F0F210000000009 /* SRSView.swift */; };
+		6A1ABF1B2F0F21000000001B /* KanaTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF0B2F0F21000000000B /* KanaTraceView.swift */; };
+		6A1ABF1C2F0F21000000001C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF0D2F0F21000000000D /* SettingsView.swift */; };
+		6A1ABF1D2F0F21000000001D /* SeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1ABF0E2F0F21000000000E /* SeedData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +50,22 @@
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
 		6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRSProgressionTests.swift; sourceTree = "<group>"; };
+		6A1AA0002F0F200000000000 /* GoalProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalProgressTests.swift; sourceTree = "<group>"; };
+		6A1ABF002F0F210000000000 /* JapaneseBuddy */ = {isa = PBXGroup; name = JapaneseBuddy; path = ../JapaneseBuddy; sourceTree = "<group>"; };
+		6A1ABF012F0F210000000001 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Card.swift; sourceTree = "<group>"; };
+		6A1ABF022F0F210000000002 /* SRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/SRS.swift; sourceTree = "<group>"; };
+		6A1ABF032F0F210000000003 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Goal.swift; sourceTree = "<group>"; };
+		6A1ABF042F0F210000000004 /* DeckStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/DeckStore.swift; sourceTree = "<group>"; };
+		6A1ABF052F0F210000000005 /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/Speaker.swift; sourceTree = "<group>"; };
+		6A1ABF062F0F210000000006 /* TraceCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/TraceCanvas.swift; sourceTree = "<group>"; };
+		6A1ABF072F0F210000000007 /* TemplateRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/TemplateRenderer.swift; sourceTree = "<group>"; };
+		6A1ABF082F0F210000000008 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Home/HomeView.swift; sourceTree = "<group>"; };
+		6A1ABF092F0F210000000009 /* SRSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/SRS/SRSView.swift; sourceTree = "<group>"; };
+		6A1ABF0A2F0F21000000000A /* DailyGoalCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Home/DailyGoalCard.swift; sourceTree = "<group>"; };
+		6A1ABF0B2F0F21000000000B /* KanaTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/KanaTraceView.swift; sourceTree = "<group>"; };
+		6A1ABF0C2F0F21000000000C /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/LocalNotifications.swift; sourceTree = "<group>"; };
+		6A1ABF0D2F0F21000000000D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		6A1ABF0E2F0F21000000000E /* SeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources/SeedData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -88,7 +119,30 @@
 				42E352DD2E543E3B0008A8CD /* JapaneseBuddyProjUITests */,
 				42E352C32E543E390008A8CD /* Products */,
 				6A1A9C7B2F0F000000000002 /* JapaneseBuddyTests */,
+				6A1ABF002F0F210000000000 /* JapaneseBuddy */,
 			);
+			sourceTree = "<group>";
+		};
+		6A1ABF002F0F210000000000 /* JapaneseBuddy */ = {
+			isa = PBXGroup;
+			children = (
+				6A1ABF012F0F210000000001 /* Card.swift */,
+				6A1ABF022F0F210000000002 /* SRS.swift */,
+				6A1ABF032F0F210000000003 /* Goal.swift */,
+				6A1ABF042F0F210000000004 /* DeckStore.swift */,
+				6A1ABF052F0F210000000005 /* Speaker.swift */,
+				6A1ABF062F0F210000000006 /* TraceCanvas.swift */,
+				6A1ABF072F0F210000000007 /* TemplateRenderer.swift */,
+				6A1ABF082F0F210000000008 /* HomeView.swift */,
+				6A1ABF0A2F0F21000000000A /* DailyGoalCard.swift */,
+				6A1ABF092F0F210000000009 /* SRSView.swift */,
+				6A1ABF0B2F0F21000000000B /* KanaTraceView.swift */,
+				6A1ABF0C2F0F21000000000C /* LocalNotifications.swift */,
+				6A1ABF0D2F0F21000000000D /* SettingsView.swift */,
+				6A1ABF0E2F0F21000000000E /* SeedData.swift */,
+			);
+			name = JapaneseBuddy;
+			path = ../JapaneseBuddy;
 			sourceTree = "<group>";
 		};
 		6A1A9C7B2F0F000000000002 /* JapaneseBuddyTests */ = {
@@ -97,6 +151,7 @@
 				6A1A9C7A2F0F000000000001 /* .gitkeep */,
 				6A1A9C7C2F0F000000000003 /* WiringTests.swift */,
 				6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */,
+				6A1AA0002F0F200000000000 /* GoalProgressTests.swift */,
 			);
 			name = JapaneseBuddyTests;
 			path = ../JapaneseBuddyTests;
@@ -256,6 +311,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1ABF102F0F210000000010 /* Card.swift in Sources */,
+				6A1ABF112F0F210000000011 /* SRS.swift in Sources */,
+				6A1ABF122F0F210000000012 /* Goal.swift in Sources */,
+				6A1ABF132F0F210000000013 /* DeckStore.swift in Sources */,
+				6A1ABF142F0F210000000014 /* Speaker.swift in Sources */,
+				6A1ABF152F0F210000000015 /* TraceCanvas.swift in Sources */,
+				6A1ABF162F0F210000000016 /* TemplateRenderer.swift in Sources */,
+				6A1ABF172F0F210000000017 /* LocalNotifications.swift in Sources */,
+				6A1ABF182F0F210000000018 /* HomeView.swift in Sources */,
+				6A1ABF192F0F210000000019 /* DailyGoalCard.swift in Sources */,
+				6A1ABF1A2F0F21000000001A /* SRSView.swift in Sources */,
+				6A1ABF1B2F0F21000000001B /* KanaTraceView.swift in Sources */,
+				6A1ABF1C2F0F21000000001C /* SettingsView.swift in Sources */,
+				6A1ABF1D2F0F21000000001D /* SeedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +334,7 @@
 			files = (
 				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
 				6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */,
+				6A1AA0012F0F200000000001 /* GoalProgressTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
