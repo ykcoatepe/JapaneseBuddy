@@ -27,6 +27,7 @@
 		42E352C22E543E390008A8CD /* JapaneseBuddyProj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JapaneseBuddyProj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E352D02E543E3B0008A8CD /* JapaneseBuddyProjTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JapaneseBuddyProjTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E352DA2E543E3B0008A8CD /* JapaneseBuddyProjUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JapaneseBuddyProjUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,7 +80,17 @@
 				42E352D32E543E3B0008A8CD /* JapaneseBuddyProjTests */,
 				42E352DD2E543E3B0008A8CD /* JapaneseBuddyProjUITests */,
 				42E352C32E543E390008A8CD /* Products */,
+				6A1A9C7B2F0F000000000002 /* JapaneseBuddyTests */,
 			);
+			sourceTree = "<group>";
+		};
+		6A1A9C7B2F0F000000000002 /* JapaneseBuddyTests */ = {
+			isa = PBXGroup;
+			children = (
+				6A1A9C7A2F0F000000000001 /* .gitkeep */,
+			);
+			name = JapaneseBuddyTests;
+			path = ../JapaneseBuddyTests;
 			sourceTree = "<group>";
 		};
 		42E352C32E543E390008A8CD /* Products */ = {
