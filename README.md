@@ -17,3 +17,6 @@ MIT — see [LICENSE](LICENSE).
 
 ## Goals & Reminders
 Set daily targets for new and review cards and track progress on the Home screen. Configure goals and optional local reminders in Settings; notifications stay on-device and are fully optional.
+
+## Stroke Order
+Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.

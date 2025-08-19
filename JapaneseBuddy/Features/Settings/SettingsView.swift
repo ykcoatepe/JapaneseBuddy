@@ -14,6 +14,9 @@ struct SettingsView: View {
                 DatePicker("Time", selection: timeBinding, displayedComponents: .hourAndMinute)
                     .disabled(!store.notificationsEnabled)
             }
+            Section("Tracing") {
+                Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
+            }
         }
         .navigationTitle("Settings")
         .onChange(of: store.notificationsEnabled) { _ in updateNotifications() }
