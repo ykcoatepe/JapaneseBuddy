@@ -42,6 +42,7 @@ struct SRSView: View {
         guard var card = current else { return }
         SRS.apply(rating, to: &card)
         store.update(card)
+        store.logReview(for: card)
         next()
     }
 }
