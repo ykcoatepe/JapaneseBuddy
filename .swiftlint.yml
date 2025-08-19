@@ -1,0 +1,10 @@
+line_length: 140
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+included:
+  - JapaneseBuddy
+excluded:
+  - JapaneseBuddyTests
