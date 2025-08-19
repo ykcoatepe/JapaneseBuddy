@@ -14,3 +14,6 @@ All data stays on the device. No analytics or third-party SDKs.
 
 ## License
 MIT — see [LICENSE](LICENSE).
+
+## Goals & Reminders
+Set daily targets for new and review cards and track progress on the Home screen. Configure goals and optional local reminders in Settings; notifications stay on-device and are fully optional.

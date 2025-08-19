@@ -16,6 +16,9 @@ struct HomeView: View {
             Toggle("Pencil only", isOn: $store.pencilOnly)
                 .padding(.horizontal)
 
+            DailyGoalCard(progress: store.progressToday())
+                .padding(.horizontal)
+
             HStack(spacing: 20) {
                 NavigationLink {
                     KanaTraceView()
@@ -34,6 +37,13 @@ struct HomeView: View {
             Spacer()
         }
         .navigationTitle("Home")
+        .toolbar {
+            NavigationLink {
+                SettingsView()
+            } label: {
+                Image(systemName: "gear")
+            }
+        }
     }
 
     private var traceCount: Int { store.dueCards(type: store.currentType).count }

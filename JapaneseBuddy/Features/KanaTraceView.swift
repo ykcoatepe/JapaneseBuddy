@@ -56,8 +56,10 @@ struct KanaTraceView: View {
         let score = TraceEvaluator.overlapScore(drawing: drawn, template: template)
         if score > 0.6 {
             var updated = card
+            let wasNew = updated.interval == 0
             SRS.apply(.good, to: &updated)
             store.update(updated)
+            if wasNew { store.logNew(for: updated) }
             next()
         }
     }

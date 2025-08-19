@@ -1,56 +1,86 @@
 import Foundation
 import Combine
 
-/// Manages persistence and due card queries.
 final class DeckStore: ObservableObject {
     @Published var cards: [Card] = []
     @Published var pencilOnly = true
     @Published var currentType: CardType = .hiragana
+    @Published var dailyGoal = DailyGoal()
+    @Published var notificationsEnabled = false
+    @Published var reminderTime: DateComponents?
+    @Published private(set) var sessionLog: [SessionLogEntry] = []
 
     private let url: URL
     private var saveTask: AnyCancellable?
+
+    struct State: Codable {
+        var cards: [Card]
+        var dailyGoal: DailyGoal = DailyGoal()
+        var notificationsEnabled: Bool = false
+        var reminderTime: ReminderTime?
+        var sessionLog: [SessionLogEntry] = []
+
+        struct ReminderTime: Codable {
+            var hour: Int
+            var minute: Int
+            init(_ comps: DateComponents) { hour = comps.hour ?? 0; minute = comps.minute ?? 0 }
+            var components: DateComponents { DateComponents(hour: hour, minute: minute) }
+        }
+    }
 
     init() {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         url = docs.appendingPathComponent("deck.json")
         load()
-        // save on changes with debounce
-        saveTask = $cards
+        saveTask = Publishers.CombineLatest4($cards, $dailyGoal, $notificationsEnabled, $reminderTime)
+            .combineLatest($sessionLog)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in self?.save() }
     }
 
-    /// Loads cards from disk or seed data on first launch.
     private func load() {
-        guard let data = try? Data(contentsOf: url),
-              let decoded = try? JSONDecoder().decode([Card].self, from: data) else {
+        guard let data = try? Data(contentsOf: url) else {
             cards = SeedData.makeCards()
             save()
             return
         }
-        cards = decoded
+        if let state = try? JSONDecoder().decode(State.self, from: data) {
+            cards = state.cards
+            dailyGoal = state.dailyGoal
+            notificationsEnabled = state.notificationsEnabled
+            reminderTime = state.reminderTime?.components
+            sessionLog = state.sessionLog
+        } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
+            cards = decoded
+        } else {
+            cards = SeedData.makeCards()
+        }
     }
 
-    /// Persists cards atomically.
     private func save() {
-        guard let data = try? JSONEncoder().encode(cards) else { return }
-        do {
-            try data.write(to: url, options: .atomic)
-        } catch { print("Deck save error: \(error)") }
+        let reminder = reminderTime.map { State.ReminderTime($0) }
+        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog)
+        guard let data = try? JSONEncoder().encode(state) else { return }
+        try? data.write(to: url, options: .atomic)
     }
 
-    /// Updates an existing card in memory and schedules persistence.
     func update(_ card: Card) {
-        if let idx = cards.firstIndex(where: { $0.id == card.id }) {
-            cards[idx] = card
-        }
+        if let idx = cards.firstIndex(where: { $0.id == card.id }) { cards[idx] = card }
     }
 
-    /// Returns cards due on or before the given date filtered by type.
     func dueCards(type: CardType?, on date: Date = Date()) -> [Card] {
-        cards.filter { card in
-            card.nextDue <= date && (type == nil || card.type == type!)
-        }
+        cards.filter { $0.nextDue <= date && (type == nil || $0.type == type!) }
+    }
+
+    func logNew(for card: Card, date: Date = .now) {
+        sessionLog.append(SessionLogEntry(date: date, kind: .new, cardID: card.id))
+    }
+
+    func logReview(for card: Card, date: Date = .now) {
+        sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id))
+    }
+
+    func progressToday(now: Date = .now, cal: Calendar = .current) -> GoalProgress {
+        GoalProgress.compute(entries: sessionLog, on: now, goal: dailyGoal, cal: cal)
     }
 }
-
