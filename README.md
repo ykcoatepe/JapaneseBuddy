@@ -5,6 +5,10 @@ Private iPad app for kana and kanji practice with Apple Pencil and a spaced repe
 ## Run
 Open in Xcode, select an iPad simulator or device, and press **Run**.
 
+### Run & Test
+- Build: `make build` (uses `xcodebuild -scheme JapaneseBuddy`)
+- Tests: `make test`
+
 ## Privacy
 All data stays on the device. No analytics or third-party SDKs.
 

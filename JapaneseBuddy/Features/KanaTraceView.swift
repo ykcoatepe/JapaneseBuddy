@@ -1,95 +1,65 @@
 import SwiftUI
 import PencilKit
 
-// Responsive kana tracing view with dynamic template rendering
+/// Practice view for tracing kana characters.
 struct KanaTraceView: View {
     @EnvironmentObject var store: DeckStore
 
     @State private var current: Card?
-    @State private var canvasRef: PKCanvasView?
-    @State private var message = ""
+    @State private var canvas: PKCanvasView?
     @State private var showHint = true
+    private let speaker = Speaker()
 
     var body: some View {
-        GeometryReader { proxy in
-            // Kare pano: 420–900 px arası, ekrana göre ayarlanır (11" ve 13" için ideal)
-            let side = max(420, min(min(proxy.size.width, proxy.size.height) - 160, 900))
-            let fontSize = side * 0.74
-
-            VStack(spacing: 16) {
+        GeometryReader { geo in
+            let side = min(max(min(geo.size.width, geo.size.height) - 160, 420), 900)
+            VStack(spacing: 24) {
                 if let card = current {
-                    Text(card.front)
-                        .font(.system(size: 48))
-                        .padding(.top, 8)
-
+                    Text(card.front).font(.largeTitle)
                     ZStack {
-                        Rectangle()
-                            .fill(Color(white: 0.97))
-                            .cornerRadius(20)
-                            .overlay(RoundedRectangle(cornerRadius: 20).stroke(.quaternary))
-
-                        TraceCanvas(canvasView: $canvasRef, pencilOnly: store.pencilOnly)
+                        TraceCanvas(canvasView: $canvas, pencilOnly: store.pencilOnly)
                             .frame(width: side, height: side)
-
+                            .background(RoundedRectangle(cornerRadius: 20).stroke(Color.secondary))
                         if showHint {
                             Text(card.front)
-                                .font(.system(size: fontSize, weight: .regular))
-                                .foregroundStyle(.gray.opacity(0.25))
-                                .allowsHitTesting(false)
+                                .font(.system(size: side * 0.75))
+                                .foregroundColor(.gray.opacity(0.3))
                         }
                     }
-                    .frame(height: side)
-                    .padding(.horizontal)
-
-                    HStack(spacing: 12) {
-                        Button("Kontrol Et") { check() }
-                        Button(showHint ? "İpucunu Gizle" : "İpucunu Göster") { showHint.toggle() }
+                    HStack(spacing: 16) {
+                        Button("Clear") { canvas?.drawing = PKDrawing() }
+                        Button(showHint ? "Hide" : "Hint") { showHint.toggle() }
+                        Button("Speak") { speaker.speak(card.front) }
+                        Button("Check") { check() }
                     }
-
-                    Text(message)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
                 } else {
-                    ProgressView().onAppear { pickNext() }
+                    Text("No cards due")
                 }
             }
-            .navigationTitle("Kana İzleme")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onAppear { pickNext() }
+        .onAppear(perform: next)
+        .navigationTitle("Trace")
     }
 
-    private func pickNext() {
-        current = store.dueCards(type: .kana).first
-        canvasRef?.drawing = PKDrawing()
-        message = "Şablonu izleyerek çizin."
+    private func next() {
+        current = store.dueCards(type: store.currentType).first
+        canvas?.drawing = PKDrawing()
         showHint = true
     }
 
     private func check() {
-        guard let card = current, let canvas = canvasRef else { return }
-        // Dinamik pano boyutunu canvas’tan al
+        guard let card = current, let canvas else { return }
         let size = canvas.bounds.size
         let drawn = TraceEvaluator.snapshot(canvas, size: size)
         let template = TemplateRenderer.image(for: card.front, size: size)
         let score = TraceEvaluator.overlapScore(drawing: drawn, template: template)
-        if score >= 0.6 {
+        if score > 0.6 {
             var updated = card
             SRS.apply(.good, to: &updated)
             store.update(updated)
-            message = "Başarılı (\(Int(score * 100))%). Sıradaki!"
-            pickNext()
-        } else {
-            message = "Biraz daha dikkatli izleyin (\(Int(score * 100))%)."
+            next()
         }
     }
 }
-
-// Preview stub (will not compile until DeckStore/Card/TraceCanvas exist)
-#if DEBUG
-struct KanaTraceView_Previews: PreviewProvider {
-    static var previews: some View {
-        KanaTraceView().environmentObject(DeckStore())
-    }
-}
-#endif
 
