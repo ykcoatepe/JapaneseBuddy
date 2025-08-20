@@ -21,6 +21,9 @@ All data stays on the device. No analytics or third-party SDKs.
 ## License
 MIT — see [LICENSE](LICENSE).
 
+## Branding
+JapaneseBuddy sports a red sun app icon with kana and uses a warm accent tint throughout the app.
+
 ## Goals & Reminders
 Set daily targets for new and review cards and track progress on the Home screen. Configure goals and optional local reminders in Settings; notifications stay on-device and are fully optional.
 
@@ -32,3 +35,5 @@ Learn with short can-do based lessons. Each lesson starts with an objective, run
 
 ## Kanji Words
 Type the reading in hiragana; tap Speak to hear it; correct answers join your SRS queue.
+## Onboarding
+First launch presents a short onboarding flow to choose decks, learn the tracing pass rule, set goals, and optionally save your name.

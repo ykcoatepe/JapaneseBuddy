@@ -14,6 +14,9 @@ struct JapaneseBuddyProjApp: App {
 
     init() {
         let deck = DeckStore()
+        if CommandLine.arguments.contains("UI-TESTING") {
+            deck.hasOnboarded = true
+        }
         _store = StateObject(wrappedValue: deck)
         _lessonStore = StateObject(wrappedValue: LessonStore(deckStore: deck))
     }
@@ -21,8 +24,13 @@ struct JapaneseBuddyProjApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                HomeView()
+                if store.hasOnboarded {
+                    HomeView()
+                } else {
+                    OnboardingView()
+                }
             }
+            .tint(Color("AccentColor"))
             .environmentObject(store)
             .environmentObject(lessonStore)
         }

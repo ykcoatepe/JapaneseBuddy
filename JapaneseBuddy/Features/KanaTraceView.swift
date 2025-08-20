@@ -1,5 +1,6 @@
 import SwiftUI
 import PencilKit
+import UIKit
 
 /// Practice view for tracing kana characters.
 struct KanaTraceView: View {
@@ -34,13 +35,22 @@ struct KanaTraceView: View {
                         }
                     }
                     HStack(spacing: 16) {
-                        if store.showStrokeHints {
+                        if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
                             Button(playing ? "Pause" : "Play") { playing.toggle() }
+                                .accessibilityLabel(playing ? "Pause preview" : "Play preview")
+                                .accessibilityHint("Preview stroke order")
                         }
                         Button("Clear") { canvas?.drawing = PKDrawing() }
+                            .accessibilityLabel("Clear drawing")
+                            .accessibilityHint("Erases your strokes")
                         Button(showHint ? "Hide" : "Hint") { showHint.toggle() }
+                            .accessibilityLabel(showHint ? "Hide hint" : "Show hint")
                         Button("Speak") { speaker.speak(card.front) }
+                            .accessibilityLabel("Speak character")
+                            .accessibilityHint("Plays pronunciation")
                         Button("Check") { check() }
+                            .accessibilityLabel("Check drawing")
+                            .accessibilityHint("Grades your tracing")
                     }
                 } else {
                     Text("No cards due")
@@ -50,6 +60,7 @@ struct KanaTraceView: View {
         }
         .onAppear(perform: next)
         .navigationTitle("Trace")
+        .dynamicTypeSize(... .xxxLarge)
     }
 
     private func next() {
@@ -64,16 +75,26 @@ struct KanaTraceView: View {
         let size = canvas.bounds.size
         let drawn = TraceEvaluator.snapshot(canvas, size: size)
         let template = TemplateRenderer.image(for: card.front, size: size)
-        let score = TraceEvaluator.overlapScore(drawing: drawn, template: template)
-        let strokeCount = canvas.drawing.strokes.count
-        let expected = StrokeData.expectedCount(for: card.front)
-        if score > 0.6 && strokeCount >= expected && strokeCount <= expected + 1 {
-            var updated = card
-            let wasNew = updated.interval == 0
-            SRS.apply(.good, to: &updated)
-            store.update(updated)
-            if wasNew { store.logNew(for: updated) }
-            next()
+        Task {
+            let score = await Task.detached(priority: .background) {
+                TraceEvaluator.overlapScore(drawing: drawn, template: template)
+            }.value
+            let strokeCount = canvas.drawing.strokes.count
+            let expected = StrokeData.expectedCount(for: card.front)
+            await MainActor.run {
+                if score > 0.6 && strokeCount >= expected && strokeCount <= expected + 1 {
+                    Log.app.log("trace pass for \(card.front)")
+                    Haptics.light()
+                    var updated = card
+                    let wasNew = updated.interval == 0
+                    SRS.apply(.good, to: &updated)
+                    store.update(updated)
+                    if wasNew { store.logNew(for: updated) }
+                    next()
+                } else {
+                    Log.app.log("trace fail for \(card.front)")
+                }
+            }
         }
     }
 }
