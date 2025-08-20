@@ -4,6 +4,7 @@ import Foundation
 enum CardType: String, Codable, CaseIterable, Identifiable {
     case hiragana
     case katakana
+    case vocab
 
     var id: String { rawValue }
 
