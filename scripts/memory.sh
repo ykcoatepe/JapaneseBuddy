@@ -86,5 +86,56 @@ case ${1:-} in
   append) shift; append_note "$*" ;;
   sanity) sanity ;;
   progress) progress ;;
+  recall)
+    ensure
+    iso=$(date -u +%FT%TZ)
+    echo "# Recall Summary"
+    echo
+    echo "- Updated: $iso"
+    echo
+    if [[ -f "$STATE" ]]; then
+      echo "## Next Step"
+      awk -F '"' '/"next_step"/ { print "- " $4 }' "$STATE" || true
+      echo
+      echo "## Plan"
+      awk '
+        /\"plan\"[[:space:]]*:/ { inplan=1; next }
+        inplan && /\]/ { inplan=0 }
+        inplan {
+          if ($0 ~ /\"step\"[[:space:]]*:/) {
+            line=$0; sub(/.*\"step\"[[:space:]]*:[[:space:]]*\"/, "", line); sub(/\".*/, "", line); step=line
+          }
+          if ($0 ~ /\"status\"[[:space:]]*:/) {
+            line=$0; sub(/.*\"status\"[[:space:]]*:[[:space:]]*\"/, "", line); sub(/\".*/, "", line); status=line
+            if (length(step) > 0 && length(status) > 0) { print "- " step " (" status ")" }
+            step=""; status=""
+          }
+        }
+      ' "$STATE" || true
+      echo
+      echo "## Decisions (recent)"
+      awk '
+        /\"decisions\"[[:space:]]*:/ { indec=1; count=0; next }
+        indec && /\]/ { indec=0 }
+        indec && count<3 {
+          # extract text between the first pair of double quotes on the line
+          s=$0; i=index(s, "\""); if (i>0) { rest=substr(s, i+1); j=index(rest, "\""); if (j>0) { line=substr(rest, 1, j-1); if (length(line)>0) { print "- " line; count++ } } }
+        }
+      ' "$STATE" || true
+      echo
+    fi
+    echo "## Latest Session"
+    if [[ -d "$SESS_DIR" ]]; then
+      latest=$(ls -1 "$SESS_DIR" 2>/dev/null | sort | tail -1)
+      if [[ -n "$latest" && -f "$SESS_DIR/$latest" ]]; then
+        echo "- File: $latest"
+        tail -n 5 "$SESS_DIR/$latest" || true
+      else
+        echo "- No session notes yet"
+      fi
+    else
+      echo "- Sessions directory missing"
+    fi
+    ;;
   *) echo "Usage: $0 {init|append <msg>|sanity|progress}" >&2; exit 1 ;;
 esac

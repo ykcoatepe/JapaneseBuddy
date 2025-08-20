@@ -32,7 +32,7 @@
 		A2FF00072FFF000000000007 /* ../JapaneseBuddy/Models/Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */; };
 		A2FF00092FFF000000000009 /* ../JapaneseBuddy/Services/LessonStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */; };
 		A2FF000B2FFF00000000000B /* lessons in Resources */ = {isa = PBXBuildFile; fileRef = A2FF000A2FFF00000000000A /* lessons */; };
-		A2FF000D2FFF00000000000D /* KanjiDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF000C2FFF00000000000C /* KanjiDecodeTests.swift */; };
+		A2FF000D2FFF00000000000D /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */; };
 		A2FF000F2FFF00000000000F /* ../JapaneseBuddy/Models/LessonProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */; };
 		A2FF00112FFF000000000011 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */; };
 		A2FF00132FFF000000000013 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */; };
@@ -89,7 +89,7 @@
 		A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Lesson.swift; sourceTree = "<group>"; };
 		A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/LessonStore.swift; sourceTree = "<group>"; };
 		A2FF000A2FFF00000000000A /* lessons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lessons; path = ../JapaneseBuddy/Resources/lessons; sourceTree = "<group>"; };
-		A2FF000C2FFF00000000000C /* KanjiDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift; sourceTree = "<group>"; };
+		A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift; sourceTree = "<group>"; };
 		A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/LessonProgress.swift; sourceTree = "<group>"; };
 		A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift; sourceTree = "<group>"; };
 		A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/ShadowingView.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 				A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */,
 				A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */,
 				A2FF000A2FFF00000000000A /* lessons */,
-				A2FF000C2FFF00000000000C /* KanjiDecodeTests.swift */,
+				A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */,
 				A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */,
 				A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */,
 				A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */,
@@ -396,7 +396,7 @@
 			files = (
 				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
 				6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */,
-				A2FF000D2FFF00000000000D /* KanjiDecodeTests.swift in Sources */,
+				A2FF000D2FFF00000000000D /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

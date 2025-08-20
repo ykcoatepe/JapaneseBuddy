@@ -35,3 +35,26 @@ Example: `make format && make lint && make test` before opening a PR.
 ## Agent-Specific Notes
 - Implement sources only; do not modify Xcode project files.
 - Adhere to `SwiftLint`/`SwiftFormat` and keep modules small and focused.
+
+## Repo Memory
+
+This project includes a lightweight, in-repo memory system so the assistant (and humans) can resume context after restarts.
+
+- Files:
+  - `.codex/state.json`: machine-readable plan, next step, decisions, timestamps.
+  - `.codex/sessions/YYYY-MM-DD.md`: append-only session notes (daily log).
+  - `.codex/checks/sanity.md`: quick, static “sanity snapshot”.
+  - `PROGRESS.md`: human-friendly summary.
+
+- Scripts:
+  - `scripts/memory.sh init`: ensure `.codex/` structure and default state exists.
+  - `scripts/memory.sh append "note"`: append a timestamped note to today’s session file.
+  - `scripts/memory.sh sanity`: refresh `.codex/checks/sanity.md` from static signals.
+  - `scripts/memory.sh progress`: update timestamps in `state.json` and `PROGRESS.md`.
+  - `scripts/memory.sh recall`: print the current plan, next step, recent decisions, and tail of the latest session file.
+
+### Assistant behavior
+
+- On a fresh session, the assistant proactively reads `.codex/state.json` and the latest `.codex/sessions/*.md` to rehydrate context (no reminder needed).
+- If memory files are missing or malformed, the assistant asks for guidance before proceeding.
+- You can always force a summary by running `scripts/memory.sh recall` or asking “recall the plan/next steps”.
