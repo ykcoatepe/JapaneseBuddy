@@ -19,8 +19,8 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
-        .onChange(of: store.notificationsEnabled) { _ in updateNotifications() }
-        .onChange(of: store.reminderTime) { _ in updateNotifications() }
+        .onChangeCompat(store.notificationsEnabled) { updateNotifications() }
+        .onChangeCompat(store.reminderTime) { updateNotifications() }
     }
 
     private var timeBinding: Binding<Date> {
@@ -41,6 +41,17 @@ struct SettingsView: View {
             } else {
                 await LocalNotifications.cancel(id: "daily-goal")
             }
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func onChangeCompat<T: Equatable>(_ value: T, perform action: @escaping () -> Void) -> some View {
+        if #available(iOS 17.0, *) {
+            self.onChange(of: value) { _, _ in action() }
+        } else {
+            self.onChange(of: value) { _ in action() }
         }
     }
 }

@@ -75,7 +75,7 @@ final class DeckStore: ObservableObject {
         let reminder = reminderTime.map { State.ReminderTime($0) }
         let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress)
         guard let data = try? JSONEncoder().encode(state) else { return }
-        try? data.write(to: url, options: .atomic)
+        try? data.write(to: url, options: [.atomic])
     }
 
     func update(_ card: Card) {
