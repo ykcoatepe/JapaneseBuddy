@@ -26,3 +26,6 @@ Set daily targets for new and review cards and track progress on the Home screen
 
 ## Stroke Order
 Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.
+
+## Lessons
+Learn with short can-do based lessons. Each lesson starts with an objective, runs through activities like shadowing with Japanese TTS, listening or reading checks, then ends with a self-rated star review. Progress and stars save offline per lesson.

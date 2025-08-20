@@ -9,7 +9,14 @@ import SwiftUI
 
 @main
 struct JapaneseBuddyProjApp: App {
-    @StateObject private var store = DeckStore()
+    @StateObject private var store: DeckStore
+    @StateObject private var lessonStore: LessonStore
+
+    init() {
+        let deck = DeckStore()
+        _store = StateObject(wrappedValue: deck)
+        _lessonStore = StateObject(wrappedValue: LessonStore(deckStore: deck))
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -17,6 +24,7 @@ struct JapaneseBuddyProjApp: App {
                 HomeView()
             }
             .environmentObject(store)
+            .environmentObject(lessonStore)
         }
     }
 }
