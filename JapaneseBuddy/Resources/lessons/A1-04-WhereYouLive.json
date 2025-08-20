@@ -10,5 +10,9 @@
     {"check":{}}
   ],
   "tips":["に 住んでいます ‘live in’. Keep it simple at A1."],
-  "kanjiWords":["住","東","京"]
+  "kanjiWords":[
+    {"id":"A1-04-住","kanji":"住","reading":"す","meaning":"live"},
+    {"id":"A1-04-東","kanji":"東","reading":"ひがし","meaning":"east"},
+    {"id":"A1-04-京","kanji":"京","reading":"きょう","meaning":"capital"}
+  ]
 }

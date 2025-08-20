@@ -11,6 +11,7 @@ final class DeckStore: ObservableObject {
     @Published var showStrokeHints = true
     @Published private(set) var sessionLog: [SessionLogEntry] = []
     @Published var lessonProgress: [String: LessonProgress] = [:]
+    @Published var kanjiProgress: [String: KanjiProgress] = [:]
 
     private let url: URL
     private var saveTask: AnyCancellable?
@@ -23,6 +24,7 @@ final class DeckStore: ObservableObject {
         var sessionLog: [SessionLogEntry] = []
         var showStrokeHints: Bool = true
         var lessonProgress: [String: LessonProgress] = [:]
+        var kanjiProgress: [String: KanjiProgress] = [:]
 
         struct ReminderTime: Codable {
             var hour: Int
@@ -32,6 +34,8 @@ final class DeckStore: ObservableObject {
         }
     }
 
+    struct KanjiProgress: Codable { var correct: Int = 0; var total: Int = 0 }
+
     init() {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         url = docs.appendingPathComponent("deck.json")
@@ -40,6 +44,7 @@ final class DeckStore: ObservableObject {
             .combineLatest($sessionLog)
             .combineLatest($showStrokeHints)
             .combineLatest($lessonProgress)
+            .combineLatest($kanjiProgress)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in self?.save() }
     }
@@ -58,6 +63,7 @@ final class DeckStore: ObservableObject {
             sessionLog = state.sessionLog
             showStrokeHints = state.showStrokeHints
             lessonProgress = state.lessonProgress
+            kanjiProgress = state.kanjiProgress
         } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
             cards = decoded
         } else {
@@ -67,7 +73,7 @@ final class DeckStore: ObservableObject {
 
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
-        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress)
+        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress)
         guard let data = try? JSONEncoder().encode(state) else { return }
         try? data.write(to: url, options: .atomic)
     }
@@ -100,5 +106,18 @@ final class DeckStore: ObservableObject {
 
     func updateProgress(_ progress: LessonProgress, for lessonID: String) {
         lessonProgress[lessonID] = progress
+    }
+
+    func markKanjiCorrect(_ w: KanjiWord, in lessonID: String) {
+        if let idx = cards.firstIndex(where: { $0.type == .vocab && $0.front == w.kanji }) {
+            if cards[idx].interval == 0 { SRS.apply(.good, to: &cards[idx]) }
+        } else {
+            var c = Card(type: .vocab, front: w.kanji, back: w.meaning, reading: w.reading)
+            SRS.apply(.good, to: &c)
+            cards.append(c)
+        }
+        var p = kanjiProgress[lessonID] ?? KanjiProgress()
+        p.correct += 1
+        kanjiProgress[lessonID] = p
     }
 }

@@ -9,5 +9,9 @@
     {"check":{}}
   ],
   "tips":["Use はじめまして at first meetings."],
-  "kanjiWords":["名","人","私"]
+  "kanjiWords":[
+    {"id":"A1-01-名","kanji":"名","reading":"な","meaning":"name"},
+    {"id":"A1-01-人","kanji":"人","reading":"ひと","meaning":"person"},
+    {"id":"A1-01-私","kanji":"私","reading":"わたし","meaning":"I"}
+  ]
 }

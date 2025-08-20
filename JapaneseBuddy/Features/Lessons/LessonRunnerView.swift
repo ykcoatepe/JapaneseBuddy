@@ -3,18 +3,34 @@ import SwiftUI
 /// Drives a lesson through its ordered activities.
 struct LessonRunnerView: View {
     @EnvironmentObject var lessons: LessonStore
+    @EnvironmentObject var deck: DeckStore
     let lesson: Lesson
 
     @State private var step = 0
     @State private var selection: Int?
+    @State private var tab = 0
 
     var body: some View {
         VStack {
-            contentView
-            if !isCheck {
-                Button("Next") { next() }
-                    .padding()
-                    .disabled(disableNext)
+            if lesson.kanjiWords?.isEmpty == false {
+                Picker("Mode", selection: $tab) {
+                    Text("Lesson").tag(0)
+                    Text("Kanji").tag(1)
+                }
+                .pickerStyle(.segmented)
+                .padding()
+            }
+            if tab == 0 {
+                VStack {
+                    contentView
+                    if !isCheck {
+                        Button("Next") { next() }
+                            .padding()
+                            .disabled(disableNext)
+                    }
+                }
+            } else if let words = lesson.kanjiWords {
+                KanjiPracticeView(words: words, lessonID: lesson.id, store: deck)
             }
         }
         .navigationTitle(lesson.title)

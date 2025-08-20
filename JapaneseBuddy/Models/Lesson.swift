@@ -7,7 +7,7 @@ struct Lesson: Codable, Identifiable {
     var canDo: String
     var activities: [Activity]
     var tips: [String]
-    var kanjiWords: [String]
+    var kanjiWords: [KanjiWord]?
 
     enum Activity: Codable {
         case objective(text: String)
@@ -61,5 +61,43 @@ struct Lesson: Codable, Identifiable {
             }
         }
     }
-}
 
+    private enum CodingKeys: String, CodingKey {
+        case id, title, canDo, activities, tips, kanjiWords
+    }
+
+    init(id: String, title: String, canDo: String, activities: [Activity], tips: [String], kanjiWords: [KanjiWord]? = nil) {
+        self.id = id
+        self.title = title
+        self.canDo = canDo
+        self.activities = activities
+        self.tips = tips
+        self.kanjiWords = kanjiWords
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        canDo = try container.decode(String.self, forKey: .canDo)
+        activities = try container.decode([Activity].self, forKey: .activities)
+        tips = try container.decode([String].self, forKey: .tips)
+        if let words = try container.decodeIfPresent([KanjiWord].self, forKey: .kanjiWords) {
+            kanjiWords = words
+        } else if let strings = try container.decodeIfPresent([String].self, forKey: .kanjiWords) {
+            kanjiWords = strings.map { KanjiWord(id: "\(id)-\($0)", kanji: $0, reading: "", meaning: "") }
+        } else {
+            kanjiWords = nil
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encode(canDo, forKey: .canDo)
+        try container.encode(activities, forKey: .activities)
+        try container.encode(tips, forKey: .tips)
+        try container.encodeIfPresent(kanjiWords, forKey: .kanjiWords)
+    }
+}

@@ -22,3 +22,10 @@ Adds a minimal lesson system driven by JSON packs. Lessons follow a can-do flow:
 
 ## Tests
 `LessonDecodeTests` validates JSON decoding and progress persistence.
+
+## Kanji Words
+- `KanjiWord` model stores `id`, `kanji`, `reading`, and `meaning`.
+- Added optional `kanjiWords` to `Lesson` (embedded in lesson JSONs).
+- `DeckStore` tracks `kanjiProgress` and seeds vocab `Card`s via `markKanjiCorrect`.
+- `KanjiPracticeView` drills typing readings with speech and SRS integration.
+- Chose loader option A: kanji arrays embedded within lesson JSON files.

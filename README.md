@@ -29,3 +29,6 @@ Trace practice shows optional stroke hints with numbered overlays and an animate
 
 ## Lessons
 Learn with short can-do based lessons. Each lesson starts with an objective, runs through activities like shadowing with Japanese TTS, listening or reading checks, then ends with a self-rated star review. Progress and stars save offline per lesson.
+
+## Kanji Words
+Type the reading in hiragana; tap Speak to hear it; correct answers join your SRS queue.
