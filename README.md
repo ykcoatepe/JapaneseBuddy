@@ -3,11 +3,17 @@
 Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
 
 ## Run
-Open in Xcode, select an iPad simulator or device, and press **Run**.
+Open in Xcode, select the `JapaneseBuddyProj` scheme, pick an iPad simulator or device, and press **Run**.
 
 ### Run & Test
-- Build: `make build` (uses `xcodebuild -scheme JapaneseBuddy`)
+- Build: `make build` (uses `xcodebuild -scheme JapaneseBuddyProj`)
 - Tests: `make test`
+
+## Architecture
+- `JapaneseBuddy/`: App source (Features, Models, Services, Resources). Reusable and project-agnostic.
+- `JapaneseBuddyProj/`: Xcode project shell that references `JapaneseBuddy/` sources and contains the app target and tests.
+- Entry point: `JapaneseBuddyProjApp` launches `HomeView` in a `NavigationStack` and injects a shared `DeckStore` with `.environmentObject`.
+- Only one `@main` exists in the app target. An older app entry file was removed from `JapaneseBuddy/App` to avoid confusion.
 
 ## Privacy
 All data stays on the device. No analytics or third-party SDKs.
