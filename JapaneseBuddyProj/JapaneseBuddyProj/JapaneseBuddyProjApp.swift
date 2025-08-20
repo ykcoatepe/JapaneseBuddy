@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct JapaneseBuddyProjApp: App {
+    @StateObject private var store = DeckStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                HomeView()
+            }
+            .environmentObject(store)
         }
     }
 }
