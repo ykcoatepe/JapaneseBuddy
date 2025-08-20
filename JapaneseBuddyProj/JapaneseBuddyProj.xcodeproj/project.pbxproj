@@ -40,6 +40,10 @@
 		A2FF00172FFF000000000017 /* ../JapaneseBuddy/Features/Lessons/ReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00162FFF000000000016 /* ../JapaneseBuddy/Features/Lessons/ReadingView.swift */; };
 		A2FF00192FFF000000000019 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00182FFF000000000018 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift */; };
 		A2FF001B2FFF00000000001B /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF001A2FFF00000000001A /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift */; };
+		A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */; };
+		A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */; };
+		A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */; };
+\t\tA3FF02012FFF000000000101 /* art in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02002FFF000000000100 /* art */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,10 @@
 		A2FF00162FFF000000000016 /* ../JapaneseBuddy/Features/Lessons/ReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/ReadingView.swift; sourceTree = "<group>"; };
 		A2FF00182FFF000000000018 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/CheckView.swift; sourceTree = "<group>"; };
 		A2FF001A2FFF00000000001A /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/LessonListView.swift; sourceTree = "<group>"; };
+		A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
+		A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Haptics.swift; sourceTree = "<group>"; };
+		A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Log.swift; sourceTree = "<group>"; };
+\t\tA3FF02002FFF000000000100 /* art */ = {isa = PBXFileReference; lastKnownFileType = folder; name = art; path = ../art; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -176,6 +184,7 @@
 				A2FF00162FFF000000000016 /* ../JapaneseBuddy/Features/Lessons/ReadingView.swift */,
 				A2FF00182FFF000000000018 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift */,
 				A2FF001A2FFF00000000001A /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift */,
+				A3FF02002FFF000000000100 /* art */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -334,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2FF000B2FFF00000000000B /* lessons in Resources */,
+				A3FF02012FFF000000000101 /* art in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +397,9 @@
 				A2FF00172FFF000000000017 /* ../JapaneseBuddy/Features/Lessons/ReadingView.swift in Sources */,
 				A2FF00192FFF000000000019 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift in Sources */,
 				A2FF001B2FFF00000000001B /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift in Sources */,
+				A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */,
+				A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */,
+				A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

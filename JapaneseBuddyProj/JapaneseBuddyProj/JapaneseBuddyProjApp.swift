@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct JapaneseBuddyProjApp: App {
     @StateObject private var store: DeckStore
-    @StateObject private var lessonStore: LessonStore
+    @StateObject private var lessons: LessonStore
 
     init() {
         let deck = DeckStore()
@@ -18,21 +18,17 @@ struct JapaneseBuddyProjApp: App {
             deck.hasOnboarded = true
         }
         _store = StateObject(wrappedValue: deck)
-        _lessonStore = StateObject(wrappedValue: LessonStore(deckStore: deck))
+        _lessons = StateObject(wrappedValue: LessonStore(deckStore: deck))
     }
 
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                if store.hasOnboarded {
-                    HomeView()
-                } else {
-                    OnboardingView()
-                }
+                store.hasOnboarded ? AnyView(HomeView()) : AnyView(OnboardingView())
             }
-            .tint(Color("AccentColor"))
             .environmentObject(store)
-            .environmentObject(lessonStore)
+            .environmentObject(lessons)
+            .tint(Color("AccentColor"))
         }
     }
 }

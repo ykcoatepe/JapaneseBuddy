@@ -4,6 +4,8 @@
     { "step": "Harden LessonStore", "status": "done" },
     { "step": "Tidy xcodeproj", "status": "done" },
     { "step": "Add repo memory", "status": "done" },
+    { "step": "Welcome hero image", "status": "done" },
+    { "step": "AppIcon generator", "status": "done" },
     { "step": "Run tests + smoke", "status": "in_progress" }
   ],
   "next_step": "Run tests + smoke",
@@ -16,8 +18,10 @@
     "Wire Lesson subviews + LessonListView",
     "Remove duplicate App.swift compile entry",
     "Use iOS17-safe onChange wrapper in SettingsView",
-    "Use Data.write options [.atomic]"
+    "Use Data.write options [.atomic]",
+    "Bundle art/ for runtime welcome hero",
+    "Generate icons with sips via script; remove PDF icon"
   ],
   "context_notes": [],
-  "last_updated": "2025-08-25T12:35:46Z",
+  "last_updated": "2025-08-20T13:27:57Z",
 }
