@@ -81,7 +81,9 @@ final class StrokePreviewLayer: CALayer {
 
 private extension UIBezierPath {
     func scaled(to rect: CGRect) -> UIBezierPath {
-        applying(CGAffineTransform(scaleX: rect.width, y: rect.height))
+        var transform = CGAffineTransform(scaleX: rect.width, y: rect.height)
+        let scaledCGPath = cgPath.copy(using: &transform) ?? cgPath
+        return UIBezierPath(cgPath: scaledCGPath)
     }
 }
 
@@ -121,4 +123,3 @@ struct StrokePreviewView: UIViewRepresentable {
         var configured = false
     }
 }
-
