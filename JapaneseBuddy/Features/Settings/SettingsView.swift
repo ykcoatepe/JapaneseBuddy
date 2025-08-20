@@ -21,6 +21,11 @@ struct SettingsView: View {
             Section("Tracing") {
                 Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
             }
+            Section("Developer") {
+                Button("Reset Onboarding") { store.hasOnboarded = false }
+                .accessibilityLabel("Reset onboarding")
+                .accessibilityHint("Shows the welcome flow on next render")
+            }
         }
         .navigationTitle("Settings")
         .onChangeCompat(store.notificationsEnabled) { updateNotifications() }
