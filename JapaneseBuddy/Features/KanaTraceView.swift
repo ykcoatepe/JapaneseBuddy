@@ -60,7 +60,7 @@ struct KanaTraceView: View {
         }
         .onAppear(perform: next)
         .navigationTitle("Trace")
-        .dynamicTypeSize(... .xxxLarge)
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
     private func next() {
@@ -98,4 +98,3 @@ struct KanaTraceView: View {
         }
     }
 }
-

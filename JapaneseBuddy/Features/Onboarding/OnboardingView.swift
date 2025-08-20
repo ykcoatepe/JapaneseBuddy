@@ -11,8 +11,20 @@ struct OnboardingView: View {
 
     var body: some View {
         TabView(selection: $tab) {
-            page(icon: "sun.max", title: "Welcome", text: "Learn kana with a friendly SRS.")
-                .tag(0)
+            VStack(spacing: 20) {
+                if let hero = loadWelcomeImage() {
+                    Image(uiImage: hero)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 260)
+                        .accessibilityLabel("Welcome illustration")
+                }
+                Text("Welcome")
+                    .font(.title)
+                Text("Learn kana with a friendly SRS.")
+                    .multilineTextAlignment(.center)
+            }
+            .tag(0)
             VStack(spacing: 20) {
                 Text("Pick deck")
                 Picker("Deck", selection: $deckChoice) {
@@ -46,7 +58,7 @@ struct OnboardingView: View {
         .tabViewStyle(.page)
         .indexViewStyle(.page)
         .padding()
-        .dynamicTypeSize(... .xxxLarge)
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
     private func page(icon: String, title: String, text: String) -> some View {
@@ -55,6 +67,13 @@ struct OnboardingView: View {
             Text(title).font(.title)
             Text(text).multilineTextAlignment(.center)
         }
+    }
+
+    private func loadWelcomeImage() -> UIImage? {
+        if let url = Bundle.main.url(forResource: "wellcome_1", withExtension: "png", subdirectory: "art") {
+            return UIImage(contentsOfFile: url.path)
+        }
+        return nil
     }
 
     private func finish() {

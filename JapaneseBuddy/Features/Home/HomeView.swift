@@ -48,7 +48,7 @@ struct HomeView: View {
             Spacer()
         }
         .navigationTitle("Home")
-        .dynamicTypeSize(... .xxxLarge)
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
         .toolbar {
             NavigationLink {
                 SettingsView()
@@ -77,4 +77,3 @@ struct HomeView: View {
         .accessibilitySortPriority(priority)
     }
 }
-

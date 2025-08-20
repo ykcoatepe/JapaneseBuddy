@@ -39,7 +39,7 @@ struct SRSView: View {
         }
         .onAppear(perform: next)
         .navigationTitle("SRS")
-        .dynamicTypeSize(... .xxxLarge)
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
     private func next() {
@@ -56,4 +56,3 @@ struct SRSView: View {
         next()
     }
 }
-
