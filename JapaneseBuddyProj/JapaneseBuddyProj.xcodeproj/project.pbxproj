@@ -43,7 +43,7 @@
 		A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */; };
 		A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */; };
 		A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */; };
-\t\tA3FF02012FFF000000000101 /* art in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02002FFF000000000100 /* art */; };
+		A3FF02012FFF000000000101 /* art in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02002FFF000000000100 /* art */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,7 +104,7 @@
 		A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
 		A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Haptics.swift; sourceTree = "<group>"; };
 		A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Log.swift; sourceTree = "<group>"; };
-\t\tA3FF02002FFF000000000100 /* art */ = {isa = PBXFileReference; lastKnownFileType = folder; name = art; path = ../art; sourceTree = "<group>"; };
+		A3FF02002FFF000000000100 /* art */ = {isa = PBXFileReference; lastKnownFileType = folder; name = art; path = ../art; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
