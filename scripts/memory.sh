@@ -33,7 +33,8 @@ append_note() {
   local day
   day=$(date +%F)
   local file="$SESS_DIR/$day.md"
-  printf "- %s %s\n" "$(date -u +%FT%TZ)" "$msg" >> "$file"
+  # avoid printf parsing '-' as an option by using '--'
+  printf -- "- %s %s\n" "$(date -u +%FT%TZ)" "$msg" >> "$file"
 }
 
 sanity() {
@@ -87,4 +88,3 @@ case ${1:-} in
   progress) progress ;;
   *) echo "Usage: $0 {init|append <msg>|sanity|progress}" >&2; exit 1 ;;
 esac
-

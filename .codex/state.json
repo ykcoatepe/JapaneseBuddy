@@ -3,16 +3,21 @@
     { "step": "Wire lessons bundle", "status": "done" },
     { "step": "Harden LessonStore", "status": "done" },
     { "step": "Tidy xcodeproj", "status": "done" },
-    { "step": "Add repo memory", "status": "in_progress" }
+    { "step": "Add repo memory", "status": "done" },
+    { "step": "Run tests + smoke", "status": "in_progress" }
   ],
-  "next_step": "Add repo memory",
+  "next_step": "Run tests + smoke",
   "blockers": [],
   "decisions": [
     "Use blue folder 'lessons' in bundle",
     "Gate loader logs under DEBUG",
-    "Decode reading.items compat"
+    "Decode reading.items compat",
+    "Include LessonProgress in app target",
+    "Wire Lesson subviews + LessonListView",
+    "Remove duplicate App.swift compile entry",
+    "Use iOS17-safe onChange wrapper in SettingsView",
+    "Use Data.write options [.atomic]"
   ],
   "context_notes": [],
-  "last_updated": "2025-08-20T12:21:53Z",
+  "last_updated": "2025-08-20T12:23:21Z",
 }
-
