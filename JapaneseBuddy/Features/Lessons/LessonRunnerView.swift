@@ -1,0 +1,70 @@
+import SwiftUI
+
+/// Drives a lesson through its ordered activities.
+struct LessonRunnerView: View {
+    @EnvironmentObject var lessons: LessonStore
+    let lesson: Lesson
+
+    @State private var step = 0
+    @State private var selection: Int?
+
+    var body: some View {
+        VStack {
+            contentView
+            if !isCheck {
+                Button("Next") { next() }
+                    .padding()
+                    .disabled(disableNext)
+            }
+        }
+        .navigationTitle(lesson.title)
+        .onAppear {
+            step = lessons.progress(for: lesson.id).lastStep
+        }
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        switch lesson.activities[step] {
+        case let .objective(text):
+            ObjectiveView(text: text)
+        case let .shadow(segments):
+            ShadowingView(segments: segments)
+        case let .listening(prompt, choices, answer):
+            ListeningView(prompt: prompt, choices: choices, answer: answer, selection: $selection)
+        case let .reading(prompt, items, answer):
+            ReadingView(prompt: prompt, items: items, answer: answer, selection: $selection)
+        case .check:
+            CheckView(current: lessons.progress(for: lesson.id).stars) { stars in
+                var p = lessons.progress(for: lesson.id)
+                p.stars = stars
+                p.completedAt = Date()
+                p.lastStep = step
+                lessons.updateProgress(p, for: lesson.id)
+            }
+        }
+    }
+
+    private func next() {
+        step += 1
+        var p = lessons.progress(for: lesson.id)
+        p.lastStep = step
+        lessons.updateProgress(p, for: lesson.id)
+        selection = nil
+    }
+
+    private var isCheck: Bool {
+        if case .check = lesson.activities[step] { return true }
+        return false
+    }
+
+    private var disableNext: Bool {
+        switch lesson.activities[step] {
+        case .listening, .reading:
+            return selection == nil
+        default:
+            return false
+        }
+    }
+}
+

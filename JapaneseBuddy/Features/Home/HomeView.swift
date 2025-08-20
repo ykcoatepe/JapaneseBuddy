@@ -3,6 +3,7 @@ import SwiftUI
 /// Landing screen with deck toggles and navigation tiles.
 struct HomeView: View {
     @EnvironmentObject var store: DeckStore
+    @EnvironmentObject var lessonStore: LessonStore
 
     var body: some View {
         VStack(spacing: 24) {
@@ -31,6 +32,12 @@ struct HomeView: View {
                 } label: {
                     tile(title: "SRS", count: srsCount)
                 }
+
+                NavigationLink {
+                    LessonListView()
+                } label: {
+                    tile(title: "Lessons", count: lessonCount)
+                }
             }
             .padding(.horizontal)
 
@@ -48,6 +55,7 @@ struct HomeView: View {
 
     private var traceCount: Int { store.dueCards(type: store.currentType).count }
     private var srsCount: Int { traceCount }
+    private var lessonCount: Int { lessonStore.lessons().count }
 
     @ViewBuilder
     private func tile(title: String, count: Int) -> some View {

@@ -10,6 +10,7 @@ final class DeckStore: ObservableObject {
     @Published var reminderTime: DateComponents?
     @Published var showStrokeHints = true
     @Published private(set) var sessionLog: [SessionLogEntry] = []
+    @Published var lessonProgress: [String: LessonProgress] = [:]
 
     private let url: URL
     private var saveTask: AnyCancellable?
@@ -21,6 +22,7 @@ final class DeckStore: ObservableObject {
         var reminderTime: ReminderTime?
         var sessionLog: [SessionLogEntry] = []
         var showStrokeHints: Bool = true
+        var lessonProgress: [String: LessonProgress] = [:]
 
         struct ReminderTime: Codable {
             var hour: Int
@@ -37,6 +39,7 @@ final class DeckStore: ObservableObject {
         saveTask = Publishers.CombineLatest4($cards, $dailyGoal, $notificationsEnabled, $reminderTime)
             .combineLatest($sessionLog)
             .combineLatest($showStrokeHints)
+            .combineLatest($lessonProgress)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in self?.save() }
     }
@@ -54,6 +57,7 @@ final class DeckStore: ObservableObject {
             reminderTime = state.reminderTime?.components
             sessionLog = state.sessionLog
             showStrokeHints = state.showStrokeHints
+            lessonProgress = state.lessonProgress
         } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
             cards = decoded
         } else {
@@ -63,7 +67,7 @@ final class DeckStore: ObservableObject {
 
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
-        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints)
+        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress)
         guard let data = try? JSONEncoder().encode(state) else { return }
         try? data.write(to: url, options: .atomic)
     }
@@ -86,5 +90,15 @@ final class DeckStore: ObservableObject {
 
     func progressToday(now: Date = .now, cal: Calendar = .current) -> GoalProgress {
         GoalProgress.compute(entries: sessionLog, on: now, goal: dailyGoal, cal: cal)
+    }
+
+    // MARK: - Lessons
+
+    func progress(for lessonID: String) -> LessonProgress {
+        lessonProgress[lessonID] ?? LessonProgress()
+    }
+
+    func updateProgress(_ progress: LessonProgress, for lessonID: String) {
+        lessonProgress[lessonID] = progress
     }
 }
