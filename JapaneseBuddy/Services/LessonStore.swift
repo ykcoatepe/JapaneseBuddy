@@ -11,12 +11,37 @@ final class LessonStore: ObservableObject {
     }
 
     private func loadLessons() {
-        guard let urls = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons") else { return }
         let decoder = JSONDecoder()
-        cached = urls.compactMap { url in
-            guard let data = try? Data(contentsOf: url) else { return nil }
-            return try? decoder.decode(Lesson.self, from: data)
-        }.sorted { $0.id < $1.id }
+        // Prefer bundled "lessons" folder (blue folder reference). Fallback to flat bundle files.
+        let fromFolder = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
+        let fromRoot = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil)
+#if DEBUG
+        if let u1 = fromFolder { print("ℹ️ LessonStore: found \(u1.count) json(s) under 'lessons' folder in bundle") }
+        if let u2 = fromRoot { print("ℹ️ LessonStore: found \(u2.count) json(s) at bundle root") }
+#endif
+        let urls = (fromFolder ?? fromRoot) ?? []
+#if DEBUG
+        if urls.isEmpty {
+            print("⚠️ LessonStore: no JSONs found in bundle (bundlePath=\(Bundle.main.bundlePath)). Check Copy Bundle Resources.")
+        }
+#endif
+
+        var loaded: [Lesson] = []
+        for url in urls {
+            do {
+                let data = try Data(contentsOf: url)
+                let lesson = try decoder.decode(Lesson.self, from: data)
+                loaded.append(lesson)
+            } catch {
+#if DEBUG
+                print("⚠️ Lesson decode error for \(url.lastPathComponent): \(error)")
+#endif
+            }
+        }
+        cached = loaded.sorted { $0.id < $1.id }
+#if DEBUG
+        print("✅ LessonStore: loaded \(cached.count) / \(urls.count) JSON file(s).")
+#endif
     }
 
     func lessons() -> [Lesson] { cached }
@@ -29,4 +54,3 @@ final class LessonStore: ObservableObject {
         deckStore.updateProgress(p, for: id)
     }
 }
-
