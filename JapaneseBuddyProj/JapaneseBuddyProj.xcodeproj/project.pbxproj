@@ -26,6 +26,25 @@
 /* Begin PBXBuildFile section */
 		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
 		6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */; };
+        A10000012FFF000000000001 /* JapaneseBuddyProjApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000002FFF000000000001 /* JapaneseBuddyProjApp.swift */; };
+        A10000022FFF000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000032FFF000000000003 /* ContentView.swift */; };
+        A10000042FFF000000000004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000122FFF000000000012 /* HomeView.swift */; };
+        A10000052FFF000000000005 /* DailyGoalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000132FFF000000000013 /* DailyGoalCard.swift */; };
+        A10000062FFF000000000006 /* KanaTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000142FFF000000000014 /* KanaTraceView.swift */; };
+        A10000072FFF000000000007 /* SRSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000152FFF000000000015 /* SRSView.swift */; };
+        A10000082FFF000000000008 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000162FFF000000000016 /* SettingsView.swift */; };
+        A10000092FFF000000000009 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000172FFF000000000017 /* PracticeView.swift */; };
+        A100000A2FFF00000000000A /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000B2FFF00000000000B /* Card.swift */; };
+        A100000C2FFF00000000000C /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000D2FFF00000000000D /* Goal.swift */; };
+        A100000E2FFF00000000000E /* SRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000F2FFF00000000000F /* SRS.swift */; };
+        A10000102FFF000000000010 /* StrokeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000112FFF000000000011 /* StrokeData.swift */; };
+        A10000182FFF000000000018 /* SeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000192FFF000000000019 /* SeedData.swift */; };
+        A100001A2FFF00000000001A /* DeckStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001B2FFF00000000001B /* DeckStore.swift */; };
+        A100001C2FFF00000000001C /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D2FFF00000000001D /* Speaker.swift */; };
+        A100001E2FFF00000000001E /* TraceCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001F2FFF00000000001F /* TraceCanvas.swift */; };
+        A10000202FFF000000000020 /* TemplateRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000212FFF000000000021 /* TemplateRenderer.swift */; };
+        A10000222FFF000000000022 /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000232FFF000000000023 /* LocalNotifications.swift */; };
+        A10000242FFF000000000024 /* StrokePreviewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000252FFF000000000025 /* StrokePreviewLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +54,25 @@
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
 		6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRSProgressionTests.swift; sourceTree = "<group>"; };
+        A10000002FFF000000000001 /* JapaneseBuddyProjApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProj/JapaneseBuddyProjApp.swift; sourceTree = "<group>"; };
+        A10000032FFF000000000003 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProj/ContentView.swift; sourceTree = "<group>"; };
+        A100000B2FFF00000000000B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Card.swift; sourceTree = "<group>"; };
+        A100000D2FFF00000000000D /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Goal.swift; sourceTree = "<group>"; };
+        A100000F2FFF00000000000F /* SRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/SRS.swift; sourceTree = "<group>"; };
+        A10000112FFF000000000011 /* StrokeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/StrokeData.swift; sourceTree = "<group>"; };
+        A10000192FFF000000000019 /* SeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Resources/SeedData.swift; sourceTree = "<group>"; };
+        A100001B2FFF00000000001B /* DeckStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/DeckStore.swift; sourceTree = "<group>"; };
+        A100001D2FFF00000000001D /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Speaker.swift; sourceTree = "<group>"; };
+        A100001F2FFF00000000001F /* TraceCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/TraceCanvas.swift; sourceTree = "<group>"; };
+        A10000212FFF000000000021 /* TemplateRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/TemplateRenderer.swift; sourceTree = "<group>"; };
+        A10000232FFF000000000023 /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/LocalNotifications.swift; sourceTree = "<group>"; };
+        A10000252FFF000000000025 /* StrokePreviewLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/StrokePreviewLayer.swift; sourceTree = "<group>"; };
+        A10000122FFF000000000012 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Home/HomeView.swift; sourceTree = "<group>"; };
+        A10000132FFF000000000013 /* DailyGoalCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Home/DailyGoalCard.swift; sourceTree = "<group>"; };
+        A10000142FFF000000000014 /* KanaTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/KanaTraceView.swift; sourceTree = "<group>"; };
+        A10000152FFF000000000015 /* SRSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/SRS/SRSView.swift; sourceTree = "<group>"; };
+        A10000162FFF000000000016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+        A10000172FFF000000000017 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Practice/PracticeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -256,6 +294,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                A10000012FFF000000000001 /* JapaneseBuddyProjApp.swift in Sources */,
+                A10000022FFF000000000002 /* ContentView.swift in Sources */,
+                A100000A2FFF00000000000A /* Card.swift in Sources */,
+                A100000C2FFF00000000000C /* Goal.swift in Sources */,
+                A100000E2FFF00000000000E /* SRS.swift in Sources */,
+                A10000102FFF000000000010 /* StrokeData.swift in Sources */,
+                A10000182FFF000000000018 /* SeedData.swift in Sources */,
+                A100001A2FFF00000000001A /* DeckStore.swift in Sources */,
+                A100001C2FFF00000000001C /* Speaker.swift in Sources */,
+                A100001E2FFF00000000001E /* TraceCanvas.swift in Sources */,
+                A10000202FFF000000000020 /* TemplateRenderer.swift in Sources */,
+                A10000222FFF000000000022 /* LocalNotifications.swift in Sources */,
+                A10000242FFF000000000024 /* StrokePreviewLayer.swift in Sources */,
+                A10000042FFF000000000004 /* HomeView.swift in Sources */,
+                A10000052FFF000000000005 /* DailyGoalCard.swift in Sources */,
+                A10000062FFF000000000006 /* KanaTraceView.swift in Sources */,
+                A10000072FFF000000000007 /* SRSView.swift in Sources */,
+                A10000082FFF000000000008 /* SettingsView.swift in Sources */,
+                A10000092FFF000000000009 /* PracticeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
