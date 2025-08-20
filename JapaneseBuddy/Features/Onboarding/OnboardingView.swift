@@ -8,21 +8,38 @@ struct OnboardingView: View {
     @State private var newGoal = 5
     @State private var reviewGoal = 20
     @State private var name = ""
+    @State private var debugHotspot = false
 
     var body: some View {
         TabView(selection: $tab) {
-            VStack(spacing: 20) {
-                if let hero = loadWelcomeImage() {
-                    Image(uiImage: hero)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 260)
-                        .accessibilityLabel("Welcome illustration")
+            // Full-screen hero with tappable "Get Started" hotspot
+            GeometryReader { proxy in
+                ZStack {
+                    if let hero = loadHeroImage() {
+                        Image(uiImage: hero)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: proxy.size.width, height: proxy.size.height)
+                            .ignoresSafeArea()
+                            .accessibilityLabel("Welcome")
+
+                        // Proportional hotspot overlay mapped to the image coordinate space
+                        hotspotOverlay(in: proxy.size, imageSize: hero.size) {
+                            finish()
+                        }
+
+                        if debugHotspot {
+                            hotspotOverlay(in: proxy.size, imageSize: hero.size, debug: true) {}
+                        }
+                    } else {
+                        // Fallback simple welcome if image missing
+                        VStack(spacing: 16) {
+                            Text("Welcome").font(.largeTitle).bold()
+                            Button("Get Started") { finish() }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
-                Text("Welcome")
-                    .font(.title)
-                Text("Learn kana with a friendly SRS.")
-                    .multilineTextAlignment(.center)
             }
             .tag(0)
             VStack(spacing: 20) {
@@ -57,7 +74,6 @@ struct OnboardingView: View {
         }
         .tabViewStyle(.page)
         .indexViewStyle(.page)
-        .padding()
         .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
@@ -67,13 +83,71 @@ struct OnboardingView: View {
             Text(title).font(.title)
             Text(text).multilineTextAlignment(.center)
         }
+        .padding()
     }
 
-    private func loadWelcomeImage() -> UIImage? {
-        if let url = Bundle.main.url(forResource: "wellcome_1", withExtension: "png", subdirectory: "art") {
-            return UIImage(contentsOfFile: url.path)
+    // Load hero image. Prefers an asset named "onboarding_hero" from the art/ folder,
+    // falls back to the existing wellcome_1.png if present.
+    private func loadHeroImage() -> UIImage? {
+        // Try onboarding_hero.* under art/
+        let candidates: [(String, String?)] = [
+            ("onboarding_hero", "png"),
+            ("onboarding_hero", "jpg"),
+            ("onboarding_hero", "jpeg"),
+            ("wellcome_1", "png")
+        ]
+        for (name, ext) in candidates {
+            if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "art"),
+               let img = UIImage(contentsOfFile: url.path) {
+                return img
+            }
         }
         return nil
+    }
+
+    // Normalized hotspot rect where the "Get Started" appears on the image (0-1 in both axes).
+    // Adjust these values to align with your artwork.
+    private var heroHotspotNormalized: CGRect {
+        // Default: centered near bottom; width 60%, height 12%
+        CGRect(x: 0.20, y: 0.80, width: 0.60, height: 0.12)
+    }
+
+    // Overlay that maps the normalized hotspot to the actual displayed frame
+    @ViewBuilder
+    private func hotspotOverlay(in containerSize: CGSize, imageSize: CGSize, debug: Bool = false, action: @escaping () -> Void = {}) -> some View {
+        let W = containerSize.width
+        let H = containerSize.height
+        let w = imageSize.width
+        let h = imageSize.height
+        // Aspect-fit: ensure the entire image is visible without cropping
+        let scale = min(W / max(w, 1), H / max(h, 1))
+        let displayedW = w * scale
+        let displayedH = h * scale
+        let offsetX = (W - displayedW) / 2
+        let offsetY = (H - displayedH) / 2
+
+        let r = heroHotspotNormalized
+        let x = offsetX + r.origin.x * displayedW
+        let y = offsetY + r.origin.y * displayedH
+        let width = r.size.width * displayedW
+        let height = r.size.height * displayedH
+
+        Group {
+            if debug {
+                Rectangle()
+                    .strokeBorder(Color.red.opacity(0.8), lineWidth: 2)
+                    .background(Color.red.opacity(0.15))
+            } else {
+                Button(action: action) {
+                    Color.clear
+                }
+                .accessibilityLabel("Get Started")
+                .contentShape(Rectangle())
+            }
+        }
+        .frame(width: width, height: height)
+        .position(x: x + width / 2, y: y + height / 2)
+        .allowsHitTesting(true)
     }
 
     private func finish() {
