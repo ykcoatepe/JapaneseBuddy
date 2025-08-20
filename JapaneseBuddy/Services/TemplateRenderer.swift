@@ -3,7 +3,9 @@ import UIKit
 /// Renders kana glyphs into mask images for tracing.
 enum TemplateRenderer {
     static func image(for glyph: String, size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = UIScreen.main.scale
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
         return renderer.image { ctx in
             UIColor.white.setFill()
             ctx.fill(CGRect(origin: .zero, size: size))

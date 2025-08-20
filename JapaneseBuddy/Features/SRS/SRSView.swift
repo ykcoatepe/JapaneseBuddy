@@ -17,13 +17,21 @@ struct SRSView: View {
 
                 HStack(spacing: 20) {
                     Button("Speak") { speaker.speak(card.front) }
+                        .accessibilityLabel("Speak card")
                     Button("Flip") { showBack.toggle() }
+                        .accessibilityLabel("Flip card")
                 }
 
                 HStack(spacing: 20) {
                     Button("Hard") { grade(.hard) }
+                        .accessibilityLabel("Mark hard")
+                        .accessibilityHint("Schedules sooner")
                     Button("Good") { grade(.good) }
+                        .accessibilityLabel("Mark good")
+                        .accessibilityHint("Keeps normal pace")
                     Button("Easy") { grade(.easy) }
+                        .accessibilityLabel("Mark easy")
+                        .accessibilityHint("Delays longer")
                 }
             } else {
                 Text("All caught up")
@@ -31,6 +39,7 @@ struct SRSView: View {
         }
         .onAppear(perform: next)
         .navigationTitle("SRS")
+        .dynamicTypeSize(... .xxxLarge)
     }
 
     private func next() {
@@ -43,6 +52,7 @@ struct SRSView: View {
         SRS.apply(rating, to: &card)
         store.update(card)
         store.logReview(for: card)
+        Haptics.light()
         next()
     }
 }

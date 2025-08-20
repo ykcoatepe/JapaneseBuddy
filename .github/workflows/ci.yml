@@ -10,6 +10,6 @@ jobs:
       - name: Install xcpretty
         run: sudo gem install xcpretty --no-document
       - name: Build
-        run: xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' build | xcpretty
+        run: set -o pipefail && xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' build | xcpretty
       - name: Test
-        run: xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' test | xcpretty
+        run: set -o pipefail && xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' test | xcpretty

@@ -34,6 +34,7 @@ struct LessonRunnerView: View {
             }
         }
         .navigationTitle(lesson.title)
+        .dynamicTypeSize(... .xxxLarge)
         .onAppear {
             step = lessons.progress(for: lesson.id).lastStep
         }

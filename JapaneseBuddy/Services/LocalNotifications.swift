@@ -16,7 +16,12 @@ enum LocalNotifications {
         comps.minute = components.minute
         let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
         let req = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-        try await center.add(req)
+        do {
+            try await center.add(req)
+        } catch {
+            Log.app.error("notify schedule failed: \(error.localizedDescription)")
+            throw error
+        }
     }
 
     static func cancel(id: String) async {

@@ -12,6 +12,8 @@ final class DeckStore: ObservableObject {
     @Published private(set) var sessionLog: [SessionLogEntry] = []
     @Published var lessonProgress: [String: LessonProgress] = [:]
     @Published var kanjiProgress: [String: KanjiProgress] = [:]
+    @Published var displayName: String?
+    @Published var hasOnboarded = false
 
     private let url: URL
     private var saveTask: AnyCancellable?
@@ -25,6 +27,8 @@ final class DeckStore: ObservableObject {
         var showStrokeHints: Bool = true
         var lessonProgress: [String: LessonProgress] = [:]
         var kanjiProgress: [String: KanjiProgress] = [:]
+        var displayName: String?
+        var hasOnboarded: Bool = false
 
         struct ReminderTime: Codable {
             var hour: Int
@@ -45,6 +49,8 @@ final class DeckStore: ObservableObject {
             .combineLatest($showStrokeHints)
             .combineLatest($lessonProgress)
             .combineLatest($kanjiProgress)
+            .combineLatest($displayName)
+            .combineLatest($hasOnboarded)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in self?.save() }
     }
@@ -64,6 +70,8 @@ final class DeckStore: ObservableObject {
             showStrokeHints = state.showStrokeHints
             lessonProgress = state.lessonProgress
             kanjiProgress = state.kanjiProgress
+            displayName = state.displayName
+            hasOnboarded = state.hasOnboarded
         } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
             cards = decoded
         } else {
@@ -73,9 +81,13 @@ final class DeckStore: ObservableObject {
 
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
-        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress)
+        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress, displayName: displayName, hasOnboarded: hasOnboarded)
         guard let data = try? JSONEncoder().encode(state) else { return }
-        try? data.write(to: url, options: [.atomic])
+        do {
+            try data.write(to: url, options: [.atomic])
+        } catch {
+            Log.app.error("save failed: \(error.localizedDescription)")
+        }
     }
 
     func update(_ card: Card) {

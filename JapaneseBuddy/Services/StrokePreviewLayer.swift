@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import UIKit.UIAccessibility
 
 final class StrokePreviewLayer: CALayer {
     private var strokeLayers: [CAShapeLayer] = []
@@ -109,7 +110,10 @@ struct StrokePreviewView: UIViewRepresentable {
             context.coordinator.configured = true
         }
         CATransaction.commit()
-        if playing != context.coordinator.playing {
+        if UIAccessibility.isReduceMotionEnabled {
+            layer.reset()
+            context.coordinator.playing = false
+        } else if playing != context.coordinator.playing {
             playing ? layer.play() : layer.pause()
             context.coordinator.playing = playing
         }

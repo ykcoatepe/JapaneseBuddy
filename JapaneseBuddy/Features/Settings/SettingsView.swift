@@ -5,6 +5,10 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section("Profile") {
+                TextField("Name", text: nameBinding)
+                    .textContentType(.name)
+            }
             Section("Daily Goal") {
                 Stepper("New \(store.dailyGoal.newTarget)", value: $store.dailyGoal.newTarget, in: 0...100)
                 Stepper("Review \(store.dailyGoal.reviewTarget)", value: $store.dailyGoal.reviewTarget, in: 0...500)
@@ -42,6 +46,13 @@ struct SettingsView: View {
                 await LocalNotifications.cancel(id: "daily-goal")
             }
         }
+    }
+
+    private var nameBinding: Binding<String> {
+        Binding<String>(
+            get: { store.displayName ?? "" },
+            set: { store.displayName = $0.isEmpty ? nil : $0 }
+        )
     }
 }
 
