@@ -1,6 +1,6 @@
 # Project Progress
 
-- Updated: <auto>
+- Updated: aspect-fit onboarding hero with tappable hotspot
 
 ## Current Plan
 
@@ -17,7 +17,7 @@ See `.codex/state.json` for machine-readable plan. This section is auto-updated 
   - Ensured `lessons` folder is in Copy Bundle Resources.
 - Settings: iOS 17-safe onChange compatibility wrapper.
 - Persistence: DeckStore writes now use `Data.WritingOptions[.atomic]`.
-- Onboarding: Welcome hero image loads from bundled `art/wellcome_1.png`.
+- Onboarding: Full-screen hero uses aspect-fit (no cropping) and a proportional invisible "Get Started" hotspot; falls back to `art/wellcome_1.png`.
 - Assets: Removed invalid PDF icon; added `scripts/make_appicon.sh` to generate full AppIcon set.
 - Project: Added `art/` folder reference to Copy Bundle Resources.
 
