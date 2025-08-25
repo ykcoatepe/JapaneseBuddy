@@ -136,4 +136,13 @@ final class DeckStore: ObservableObject {
         p.correct += 1
         kanjiProgress[lessonID] = p
     }
+
+    func replace(with s: State) {
+        cards = s.cards
+        dailyGoal = s.dailyGoal; notificationsEnabled = s.notificationsEnabled
+        reminderTime = s.reminderTime?.components
+        sessionLog = s.sessionLog; showStrokeHints = s.showStrokeHints
+        lessonProgress = s.lessonProgress; kanjiProgress = s.kanjiProgress
+        displayName = s.displayName; hasOnboarded = s.hasOnboarded
+    }
 }

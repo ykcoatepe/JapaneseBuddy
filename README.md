@@ -27,6 +27,9 @@ JapaneseBuddy sports a red sun app icon with kana and uses a warm accent tint th
 ## Goals & Reminders
 Set daily targets for new and review cards and track progress on the Home screen. Configure goals and optional local reminders in Settings; notifications stay on-device and are fully optional.
 
+## Backup & Restore
+In **Settings ▸ Backup & Restore** you can export your deck as `deck.json` or import a previously saved file. The file lives only on your device; sharing is manual and no data is sent elsewhere.
+
 ## Stroke Order
 Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.
 
