@@ -21,6 +21,7 @@ struct SettingsView: View {
             Section("Tracing") {
                 Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
             }
+            BackupSection()
             Section("Developer") {
                 Button("Reset Onboarding") { store.hasOnboarded = false }
                 .accessibilityLabel("Reset onboarding")
