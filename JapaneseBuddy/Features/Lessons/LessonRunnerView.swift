@@ -23,7 +23,7 @@ struct LessonRunnerView: View {
             if tab == 0 {
                 VStack {
                     contentView
-                    if !isCheck {
+                    if !isCheck && hasNextStep {
                         Button("Next") { next() }
                             .padding()
                             .disabled(disableNext)
@@ -36,12 +36,17 @@ struct LessonRunnerView: View {
         .navigationTitle(lesson.title)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .onAppear {
-            step = lessons.progress(for: lesson.id).lastStep
+            let last = lessons.progress(for: lesson.id).lastStep
+            step = min(max(0, last), max(lesson.activities.count - 1, 0))
         }
     }
 
     @ViewBuilder
     private var contentView: some View {
+        guard step >= 0, step < lesson.activities.count else {
+            Text("Lesson complete")
+            return
+        }
         switch lesson.activities[step] {
         case let .objective(text):
             ObjectiveView(text: text)
@@ -63,6 +68,7 @@ struct LessonRunnerView: View {
     }
 
     private func next() {
+        guard hasNextStep else { return }
         step += 1
         var p = lessons.progress(for: lesson.id)
         p.lastStep = step
@@ -71,16 +77,22 @@ struct LessonRunnerView: View {
     }
 
     private var isCheck: Bool {
+        guard step >= 0, step < lesson.activities.count else { return false }
         if case .check = lesson.activities[step] { return true }
         return false
     }
 
     private var disableNext: Bool {
+        guard step >= 0, step < lesson.activities.count else { return true }
         switch lesson.activities[step] {
         case .listening, .reading:
             return selection == nil
         default:
             return false
         }
+    }
+
+    private var hasNextStep: Bool {
+        step + 1 < lesson.activities.count
     }
 }

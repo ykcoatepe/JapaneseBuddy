@@ -1,8 +1,8 @@
 .PHONY: build test lint format
 build:
-	xcodebuild -scheme JapaneseBuddy -destination 'generic/platform=iOS Simulator'
+	xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' build
 test:
-	xcodebuild test -scheme JapaneseBuddy -destination 'generic/platform=iOS Simulator'
+	xcodebuild -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj -destination 'generic/platform=iOS Simulator' test
 lint:
 	swiftlint || true
 format:

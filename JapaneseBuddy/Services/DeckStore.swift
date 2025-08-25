@@ -95,7 +95,11 @@ final class DeckStore: ObservableObject {
     }
 
     func dueCards(type: CardType?, on date: Date = Date()) -> [Card] {
-        cards.filter { $0.nextDue <= date && (type == nil || $0.type == type!) }
+        cards.filter { card in
+            guard card.nextDue <= date else { return false }
+            if let t = type { return card.type == t }
+            return true
+        }
     }
 
     func logNew(for card: Card, date: Date = .now) {
