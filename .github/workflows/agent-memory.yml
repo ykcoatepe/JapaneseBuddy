@@ -31,6 +31,8 @@ jobs:
           bash scripts/memory.sh progress
 
       - name: Commit memory updates
+        # Avoid pushing on pull_request events (detached HEAD / no push perms for forks)
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -73,4 +75,3 @@ jobs:
               await github.rest.issues.update({ owner, repo, issue_number: match.number, body });
               core.info(`Updated issue #${match.number}`);
             }
-
