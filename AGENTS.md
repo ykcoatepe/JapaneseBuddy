@@ -1,60 +1,46 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `JapaneseBuddy/`: app sources — `App/`, `Features/` (SwiftUI), `Models/` (SRS, Card), `Services/` (persistence, speech, drawing), `Resources/` (seed data).
+- `JapaneseBuddy/`: app sources
+  - `Features/`: SwiftUI views (Home, SRS, Lessons, Onboarding, Practice)
+  - `Models/`: core types (Card, SRS, Lesson, Goal)
+  - `Services/`: persistence, speech, drawing, notifications, logging
+  - `Resources/lessons/`: seed lesson JSONs (e.g., `A1-05-Prices.json`)
 - `JapaneseBuddyTests/`: XCTest targets (unit/UI). Keep test helpers here.
-- `docs/`: architecture notes; `prompts/`: product/sprint briefs; `scripts/`: local utilities.
+- `docs/`, `prompts/`, `scripts/`: notes, briefs, local utilities.
+- `.codex/`: lightweight in-repo memory (state, sessions, sanity snapshot).
 
 ## Build, Test, and Development Commands
-- `make build`: build the iPad app via `xcodebuild -scheme JapaneseBuddy` (iPad simulator target).
-- `make test`: run XCTest for the scheme on the simulator.
+- `make build`: build via Xcode (`-project JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj`).
+- `make test`: run XCTest for the same scheme on iOS Simulator.
 - `make lint`: run SwiftLint (non-failing locally).
 - `make format`: apply SwiftFormat to the repo.
 Example: `make format && make lint && make test` before opening a PR.
 
 ## Coding Style & Naming Conventions
-- Swift 5.9+, SwiftUI; indent 4 spaces; line length ≤ 140 (see `.swiftlint.yml`).
-- File guideline: ≤ 150 LOC/file where practical (see TODOs and prompts).
-- Names: `PascalCase` for types, `camelCase` for methods/vars, `snake_case` only for file names that mirror resources.
-- One primary type per file; place files under the matching module folder (e.g., `Models/SRS.swift`).
+- Swift 5.9+, SwiftUI. Indent 4 spaces; max line length 140.
+- One primary type per file; keep files ≤150 LOC where practical.
+- Naming: PascalCase types; camelCase vars/methods; use snake_case for files mirroring resources only.
+- Tools: SwiftFormat + SwiftLint; prefer safe optionals over force-unwrapping.
 
 ## Testing Guidelines
-- Frameworks: XCTest (unit) and minimal UI tests.
+- Frameworks: XCTest unit tests; minimal UI smoke as needed.
 - Location: `JapaneseBuddyTests/*.swift` (e.g., `SRSProgressionTests.swift`).
-- Scope: prioritize SRS progression, deck persistence, and simple navigation smoke tests.
-- Run: `make test`. Aim for meaningful coverage on core logic; snapshot/UI tests are optional.
+- Scope: prioritize SRS progression, deck persistence, lesson decoding, simple navigation.
+- Run: `make test`. Name tests `*Tests.swift` and keep them deterministic.
 
 ## Commit & Pull Request Guidelines
-- Commits: follow Conventional Commits where possible (`feat:`, `fix:`, `chore:`, `refactor:`). Example: `feat(models): add SM-2 scheduling`.
-- PRs: include a clear description, linked issue/brief (e.g., `prompts/JP-APP-001.md`), screenshots for UI changes, and test notes (`make test` output or key cases).
+- Commits: use Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`).
+  - Example: `feat(models): add SM-2 scheduling`.
+- PRs: clear description, link the brief/issue (e.g., `prompts/JP-APP-001.md`), screenshots for UI changes, and test notes (key cases or `make test` output).
 
 ## Security & Configuration Tips
-- App is fully offline; no analytics or network calls. Store decks at `Documents/deck.json`.
-- Do not add third-party SDKs without discussion. Keep PII off logs.
+- App runs fully offline; no analytics or network calls. Persist deck at `Documents/deck.json`.
+- Avoid logging PII; prefer `Log.app` for structured messages.
+- Do not add third‑party SDKs without discussion.
 
 ## Agent-Specific Notes
 - Implement sources only; do not modify Xcode project files.
-- Adhere to `SwiftLint`/`SwiftFormat` and keep modules small and focused.
+- Keep modules small and focused; follow existing folder layout.
+- Memory helpers: `scripts/memory.sh init|append|sanity|progress|recall` to maintain `.codex/` state.
 
-## Repo Memory
-
-This project includes a lightweight, in-repo memory system so the assistant (and humans) can resume context after restarts.
-
-- Files:
-  - `.codex/state.json`: machine-readable plan, next step, decisions, timestamps.
-  - `.codex/sessions/YYYY-MM-DD.md`: append-only session notes (daily log).
-  - `.codex/checks/sanity.md`: quick, static “sanity snapshot”.
-  - `PROGRESS.md`: human-friendly summary.
-
-- Scripts:
-  - `scripts/memory.sh init`: ensure `.codex/` structure and default state exists.
-  - `scripts/memory.sh append "note"`: append a timestamped note to today’s session file.
-  - `scripts/memory.sh sanity`: refresh `.codex/checks/sanity.md` from static signals.
-  - `scripts/memory.sh progress`: update timestamps in `state.json` and `PROGRESS.md`.
-  - `scripts/memory.sh recall`: print the current plan, next step, recent decisions, and tail of the latest session file.
-
-### Assistant behavior
-
-- On a fresh session, the assistant proactively reads `.codex/state.json` and the latest `.codex/sessions/*.md` to rehydrate context (no reminder needed).
-- If memory files are missing or malformed, the assistant asks for guidance before proceeding.
-- You can always force a summary by running `scripts/memory.sh recall` or asking “recall the plan/next steps”.
