@@ -14,11 +14,11 @@ struct LessonListView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(lesson.title).font(.headline)
-                            Text(lesson.canDo).font(.caption).foregroundStyle(.secondary)
+                            Text("\(String(repeating: \"★\", count: progress.stars)) \(progress.lastStep)/\(lesson.activities.count)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                         Spacer()
-                        Text(String(repeating: "★", count: progress.stars))
-                            .foregroundStyle(.yellow)
                     }
                 }
             }

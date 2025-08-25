@@ -1,0 +1,18 @@
+{
+  "id":"A1-05",
+  "title":"Prices",
+  "canDo":"Ask and say prices politely",
+  "activities":[
+    {"objective":{"text":"Ask and answer price with いくらですか"}},
+    {"shadow":{"segments":["りんごは いくら ですか。","３００円 です。"]}},
+    {"listening":{"prompt":"How much is the apple?","choices":["300 yen","500 yen","700 yen"],"answer":0}},
+    {"reading":{"prompt":"Choose the price for the notebook.","items":["１００円","３００円","６００円"],"answer":1}},
+    {"check":{}}
+  ],
+  "tips":["Use いくら to ask prices."],
+  "kanjiWords":[
+    {"id":"A1-05-円","kanji":"円","reading":"えん","meaning":"yen"},
+    {"id":"A1-05-百","kanji":"百","reading":"ひゃく","meaning":"hundred"},
+    {"id":"A1-05-千","kanji":"千","reading":"せん","meaning":"thousand"}
+  ]
+}
