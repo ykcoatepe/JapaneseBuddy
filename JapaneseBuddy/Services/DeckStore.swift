@@ -79,6 +79,10 @@ final class DeckStore: ObservableObject {
         }
     }
 
+    func reload() {
+        load()
+    }
+
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
         let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress, displayName: displayName, hasOnboarded: hasOnboarded)
