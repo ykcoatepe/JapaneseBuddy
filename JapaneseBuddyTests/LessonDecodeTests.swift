@@ -5,8 +5,11 @@ final class LessonDecodeTests: XCTestCase {
     func testLessonsDecode() {
         let store = LessonStore(deckStore: DeckStore())
         let lessons = store.lessons()
-        XCTAssertEqual(lessons.count, 2)
-        XCTAssertEqual(lessons.first?.id, "A1-01")
+        XCTAssertGreaterThanOrEqual(lessons.count, 5)
+        let ids = lessons.map { $0.id }
+        XCTAssertTrue(ids.contains("A1-05"))
+        XCTAssertTrue(ids.contains("A1-06"))
+        XCTAssertTrue(ids.contains("A1-07"))
     }
 
     func testProgressUpdatePersists() {

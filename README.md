@@ -33,6 +33,20 @@ Trace practice shows optional stroke hints with numbered overlays and an animate
 ## Lessons
 Learn with short can-do based lessons. Each lesson starts with an objective, runs through activities like shadowing with Japanese TTS, listening or reading checks, then ends with a self-rated star review. Progress and stars save offline per lesson.
 
+## Authoring lessons
+Lessons live in `JapaneseBuddy/Resources/lessons/` as JSON.
+Generate them from a CSV with fields:
+
+```
+id,title,canDo,shadow1,shadow2,shadow3,shadow4,listQ,A,B,C,lAns,readQ,choices,rAns,kanji,reading,meaning
+```
+
+Example row:
+
+```
+A1-05,Prices,Ask prices,りんごは いくら ですか。,３００円 です.,,,How much is the apple?,300 yen,500 yen,700 yen,1,Pick the notebook price.,１００円|３００円|６００円,2,円|百|千,えん|ひゃく|せん,yen|hundred|thousand
+```
+
 ## Kanji Words
 Type the reading in hiragana; tap Speak to hear it; correct answers join your SRS queue.
 ## Onboarding
