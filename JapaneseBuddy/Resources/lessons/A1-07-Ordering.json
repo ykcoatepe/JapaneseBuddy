@@ -6,7 +6,7 @@
     {"objective":{"text":"Order food and drinks."}},
     {"shadow":{"segments":["すみません。メニューを ください。","カレー を おねがいします。","おみず も おねがいします。"]}},
     {"listening":{"prompt":"What did the customer order?","choices":["すし","カレー","ラーメン"],"answer":1}},
-    {"reading":{"prompt":"Choose the polite request.","items":["みず を くれ。","みず を おねがいします。","みず。"],"answer":1}},
+    {"reading":{"prompt":"Choose the polite request.","choices":["みず を くれ。","みず を おねがいします。","みず。"],"answer":1}},
     {"check":{}}
   ],
   "tips":["Use おねがいします when ordering."],

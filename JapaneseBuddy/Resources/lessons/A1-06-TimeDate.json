@@ -6,7 +6,7 @@
     {"objective":{"text":"State the date and time politely."}},
     {"shadow":{"segments":["きょうは ６月 ５日 です。","いま は ごご ３時 です。"]}},
     {"listening":{"prompt":"What time is it?","choices":["ごぜん９時","ごご３時","ごご７時"],"answer":1}},
-    {"reading":{"prompt":"Select today's date.","items":["４月５日","６月５日","６月６日"],"answer":1}},
+    {"reading":{"prompt":"Select today's date.","choices":["４月５日","６月５日","６月６日"],"answer":1}},
     {"check":{}}
   ],
   "tips":["Use ごご for PM times."],
