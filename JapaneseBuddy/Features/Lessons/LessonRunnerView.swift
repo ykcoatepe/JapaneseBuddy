@@ -43,26 +43,26 @@ struct LessonRunnerView: View {
 
     @ViewBuilder
     private var contentView: some View {
-        guard step >= 0, step < lesson.activities.count else {
+        if !(step >= 0 && step < lesson.activities.count) {
             Text("Lesson complete")
-            return
-        }
-        switch lesson.activities[step] {
-        case let .objective(text):
-            ObjectiveView(text: text)
-        case let .shadow(segments):
-            ShadowingView(segments: segments)
-        case let .listening(prompt, choices, answer):
-            ListeningView(prompt: prompt, choices: choices, answer: answer, selection: $selection)
-        case let .reading(prompt, items, answer):
-            ReadingView(prompt: prompt, items: items, answer: answer, selection: $selection)
-        case .check:
-            CheckView(current: lessons.progress(for: lesson.id).stars) { stars in
-                var p = lessons.progress(for: lesson.id)
-                p.stars = stars
-                p.completedAt = Date()
-                p.lastStep = step
-                lessons.updateProgress(p, for: lesson.id)
+        } else {
+            switch lesson.activities[step] {
+            case let .objective(text):
+                ObjectiveView(text: text)
+            case let .shadow(segments):
+                ShadowingView(segments: segments)
+            case let .listening(prompt, choices, answer):
+                ListeningView(prompt: prompt, choices: choices, answer: answer, selection: $selection)
+            case let .reading(prompt, items, answer):
+                ReadingView(prompt: prompt, items: items, answer: answer, selection: $selection)
+            case .check:
+                CheckView(current: lessons.progress(for: lesson.id).stars) { stars in
+                    var p = lessons.progress(for: lesson.id)
+                    p.stars = stars
+                    p.completedAt = Date()
+                    p.lastStep = step
+                    lessons.updateProgress(p, for: lesson.id)
+                }
             }
         }
     }

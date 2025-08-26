@@ -1,4 +1,6 @@
 import SwiftUI
+import UniformTypeIdentifiers
+import UIKit
 
 struct SettingsView: View {
     @EnvironmentObject var store: DeckStore
@@ -21,7 +23,7 @@ struct SettingsView: View {
             Section("Tracing") {
                 Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
             }
-            BackupSection()
+            SettingsBackupSection()
             Section("Developer") {
                 Button("Reset Onboarding") { store.hasOnboarded = false }
                 .accessibilityLabel("Reset onboarding")
@@ -69,6 +71,90 @@ private extension View {
             self.onChange(of: value) { _, _ in action() }
         } else {
             self.onChange(of: value) { _ in action() }
+        }
+    }
+}
+
+// Local fallback implementation to ensure build succeeds if BackupSection.swift
+// is not included in the target membership. Namespaced to avoid collisions.
+struct SettingsBackupSection: View {
+    @EnvironmentObject var store: DeckStore
+    @State private var showExporter = false
+    @State private var showImporter = false
+    @State private var alert: AlertInfo?
+
+    var body: some View {
+        Section("Backup & Restore") {
+            Button("Export deck.json") { showExporter = true }
+            Button("Import deck.json") { showImporter = true }
+        }
+        .sheet(isPresented: $showExporter) { ActivityController(url: Self.deckURL) }
+        .sheet(isPresented: $showImporter) {
+            DocumentPicker { url in
+                do {
+                    try Self.importDeck(from: url, into: store)
+                    alert = AlertInfo(title: "Import Complete")
+                } catch {
+                    alert = AlertInfo(title: "Import Failed", message: error.localizedDescription)
+                }
+            }
+        }
+        .alert(item: $alert) { info in
+            Alert(title: Text(info.title),
+                  message: Text(info.message ?? ""),
+                  dismissButton: .default(Text("OK")))
+        }
+    }
+
+    // MARK: - Local backup helpers (fallback if BackupService is not in target)
+    static var deckURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            .appendingPathComponent("deck.json")
+    }
+
+    enum BackupError: Error { case invalidFormat }
+
+    static func importDeck(from url: URL, into store: DeckStore) throws {
+        let data = try Data(contentsOf: url)
+        guard (try? JSONDecoder().decode(DeckStore.State.self, from: data)) != nil else {
+            throw BackupError.invalidFormat
+        }
+        try data.write(to: deckURL, options: .atomic)
+        store.reload()
+    }
+
+    // MARK: - Nested helpers to avoid cross-file name collisions
+    private struct AlertInfo: Identifiable {
+        let id = UUID()
+        var title: String
+        var message: String?
+    }
+
+    private struct ActivityController: UIViewControllerRepresentable {
+        let url: URL
+        func makeUIViewController(context: Context) -> UIActivityViewController {
+            UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        }
+        func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
+    }
+
+    private struct DocumentPicker: UIViewControllerRepresentable {
+        var onPick: (URL) -> Void
+        func makeCoordinator() -> Coordinator { Coordinator(onPick: onPick) }
+        func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+            let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
+            picker.allowsMultipleSelection = false
+            picker.delegate = context.coordinator
+            return picker
+        }
+        func updateUIViewController(_ vc: UIDocumentPickerViewController, context: Context) {}
+        final class Coordinator: NSObject, UIDocumentPickerDelegate {
+            let onPick: (URL) -> Void
+            init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
+            func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+                guard let url = urls.first else { return }
+                onPick(url)
+            }
         }
     }
 }
