@@ -27,7 +27,9 @@ struct BackupSection: View {
             }
         }
         .alert(item: $alert) { info in
-            Alert(title: Text(info.title), message: Text(info.message ?? ""), dismissButton: .default(Text("OK")))
+            Alert(title: Text(info.title),
+                  message: Text(info.message ?? ""),
+                  dismissButton: .default(Text("OK")))
         }
     }
 }
@@ -48,18 +50,14 @@ private struct ActivityController: UIViewControllerRepresentable {
 
 private struct DocumentPicker: UIViewControllerRepresentable {
     var onPick: (URL) -> Void
-
     func makeCoordinator() -> Coordinator { Coordinator(onPick: onPick) }
-
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
         picker.allowsMultipleSelection = false
         picker.delegate = context.coordinator
         return picker
     }
-
     func updateUIViewController(_ vc: UIDocumentPickerViewController, context: Context) {}
-
     final class Coordinator: NSObject, UIDocumentPickerDelegate {
         let onPick: (URL) -> Void
         init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
@@ -69,3 +67,4 @@ private struct DocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
+

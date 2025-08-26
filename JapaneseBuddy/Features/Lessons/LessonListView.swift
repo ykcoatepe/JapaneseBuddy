@@ -14,7 +14,8 @@ struct LessonListView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(lesson.title).font(.headline)
-                            Text("\(String(repeating: \"★\", count: progress.stars)) \(progress.lastStep)/\(lesson.activities.count)")
+                            let stars = String(repeating: "★", count: progress.stars)
+                            Text("\(stars) \(progress.lastStep)/\(lesson.activities.count)")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -26,4 +27,3 @@ struct LessonListView: View {
         .navigationTitle("Lessons")
     }
 }
-
