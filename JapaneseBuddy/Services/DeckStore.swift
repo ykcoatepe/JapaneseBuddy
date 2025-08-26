@@ -9,6 +9,7 @@ final class DeckStore: ObservableObject {
     @Published var notificationsEnabled = false
     @Published var reminderTime: DateComponents?
     @Published var showStrokeHints = true
+    @Published var playSpeechInSilentMode = true
     @Published private(set) var sessionLog: [SessionLogEntry] = []
     @Published var lessonProgress: [String: LessonProgress] = [:]
     @Published var kanjiProgress: [String: KanjiProgress] = [:]
@@ -25,6 +26,7 @@ final class DeckStore: ObservableObject {
         var reminderTime: ReminderTime?
         var sessionLog: [SessionLogEntry] = []
         var showStrokeHints: Bool = true
+        var playSpeechInSilentMode: Bool = true
         var lessonProgress: [String: LessonProgress] = [:]
         var kanjiProgress: [String: KanjiProgress] = [:]
         var displayName: String?
@@ -44,15 +46,25 @@ final class DeckStore: ObservableObject {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         url = docs.appendingPathComponent("deck.json")
         load()
+        // Mirror audio preference to UserDefaults for lightweight access in Speaker
+        UserDefaults.standard.set(playSpeechInSilentMode, forKey: "playSpeechInSilentMode")
+
         saveTask = Publishers.CombineLatest4($cards, $dailyGoal, $notificationsEnabled, $reminderTime)
             .combineLatest($sessionLog)
             .combineLatest($showStrokeHints)
+            .combineLatest($playSpeechInSilentMode)
             .combineLatest($lessonProgress)
             .combineLatest($kanjiProgress)
             .combineLatest($displayName)
             .combineLatest($hasOnboarded)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
-            .sink { [weak self] _ in self?.save() }
+            .sink { [weak self] _ in
+                // Keep UserDefaults in sync for the Speaker to read.
+                if let self = self {
+                    UserDefaults.standard.set(self.playSpeechInSilentMode, forKey: "playSpeechInSilentMode")
+                }
+                self?.save()
+            }
     }
 
     private func load() {
@@ -68,6 +80,7 @@ final class DeckStore: ObservableObject {
             reminderTime = state.reminderTime?.components
             sessionLog = state.sessionLog
             showStrokeHints = state.showStrokeHints
+            playSpeechInSilentMode = state.playSpeechInSilentMode
             lessonProgress = state.lessonProgress
             kanjiProgress = state.kanjiProgress
             displayName = state.displayName
@@ -85,7 +98,17 @@ final class DeckStore: ObservableObject {
 
     private func save() {
         let reminder = reminderTime.map { State.ReminderTime($0) }
-        let state = State(cards: cards, dailyGoal: dailyGoal, notificationsEnabled: notificationsEnabled, reminderTime: reminder, sessionLog: sessionLog, showStrokeHints: showStrokeHints, lessonProgress: lessonProgress, kanjiProgress: kanjiProgress, displayName: displayName, hasOnboarded: hasOnboarded)
+        let state = State(cards: cards,
+                          dailyGoal: dailyGoal,
+                          notificationsEnabled: notificationsEnabled,
+                          reminderTime: reminder,
+                          sessionLog: sessionLog,
+                          showStrokeHints: showStrokeHints,
+                          playSpeechInSilentMode: playSpeechInSilentMode,
+                          lessonProgress: lessonProgress,
+                          kanjiProgress: kanjiProgress,
+                          displayName: displayName,
+                          hasOnboarded: hasOnboarded)
         guard let data = try? JSONEncoder().encode(state) else { return }
         do {
             try data.write(to: url, options: [.atomic])

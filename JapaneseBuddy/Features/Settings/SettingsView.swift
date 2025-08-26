@@ -23,6 +23,9 @@ struct SettingsView: View {
             Section("Tracing") {
                 Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
             }
+            Section("Audio") {
+                Toggle("Play Speech in Silent Mode", isOn: $store.playSpeechInSilentMode)
+            }
             SettingsBackupSection()
             Section("Developer") {
                 Button("Reset Onboarding") { store.hasOnboarded = false }
