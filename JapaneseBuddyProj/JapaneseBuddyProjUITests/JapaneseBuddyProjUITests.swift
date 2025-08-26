@@ -23,12 +23,12 @@ final class JapaneseBuddyProjUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testNavigateLessons() throws {
         let app = XCUIApplication()
+        app.launchArguments.append("UI-TESTING")
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app.buttons["Lessons"].tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
     }
 
     @MainActor

@@ -9,14 +9,26 @@ import SwiftUI
 
 @main
 struct JapaneseBuddyProjApp: App {
-    @StateObject private var store = DeckStore()
+    @StateObject private var store: DeckStore
+    @StateObject private var lessons: LessonStore
+
+    init() {
+        let deck = DeckStore()
+        if CommandLine.arguments.contains("UI-TESTING") {
+            deck.hasOnboarded = true
+        }
+        _store = StateObject(wrappedValue: deck)
+        _lessons = StateObject(wrappedValue: LessonStore(deckStore: deck))
+    }
 
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                HomeView()
+                store.hasOnboarded ? AnyView(HomeView()) : AnyView(OnboardingView())
             }
             .environmentObject(store)
+            .environmentObject(lessons)
+            .tint(Color("AccentColor"))
         }
     }
 }

@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import UIKit.UIAccessibility
 
 final class StrokePreviewLayer: CALayer {
     private var strokeLayers: [CAShapeLayer] = []
@@ -27,7 +28,11 @@ final class StrokePreviewLayer: CALayer {
             strokeLayers.append(layer)
 
             let text = CATextLayer()
-            text.string = String(Character(UnicodeScalar(0x2460 + i)!))
+            if let scalar = UnicodeScalar(0x2460 + i) {
+                text.string = String(Character(scalar))
+            } else {
+                text.string = String(i + 1)
+            }
             text.fontSize = 24
             text.alignmentMode = .center
             text.foregroundColor = UIColor.systemBlue.cgColor
@@ -67,7 +72,7 @@ final class StrokePreviewLayer: CALayer {
     func pause() {
         pausedTime = convertTime(CACurrentMediaTime(), from: nil)
         speed = 0
-        timeOffset = pausedTime!
+        if let pausedTime { timeOffset = pausedTime }
     }
 
     func reset() {
@@ -109,7 +114,10 @@ struct StrokePreviewView: UIViewRepresentable {
             context.coordinator.configured = true
         }
         CATransaction.commit()
-        if playing != context.coordinator.playing {
+        if UIAccessibility.isReduceMotionEnabled {
+            layer.reset()
+            context.coordinator.playing = false
+        } else if playing != context.coordinator.playing {
             playing ? layer.play() : layer.pause()
             context.coordinator.playing = playing
         }

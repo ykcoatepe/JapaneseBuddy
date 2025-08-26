@@ -1,0 +1,17 @@
+{
+  "id":"A1-01",
+  "title":"Greetings",
+  "canDo":"Greet and say your name briefly",
+  "activities":[
+    {"objective":{"text":"Introduce yourself in a short sentence."}},
+    {"shadow":{"segments":["はじめまして。","わたしは アヤ です。"]}},
+    {"listening":{"prompt":"What does Aya say?","choices":["Nice to meet you","Good night","Thank you"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use はじめまして at first meetings."],
+  "kanjiWords":[
+    {"id":"A1-01-名","kanji":"名","reading":"な","meaning":"name"},
+    {"id":"A1-01-人","kanji":"人","reading":"ひと","meaning":"person"},
+    {"id":"A1-01-私","kanji":"私","reading":"わたし","meaning":"I"}
+  ]
+}

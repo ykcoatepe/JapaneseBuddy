@@ -1,0 +1,18 @@
+{
+  "id":"A1-04",
+  "title":"Where you live",
+  "canDo":"Ask and answer where you live",
+  "activities":[
+    {"objective":{"text":"Say where you live with です."}},
+    {"shadow":{"segments":["わたしは イスタンブール に すんで います。"]}},
+    {"listening":{"prompt":"Where does the speaker live?","choices":["Ankara","Istanbul","Tokyo"],"answer":1}},
+    {"reading":{"prompt":"Find the address on the card.","items":["東京都 新宿区","イスタンブール ベシクタシュ","大阪市 西区"],"answer":1}},
+    {"check":{}}
+  ],
+  "tips":["に 住んでいます ‘live in’. Keep it simple at A1."],
+  "kanjiWords":[
+    {"id":"A1-04-住","kanji":"住","reading":"す","meaning":"live"},
+    {"id":"A1-04-東","kanji":"東","reading":"ひがし","meaning":"east"},
+    {"id":"A1-04-京","kanji":"京","reading":"きょう","meaning":"capital"}
+  ]
+}

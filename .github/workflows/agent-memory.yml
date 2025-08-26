@@ -1,0 +1,77 @@
+name: Agent Memory
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  memory:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize memory files
+        run: |
+          bash scripts/memory.sh init
+
+      - name: Run sanity snapshot
+        run: |
+          bash scripts/memory.sh sanity
+
+      - name: Update progress timestamps
+        run: |
+          bash scripts/memory.sh progress
+
+      - name: Commit memory updates
+        # Avoid pushing on pull_request events (detached HEAD / no push perms for forks)
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add .codex/checks/sanity.md .codex/state.json PROGRESS.md .codex/sessions || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(memory): update progress and sanity [skip ci]"
+            git push
+          fi
+
+      - name: Upload sanity artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanity-snapshot
+          path: .codex/checks/sanity.md
+
+      - name: Sticky PR comment with progress
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-file: PROGRESS.md
+
+      - name: Create/Update Agent Session issue for branch
+        if: github.event_name != 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          BRANCH: ${{ github.ref_name }}
+        with:
+          script: |
+            const fs = require('fs');
+            const {owner, repo} = context.repo;
+            const title = `Agent Session: ${process.env.BRANCH}`;
+            const body = fs.readFileSync('PROGRESS.md','utf8');
+            const {data: issues} = await github.rest.issues.listForRepo({ owner, repo, state: 'open', per_page: 100 });
+            const match = issues.find(i => i.title === title);
+            if (!match) {
+              const created = await github.rest.issues.create({ owner, repo, title, body });
+              core.info(`Created issue #${created.data.number}`);
+            } else {
+              await github.rest.issues.update({ owner, repo, issue_number: match.number, body });
+              core.info(`Updated issue #${match.number}`);
+            }
