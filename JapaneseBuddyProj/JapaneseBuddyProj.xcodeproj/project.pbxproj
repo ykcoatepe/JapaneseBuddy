@@ -53,6 +53,7 @@
         BUI000172FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000072FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift */; };
         BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */; };
         BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */; };
+        BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
         BUI000072FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/SectionHeader.swift; sourceTree = "<group>"; };
         BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/StatsView.swift; sourceTree = "<group>"; };
         BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/App/AppSidebar.swift; sourceTree = "<group>"; };
+        BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -147,7 +149,7 @@
 		42E352BF2E543E390008A8CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = (
+            files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,10 +426,11 @@
 				BUI000142FFF000000000004 /* ../JapaneseBuddy/UI/Components/ProgressBar.swift in Sources */,
 				BUI000152FFF000000000005 /* ../JapaneseBuddy/UI/Components/JBButton.swift in Sources */,
 				BUI000162FFF000000000006 /* ../JapaneseBuddy/UI/Components/StatTile.swift in Sources */,
-				BUI000172FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift in Sources */,
-				BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */,
-				BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */,
-			);
+                BUI000172FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift in Sources */,
+                BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */,
+                BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */,
+                BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */,
+            );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		42E352CC2E543E3B0008A8CD /* Sources */ = {

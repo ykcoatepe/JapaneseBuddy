@@ -53,7 +53,7 @@ struct AppSidebar: View {
     private func destinationView(_ item: NavItem) -> some View {
         switch item {
         case .home: HomeView()
-        case .lessons: LessonListView()
+        case .lessons: LessonListRedesignedView()
         case .practice: KanaTraceView()
         case .review: SRSView()
         case .stats: StatsView()
