@@ -54,3 +54,9 @@ A1-05,Prices,Ask prices,りんごは いくら ですか。,３００円 です.
 Type the reading in hiragana; tap Speak to hear it; correct answers join your SRS queue.
 ## Onboarding
 First launch presents a short onboarding flow to choose decks, learn the tracing pass rule, set goals, and optionally save your name.
+
+## Content Provenance
+- Lesson text and activities are original author-generated content.
+- Kanji and readings may reference common learner knowledge; if dictionary data is used in future (e.g., JMdict/KANJIDIC), attribution applies:
+  - Kanji/Readings derived from JMdict/KANJIDIC — © EDRDG; used under licence.
+- Some example sentences may be inspired by everyday phrases. If Tatoeba example data is ever incorporated, include a note and comply with their licenses.

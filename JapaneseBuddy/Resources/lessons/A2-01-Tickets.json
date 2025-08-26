@@ -1,0 +1,20 @@
+{
+  "id":"A2-01",
+  "title":"Buying Tickets",
+  "canDo":"Buy a train or bus ticket",
+  "activities":[
+    {"objective":{"text":"Ask for tickets and state destination and number."}},
+    {"shadow":{"segments":["新宿 まで の きっぷを ２枚 ください。","ICカードは つかえますか。","はい、つかえます。"]}},
+    {"listening":{"prompt":"How many tickets?","choices":["１枚","２枚","３枚"],"answer":1}},
+    {"reading":{"prompt":"Select the destination.","items":["新宿","東京","大阪"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use 〜まで (to). Use 枚 for flat items like tickets."],
+  "kanjiWords":[
+    {"id":"A2-01-新","kanji":"新","reading":"しん","meaning":"new"},
+    {"id":"A2-01-宿","kanji":"宿","reading":"じゅく","meaning":"lodge"},
+    {"id":"A2-01-券","kanji":"券","reading":"けん","meaning":"ticket"},
+    {"id":"A2-01-枚","kanji":"枚","reading":"まい","meaning":"counter (flat)"}
+  ]
+}
+

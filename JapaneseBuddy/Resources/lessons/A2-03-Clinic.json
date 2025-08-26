@@ -1,0 +1,19 @@
+{
+  "id":"A2-03",
+  "title":"At the Clinic",
+  "canDo":"Describe symptoms and ask for medicine",
+  "activities":[
+    {"objective":{"text":"Say what hurts and since when; ask for medicine."}},
+    {"shadow":{"segments":["頭が いたい です。","きのう から 熱が あります。"]}},
+    {"listening":{"prompt":"What symptom does the patient have?","choices":["熱","せき","おなか"],"answer":0}},
+    {"reading":{"prompt":"Choose the polite request.","items":["薬を ください。","薬 くれ。","薬。"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use 〜が いたい です for pain."],
+  "kanjiWords":[
+    {"id":"A2-03-頭","kanji":"頭","reading":"あたま","meaning":"head"},
+    {"id":"A2-03-熱","kanji":"熱","reading":"ねつ","meaning":"fever"},
+    {"id":"A2-03-薬","kanji":"薬","reading":"くすり","meaning":"medicine"}
+  ]
+}
+

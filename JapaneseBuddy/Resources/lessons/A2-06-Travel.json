@@ -1,0 +1,19 @@
+{
+  "id":"A2-06",
+  "title":"Travel Inquiries",
+  "canDo":"Ask about routes and time at an information desk",
+  "activities":[
+    {"objective":{"text":"Ask destination and travel time politely."}},
+    {"shadow":{"segments":["この バス は 空港 へ 行きますか。","はい、行きます。３０分 くらい です。"]}},
+    {"listening":{"prompt":"How long does it take?","choices":["３０分","１３分","３分"],"answer":0}},
+    {"reading":{"prompt":"Choose the destination mentioned.","items":["空港","駅","市役所"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use くらい for approximation."],
+  "kanjiWords":[
+    {"id":"A2-06-空","kanji":"空","reading":"くう","meaning":"sky/empty"},
+    {"id":"A2-06-港","kanji":"港","reading":"こう","meaning":"harbor"},
+    {"id":"A2-06-分","kanji":"分","reading":"ふん","meaning":"minute"}
+  ]
+}
+

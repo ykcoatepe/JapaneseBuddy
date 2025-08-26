@@ -1,0 +1,19 @@
+{
+  "id":"A2-05",
+  "title":"Comparing Items",
+  "canDo":"Compare prices and features to decide",
+  "activities":[
+    {"objective":{"text":"Compare two items and state a preference."}},
+    {"shadow":{"segments":["この シャツ は 安い ですが、サイズが ありません。","あの シャツ は ちょっと 高い です。"]}},
+    {"listening":{"prompt":"Why not buy the cheap shirt?","choices":["色が ちがいます","サイズが ありません","小さい です"],"answer":1}},
+    {"reading":{"prompt":"Which word means 'expensive'?","items":["高い","安い","近い"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use ですが to contrast sentences."],
+  "kanjiWords":[
+    {"id":"A2-05-安","kanji":"安","reading":"やす","meaning":"cheap"},
+    {"id":"A2-05-高","kanji":"高","reading":"たか","meaning":"tall/expensive"},
+    {"id":"A2-05-色","kanji":"色","reading":"いろ","meaning":"color"}
+  ]
+}
+

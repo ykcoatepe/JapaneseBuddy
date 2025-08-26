@@ -1,46 +1,40 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `JapaneseBuddy/`: app sources
-  - `Features/`: SwiftUI views (Home, SRS, Lessons, Onboarding, Practice)
-  - `Models/`: core types (Card, SRS, Lesson, Goal)
-  - `Services/`: persistence, speech, drawing, notifications, logging
-  - `Resources/lessons/`: seed lesson JSONs (e.g., `A1-05-Prices.json`)
-- `JapaneseBuddyTests/`: XCTest targets (unit/UI). Keep test helpers here.
-- `docs/`, `prompts/`, `scripts/`: notes, briefs, local utilities.
-- `.codex/`: lightweight in-repo memory (state, sessions, sanity snapshot).
+- `JapaneseBuddy/`: App source (Features, Models, Services, Resources).
+- `JapaneseBuddyProj/`: Xcode app shell and shared schemes.
+- `JapaneseBuddyTests/`: Unit tests (XCTest).
+- `JapaneseBuddy/Resources/lessons/`: Lesson JSON and `index.json` ordering.
+- `scripts/`: Utility scripts (e.g., `csv_to_lessons.py`).
 
 ## Build, Test, and Development Commands
-- `make build`: build via Xcode (`-project JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj`).
-- `make test`: run XCTest for the same scheme on iOS Simulator.
-- `make lint`: run SwiftLint (non-failing locally).
-- `make format`: apply SwiftFormat to the repo.
-Example: `make format && make lint && make test` before opening a PR.
+- Build: `make build` — xcodebuild for scheme `JapaneseBuddyProj` (iOS Simulator).
+- Test: `make test` — runs XCTest targets.
+- Lint: `make lint` — runs SwiftLint (non-fatal if missing).
+- Format: `make format` — runs SwiftFormat across the repo.
+Open in Xcode and run the `JapaneseBuddyProj` scheme for local development.
 
 ## Coding Style & Naming Conventions
-- Swift 5.9+, SwiftUI. Indent 4 spaces; max line length 140.
-- One primary type per file; keep files ≤150 LOC where practical.
-- Naming: PascalCase types; camelCase vars/methods; use snake_case for files mirroring resources only.
-- Tools: SwiftFormat + SwiftLint; prefer safe optionals over force-unwrapping.
+- Swift style enforced via `.swiftlint.yml`; max line length 140; opt-in rules include `explicit_init`, `first_where`.
+- Run `make format` before PRs. Prefer small, focused changes.
+- Naming: `UpperCamelCase` types/protocols; `lowerCamelCase` vars/functions; `enum` cases lowerCamel.
+- Keep Swift files ≤150 LOC when practical; avoid one-letter identifiers.
 
 ## Testing Guidelines
-- Frameworks: XCTest unit tests; minimal UI smoke as needed.
-- Location: `JapaneseBuddyTests/*.swift` (e.g., `SRSProgressionTests.swift`).
-- Scope: prioritize SRS progression, deck persistence, lesson decoding, simple navigation.
-- Run: `make test`. Name tests `*Tests.swift` and keep them deterministic.
+- Framework: XCTest; tests live under `JapaneseBuddyTests/` and project test targets.
+- Name tests `*Tests.swift`; one concern per test; keep fixtures minimal.
+- Run `make test` locally before pushing. Add tests for bug fixes and new behavior.
 
 ## Commit & Pull Request Guidelines
-- Commits: use Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`).
-  - Example: `feat(models): add SM-2 scheduling`.
-- PRs: clear description, link the brief/issue (e.g., `prompts/JP-APP-001.md`), screenshots for UI changes, and test notes (key cases or `make test` output).
+- Commits: Conventional Commits style (e.g., `feat(lessons): add A2 units`, `fix(audio): activate session for TTS`).
+- PRs: clear title and description, linked issue(s), screenshots for UI changes, and brief test notes.
+- Keep PRs small and reviewable; note any follow-ups.
+
+## Architecture & Resources
+- Lessons are data-driven. Add JSON files under `JapaneseBuddy/Resources/lessons/` and update `index.json` for ordering. In Xcode, ensure JSONs are included in “Copy Bundle Resources” or use the blue folder reference.
+- `LessonStore` prefers the `lessons` subdirectory at runtime and falls back to flat bundle JSONs.
 
 ## Security & Configuration Tips
-- App runs fully offline; no analytics or network calls. Persist deck at `Documents/deck.json`.
-- Avoid logging PII; prefer `Log.app` for structured messages.
-- Do not add third‑party SDKs without discussion.
-
-## Agent-Specific Notes
-- Implement sources only; do not modify Xcode project files.
-- Keep modules small and focused; follow existing folder layout.
-- Memory helpers: `scripts/memory.sh init|append|sanity|progress|recall` to maintain `.codex/` state.
+- No external analytics; all data is on-device. Do not commit secrets.
+- Use simulator-safe destinations in CI; avoid device-only settings in project files.
 

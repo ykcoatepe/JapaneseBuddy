@@ -1,0 +1,19 @@
+{
+  "id":"A1-10",
+  "title":"Returns & Exchanges",
+  "canDo":"Return or exchange an item politely",
+  "activities":[
+    {"objective":{"text":"Ask to return an item politely at a store."}},
+    {"shadow":{"segments":["すみません。これ を 返品 したい です。","レシート は ありますか。","はい、あります。"]}},
+    {"listening":{"prompt":"What does the customer want?","choices":["買いたい","返品したい","値段を ききたい"],"answer":1}},
+    {"reading":{"prompt":"Choose the polite phrase.","items":["返品 したい です。","返して。","かえす。"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Start with すみません. Use 〜たいです politely."],
+  "kanjiWords":[
+    {"id":"A1-10-返","kanji":"返","reading":"かえ","meaning":"return"},
+    {"id":"A1-10-品","kanji":"品","reading":"ひん","meaning":"item"},
+    {"id":"A1-10-店","kanji":"店","reading":"みせ","meaning":"shop"}
+  ]
+}
+

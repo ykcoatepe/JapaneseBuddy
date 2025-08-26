@@ -1,0 +1,19 @@
+{
+  "id":"A2-02",
+  "title":"Renting an Apartment",
+  "canDo":"Ask about renting and location",
+  "activities":[
+    {"objective":{"text":"Ask price and distance from the station."}},
+    {"shadow":{"segments":["ワンルームは いくら ですか。","駅から 近い ですか。","はい、５分 です。"]}},
+    {"listening":{"prompt":"How far from the station?","choices":["５分","１５分","５０分"],"answer":0}},
+    {"reading":{"prompt":"Choose the word that means 'near'.","items":["近い","遠い","高い"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use 〜から for 'from'. 分 means minutes."],
+  "kanjiWords":[
+    {"id":"A2-02-近","kanji":"近","reading":"ちか","meaning":"near"},
+    {"id":"A2-02-分","kanji":"分","reading":"ふん","meaning":"minute"},
+    {"id":"A2-02-家","kanji":"家","reading":"いえ","meaning":"house"}
+  ]
+}
+

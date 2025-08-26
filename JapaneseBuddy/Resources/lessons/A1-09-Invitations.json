@@ -1,0 +1,19 @@
+{
+  "id":"A1-09",
+  "title":"Invitations",
+  "canDo":"Invite someone and respond politely",
+  "activities":[
+    {"objective":{"text":"Invite someone and accept a plan politely."}},
+    {"shadow":{"segments":["いっしょに 映画を 見ませんか。","いいですね。土曜日は どうですか。"]}},
+    {"listening":{"prompt":"What will they do?","choices":["食べます","映画を 見ます","勉強します"],"answer":1}},
+    {"reading":{"prompt":"Choose the polite invitation.","items":["いっしょに 行きませんか。","行こうぜ。","行く？"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use 〜ませんか to invite politely."],
+  "kanjiWords":[
+    {"id":"A1-09-映","kanji":"映","reading":"えい","meaning":"reflect/movie"},
+    {"id":"A1-09-画","kanji":"画","reading":"が","meaning":"picture"},
+    {"id":"A1-09-見","kanji":"見","reading":"み","meaning":"see"}
+  ]
+}
+

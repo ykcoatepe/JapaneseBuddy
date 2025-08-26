@@ -1,0 +1,20 @@
+{
+  "id":"A1-08",
+  "title":"Directions",
+  "canDo":"Ask and give simple directions",
+  "activities":[
+    {"objective":{"text":"Ask where a place is and give simple directions."}},
+    {"shadow":{"segments":["すみません、駅は どこ ですか。","まっすぐ 行って、右 に まがって ください。"]}},
+    {"listening":{"prompt":"Where should you turn?","choices":["左","右","まっすぐ"],"answer":1}},
+    {"reading":{"prompt":"Which means 'go straight'?","items":["まっすぐ","みぎ","ひだり"],"answer":0}},
+    {"check":{}}
+  ],
+  "tips":["Use まっすぐ (straight), 右 (right), 左 (left)."],
+  "kanjiWords":[
+    {"id":"A1-08-駅","kanji":"駅","reading":"えき","meaning":"station"},
+    {"id":"A1-08-右","kanji":"右","reading":"みぎ","meaning":"right"},
+    {"id":"A1-08-左","kanji":"左","reading":"ひだり","meaning":"left"},
+    {"id":"A1-08-道","kanji":"道","reading":"みち","meaning":"road"}
+  ]
+}
+
