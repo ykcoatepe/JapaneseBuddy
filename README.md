@@ -10,10 +10,10 @@ Open in Xcode, select the `JapaneseBuddyProj` scheme, pick an iPad simulator or 
 - Tests: `make test`
 
 ## Architecture
-- `JapaneseBuddy/`: App source (Features, Models, Services, Resources). Reusable and project-agnostic.
+- `JapaneseBuddy/`: App source (Features, Models, Services, Resources, UI, App). Reusable and project-agnostic.
 - `JapaneseBuddyProj/`: Xcode project shell that references `JapaneseBuddy/` sources and contains the app target and tests.
-- Entry point: `JapaneseBuddyProjApp` launches `HomeView` in a `NavigationStack` and injects a shared `DeckStore` with `.environmentObject`.
-- Only one `@main` exists in the app target. An older app entry file was removed from `JapaneseBuddy/App` to avoid confusion.
+- Entry point: `JapaneseBuddyProjApp` launches `AppSidebar` using `NavigationSplitView` and injects a shared `DeckStore` with `.environmentObject`.
+- Only one `@main` exists in the app target.
 
 ## Privacy
 All data stays on the device. No analytics or third-party SDKs.
@@ -54,3 +54,27 @@ A1-05,Prices,Ask prices,りんごは いくら ですか。,３００円 です.
 Type the reading in hiragana; tap Speak to hear it; correct answers join your SRS queue.
 ## Onboarding
 First launch presents a short onboarding flow to choose decks, learn the tracing pass rule, set goals, and optionally save your name.
+
+## UI Design System
+- Tokens: defined in `UI/Theme.swift`
+  - Colors: `Color.accentColor`, `Color.washi` (background), `Color.wasabi` (support), `Color.cardBackground` (cards)
+  - Spacing: `Theme.Spacing` (xsmall/small/medium/large)
+  - CornerRadius: `Theme.CornerRadius` (small/medium/large)
+  - Shadow: `Theme.Shadow.card`
+  - Typography helpers: `Typography.title/_header/_label`
+- Components: under `UI/Components/`
+  - `JBButton` (primary/secondary)
+  - `JBCard` (material card with border + shadow)
+  - `ProgressBar` (thin semantic progress)
+  - `SectionHeader` (title + trailing action slot)
+  - `StatTile` (value+label in a card)
+  - `EmptyState` (icon + message)
+- Navigation: `App/AppSidebar.swift` uses `NavigationSplitView` with sidebar items Home, Lessons, Practice, Review, Stats, Settings.
+- Views:
+  - Home: greeting, DailyGoal card, quick actions (Continue Lesson / Trace / Review)
+  - Lessons: filter chips A1/A2/All, progress stars
+  - Runner: segmented header (Objective/Shadow/Listening/Reading/Kanji/Check)
+  - Trace: fixed bottom toolbar (Clear/Hint/Speak/Check), respects Reduce Motion
+  - SRS: large type card + haptics
+  - Stats: streak + weekly chart, falls back to EmptyState
+  - Settings: theme toggle (System/Light/Dark)

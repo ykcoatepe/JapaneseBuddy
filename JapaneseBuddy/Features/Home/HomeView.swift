@@ -1,79 +1,68 @@
 import SwiftUI
 
-/// Landing screen with deck toggles and navigation tiles.
+/// Landing screen redesigned with design system components.
 struct HomeView: View {
     @EnvironmentObject var store: DeckStore
     @EnvironmentObject var lessonStore: LessonStore
 
     var body: some View {
-        VStack(spacing: 24) {
-            if let name = store.displayName, !name.isEmpty {
-                Text("こんにちは, \(name)!")
-                    .font(.title2)
-            }
-            Picker("Deck", selection: $store.currentType) {
-                Text("Hiragana").tag(CardType.hiragana)
-                Text("Katakana").tag(CardType.katakana)
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Spacing.large) {
+                if let name = store.displayName, !name.isEmpty {
+                    Typography.title("こんにちは, \(name)!")
+                        .padding(.horizontal)
+                }
 
-            Toggle("Pencil only", isOn: $store.pencilOnly)
+                Picker("Deck", selection: $store.currentType) {
+                    Text("Hiragana").tag(CardType.hiragana)
+                    Text("Katakana").tag(CardType.katakana)
+                }
+                .pickerStyle(.segmented)
                 .padding(.horizontal)
 
-            DailyGoalCard(progress: store.progressToday())
+                Toggle("Pencil only", isOn: $store.pencilOnly)
+                    .padding(.horizontal)
+
+                JBCard {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Daily Goal").font(.headline)
+                        HStack {
+                            Label("New \(progress.newDone)/\(progress.target.newTarget)", systemImage: "sparkles")
+                            Spacer()
+                            Label("Review \(progress.reviewDone)/\(progress.target.reviewTarget)", systemImage: "arrow.triangle.2.circlepath")
+                        }.font(.subheadline)
+                        ProgressBar(value: ratio(progress))
+                    }
+                }
                 .padding(.horizontal)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Daily goal progress")
 
-            HStack(spacing: 20) {
-                NavigationLink {
-                    KanaTraceView()
-                } label: {
-                    tile(title: "Kana Trace", count: traceCount, priority: 3)
+                VStack(spacing: Theme.Spacing.small) {
+                    Text("Quick Actions").font(.headline).padding(.horizontal)
+                    HStack(spacing: Theme.Spacing.small) {
+                        NavigationLink { LessonListView() } label: { JBButton("Continue Lesson") }
+                        NavigationLink { KanaTraceView() } label: { JBButton("Trace", kind: .secondary) }
+                        NavigationLink { SRSView() } label: { JBButton("Review", kind: .secondary) }
+                    }
+                    .padding(.horizontal)
                 }
-
-                NavigationLink {
-                    SRSView()
-                } label: {
-                    tile(title: "SRS", count: srsCount, priority: 2)
-                }
-
-                NavigationLink {
-                    LessonListView()
-                } label: {
-                    tile(title: "Lessons", count: lessonCount, priority: 1)
-                }
+                .padding(.bottom, Theme.Spacing.large)
             }
-            .padding(.horizontal)
-
-            Spacer()
         }
+        .background(Color.washi.ignoresSafeArea())
         .navigationTitle("Home")
         .dynamicTypeSize(.xSmall ... .xxxLarge)
-        .toolbar {
-            NavigationLink {
-                SettingsView()
-            } label: {
-                Image(systemName: "gear")
-            }
-        }
+        .toolbar { }
     }
 
     private var traceCount: Int { store.dueCards(type: store.currentType).count }
     private var srsCount: Int { traceCount }
     private var lessonCount: Int { lessonStore.lessons().count }
-
-    @ViewBuilder
-    private func tile(title: String, count: Int, priority: Double) -> some View {
-        VStack {
-            Text(title).font(.title2)
-            Text("\(count) due").font(.caption).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, minHeight: 120)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color.blue.opacity(0.1)))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(title)
-        .accessibilityHint("\(count) due")
-        .accessibilityAddTraits(.isButton)
-        .accessibilitySortPriority(priority)
+    private var progress: GoalProgress { store.progressToday() }
+    private func ratio(_ p: GoalProgress) -> Double {
+        let done = p.newDone + p.reviewDone
+        let total = max(1, p.target.newTarget + p.target.reviewTarget)
+        return Double(done) / Double(total)
     }
 }
