@@ -23,11 +23,17 @@ struct LessonRunnerView: View {
             if tab == 0 {
                 VStack {
                     contentView
-                    if !isCheck && hasNextStep {
-                        Button("Next") { next() }
-                            .padding()
-                            .disabled(disableNext)
+                    HStack {
+                        if hasPrevStep {
+                            Button("Back") { back() }
+                        }
+                        Spacer()
+                        if !isCheck && hasNextStep {
+                            Button("Next") { next() }
+                                .disabled(disableNext)
+                        }
                     }
+                    .padding()
                 }
             } else if let words = lesson.kanjiWords {
                 KanjiPracticeView(words: words, lessonID: lesson.id, store: deck)
@@ -76,6 +82,15 @@ struct LessonRunnerView: View {
         selection = nil
     }
 
+    private func back() {
+        guard hasPrevStep else { return }
+        step -= 1
+        var p = lessons.progress(for: lesson.id)
+        p.lastStep = step
+        lessons.updateProgress(p, for: lesson.id)
+        selection = nil
+    }
+
     private var isCheck: Bool {
         guard step >= 0, step < lesson.activities.count else { return false }
         if case .check = lesson.activities[step] { return true }
@@ -94,5 +109,9 @@ struct LessonRunnerView: View {
 
     private var hasNextStep: Bool {
         step + 1 < lesson.activities.count
+    }
+
+    private var hasPrevStep: Bool {
+        step > 0
     }
 }
