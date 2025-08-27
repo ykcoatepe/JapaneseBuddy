@@ -21,7 +21,7 @@ struct LessonListRedesignedView: View {
                     HStack(spacing: 12) {
                         VStack(alignment: .leading) {
                             Text(lesson.title).font(.headline)
-                            Text("\(String(repeating: \"★\", count: progress.stars)) \(progress.lastStep)/\(lesson.activities.count)")
+                            Text("\(String(repeating: "★", count: progress.stars)) \(progress.lastStep)/\(lesson.activities.count)")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

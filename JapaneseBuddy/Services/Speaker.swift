@@ -3,7 +3,6 @@ import AVFoundation
 /// Lightweight wrapper around `AVSpeechSynthesizer` for Japanese output.
 /// Configures the audio session to ensure speech plays even in Silent mode
 /// and gracefully ducks other audio while speaking.
-@MainActor
 final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     private let synth = AVSpeechSynthesizer()
 
@@ -33,12 +32,16 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     // MARK: - AVSpeechSynthesizerDelegate
 
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        Task { await deactivateSessionIfIdleMain() }
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor [weak self] in
+            self?.deactivateSessionIfIdleMain()
+        }
     }
 
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        Task { await deactivateSessionIfIdleMain() }
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        Task { @MainActor [weak self] in
+            self?.deactivateSessionIfIdleMain()
+        }
     }
 
     @MainActor

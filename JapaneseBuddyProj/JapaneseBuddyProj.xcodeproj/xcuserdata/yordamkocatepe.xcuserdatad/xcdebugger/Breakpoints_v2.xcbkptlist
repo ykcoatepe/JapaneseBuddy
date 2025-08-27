@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CD8CD7AF-A9FD-47EC-BC9A-DAE03CEC4E90"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../JapaneseBuddy/Services/Speaker.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "speechSynthesizer(_:didFinish:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 4ede3335e2154163"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+               <Location
+                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 4ede3335e2154102"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36">
+               </Location>
+               <Location
+                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 17f1ba3ca48211af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () async -&gt; Swift.Optional&lt;()&gt; in JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36">
+               </Location>
+               <Location
+                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 4b523ddf36f2feab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Swift.MainActor () async -&gt; Swift.Optional&lt;()&gt; in JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BFE01216-1425-4A98-816E-96B06C5E4459"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../JapaneseBuddy/Services/Speaker.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "speechSynthesizer(_:didFinish:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BFE01216-1425-4A98-816E-96B06C5E4459 - 4ede3335e2154163"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+               <Location
+                  uuid = "BFE01216-1425-4A98-816E-96B06C5E4459 - 4ede3335e2154102"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
+                  moduleName = "JapaneseBuddyProj.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
