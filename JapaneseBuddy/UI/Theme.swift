@@ -23,8 +23,7 @@ enum Theme {
 }
 
 extension Color {
-    // Accent comes from Assets.xcassets (AccentColor)
-    static let accent = Color("AccentColor")
+    // Accent comes from Assets.xcassets (use Color("AccentColor") directly)
     static let washi = Color(red: 0.98, green: 0.97, blue: 0.95)
     static let wasabi = Color(hue: 0.27, saturation: 0.45, brightness: 0.75)
     static let cardBackground = Color(.secondarySystemBackground)
