@@ -5,6 +5,8 @@ import AVFoundation
 /// and gracefully ducks other audio while speaking.
 final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     private let synth = AVSpeechSynthesizer()
+    private static let audioQueue = DispatchQueue(label: "Speaker.AudioSession")
+    private var deactivateWorkItem: DispatchWorkItem?
 
     override init() {
         super.init()
@@ -13,17 +15,17 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     @MainActor
     func speak(_ text: String) {
-        // Prepare audio session off the main actor to avoid UI stalls.
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
         let options: AVAudioSession.CategoryOptions = preferSilentOverride ? [.duckOthers] : []
-        Task.detached(priority: .userInitiated) {
+        Self.audioQueue.async { [weak self] in
+            guard let self else { return }
             let session = AVAudioSession.sharedInstance()
             do {
                 try session.setCategory(category, mode: .spokenAudio, options: options)
                 try session.setActive(true, options: [])
             } catch { }
-            await MainActor.run { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 let utterance = AVSpeechUtterance(string: text)
                 utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
@@ -48,9 +50,18 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     @MainActor
     private func deactivateSessionIfIdleMain() {
-        guard !synth.isSpeaking else { return }
-        Task.detached(priority: .background) {
-            do { try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation]) } catch { }
+        // debounce deactivation a bit; recheck speaking state before deactivating
+        deactivateWorkItem?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            Task { @MainActor in
+                guard !self.synth.isSpeaking else { return }
+                Self.audioQueue.async {
+                    do { try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation]) } catch { }
+                }
+            }
         }
+        deactivateWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: work)
     }
 }
