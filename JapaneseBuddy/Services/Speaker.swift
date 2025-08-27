@@ -13,21 +13,23 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     @MainActor
     func speak(_ text: String) {
-        // Prepare audio session. Choose category based on user preference.
-        let session = AVAudioSession.sharedInstance()
+        // Prepare audio session off the main actor to avoid UI stalls.
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
         let options: AVAudioSession.CategoryOptions = preferSilentOverride ? [.duckOthers] : []
-        do {
-            try session.setCategory(category, mode: .spokenAudio, options: options)
-            try session.setActive(true, options: [])
-        } catch {
-            // If session setup fails, attempt to speak anyway.
+        Task.detached(priority: .userInitiated) {
+            let session = AVAudioSession.sharedInstance()
+            do {
+                try session.setCategory(category, mode: .spokenAudio, options: options)
+                try session.setActive(true, options: [])
+            } catch { }
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                let utterance = AVSpeechUtterance(string: text)
+                utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
+                self.synth.speak(utterance)
+            }
         }
-
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
-        synth.speak(utterance)
     }
 
     // MARK: - AVSpeechSynthesizerDelegate
