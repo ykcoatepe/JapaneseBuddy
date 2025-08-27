@@ -26,6 +26,7 @@ struct JapaneseBuddyProjApp: App {
             AppSidebar()
                 .environmentObject(store)
                 .environmentObject(lessons)
+                .applyTheme(store.themeMode)
                 .tint(Color("AccentColor"))
         }
     }

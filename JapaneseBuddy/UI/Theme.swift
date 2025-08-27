@@ -36,6 +36,22 @@ extension View {
     }
 }
 
+// Preferred color scheme applier used at the app root
+struct ThemeApplier: ViewModifier {
+    let mode: ThemeMode
+    @ViewBuilder func body(content: Content) -> some View {
+        switch mode {
+        case .system: content
+        case .light:  content.preferredColorScheme(.light)
+        case .dark:   content.preferredColorScheme(.dark)
+        }
+    }
+}
+
+extension View {
+    func applyTheme(_ mode: ThemeMode) -> some View { modifier(ThemeApplier(mode: mode)) }
+}
+
 enum Typography {
     static func title(_ text: String) -> some View { Text(text).font(.largeTitle).bold() }
     static func header(_ text: String) -> some View { Text(text).font(.title2).bold() }
