@@ -22,7 +22,6 @@ private enum NavItem: String, CaseIterable, Identifiable {
 
 struct AppSidebar: View {
     @EnvironmentObject var store: DeckStore
-    @AppStorage("themeMode") private var themeMode: String = "system" // system|light|dark
     @State private var selection: NavItem? = .home
 
     var body: some View {
@@ -53,7 +52,7 @@ struct AppSidebar: View {
     private func destinationView(_ item: NavItem) -> some View {
         switch item {
         case .home: HomeView()
-        case .lessons: LessonListRedesignedView()
+        case .lessons: LessonListView()
         case .practice: KanaTraceView()
         case .review: SRSView()
         case .stats: StatsView()
@@ -62,10 +61,10 @@ struct AppSidebar: View {
     }
 
     private var colorScheme: ColorScheme? {
-        switch themeMode {
-        case "light": return .light
-        case "dark": return .dark
-        default: return nil
+        switch store.themeMode {
+        case .light: return .light
+        case .dark: return .dark
+        case .system: return nil
         }
     }
 }

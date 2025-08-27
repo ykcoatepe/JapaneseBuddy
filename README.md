@@ -78,3 +78,4 @@ First launch presents a short onboarding flow to choose decks, learn the tracing
   - SRS: large type card + haptics
   - Stats: streak + weekly chart, falls back to EmptyState
   - Settings: theme toggle (System/Light/Dark)
+- Accessibility: supports Dynamic Type up to XXXLarge, VoiceOver hints, haptics, and Reduce Motion

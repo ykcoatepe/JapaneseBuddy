@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 
+enum ThemeMode: String, Codable, CaseIterable { case system, light, dark }
+
 final class DeckStore: ObservableObject {
     @Published var cards: [Card] = []
     @Published var pencilOnly = true
@@ -15,6 +17,7 @@ final class DeckStore: ObservableObject {
     @Published var kanjiProgress: [String: KanjiProgress] = [:]
     @Published var displayName: String?
     @Published var hasOnboarded = false
+    @Published var themeMode: ThemeMode = .system
 
     private let url: URL
     private var saveTask: AnyCancellable?
@@ -31,6 +34,7 @@ final class DeckStore: ObservableObject {
         var kanjiProgress: [String: KanjiProgress] = [:]
         var displayName: String?
         var hasOnboarded: Bool = false
+        var themeMode: ThemeMode = .system
 
         struct ReminderTime: Codable {
             var hour: Int
@@ -57,6 +61,7 @@ final class DeckStore: ObservableObject {
             .combineLatest($kanjiProgress)
             .combineLatest($displayName)
             .combineLatest($hasOnboarded)
+            .combineLatest($themeMode)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
             .sink { [weak self] _ in
                 // Keep UserDefaults in sync for the Speaker to read.
@@ -85,6 +90,7 @@ final class DeckStore: ObservableObject {
             kanjiProgress = state.kanjiProgress
             displayName = state.displayName
             hasOnboarded = state.hasOnboarded
+            themeMode = state.themeMode
         } else if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
             cards = decoded
         } else {
@@ -108,7 +114,8 @@ final class DeckStore: ObservableObject {
                           lessonProgress: lessonProgress,
                           kanjiProgress: kanjiProgress,
                           displayName: displayName,
-                          hasOnboarded: hasOnboarded)
+                          hasOnboarded: hasOnboarded,
+                          themeMode: themeMode)
         guard let data = try? JSONEncoder().encode(state) else { return }
         do {
             try data.write(to: url, options: [.atomic])

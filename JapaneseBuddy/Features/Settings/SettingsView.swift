@@ -26,6 +26,15 @@ struct SettingsView: View {
             Section("Audio") {
                 Toggle("Play Speech in Silent Mode", isOn: $store.playSpeechInSilentMode)
             }
+            Section("Appearance") {
+                Picker("Theme", selection: $store.themeMode) {
+                    Text("System").tag(ThemeMode.system)
+                    Text("Light").tag(ThemeMode.light)
+                    Text("Dark").tag(ThemeMode.dark)
+                }
+                .pickerStyle(.segmented)
+                .accessibilityLabel("App theme")
+            }
             SettingsBackupSection()
             Section("Developer") {
                 Button("Reset Onboarding") { store.hasOnboarded = false }
@@ -36,6 +45,7 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .onChangeCompat(store.notificationsEnabled) { updateNotifications() }
         .onChangeCompat(store.reminderTime) { updateNotifications() }
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
     private var timeBinding: Binding<Date> {
