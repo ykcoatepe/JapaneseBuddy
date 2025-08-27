@@ -16,52 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "speechSynthesizer(_:didFinish:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 4ede3335e2154102"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
-                  moduleName = "JapaneseBuddyProj.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36">
-               </Location>
-               <Location
-                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 17f1ba3ca48211af"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () async -&gt; Swift.Optional&lt;()&gt; in JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
-                  moduleName = "JapaneseBuddyProj.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36">
-               </Location>
-               <Location
-                  uuid = "CD31A47E-F528-44B7-B8C3-1D8A3F245283 - 4b523ddf36f2feab"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 @Swift.MainActor () async -&gt; Swift.Optional&lt;()&gt; in JapaneseBuddyProj.Speaker.speechSynthesizer(_: __C.AVSpeechSynthesizer, didFinish: __C.AVSpeechUtterance) -&gt; ()"
-                  moduleName = "JapaneseBuddyProj.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yordamkocatepe/PycharmProjects/JapaneseBuddy/JapaneseBuddy/Services/Speaker.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36">
-               </Location>
-            </Locations>
+            landmarkName = "Speaker"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -76,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
             endingLineNumber = "35"
-            landmarkName = "speechSynthesizer(_:didFinish:)"
+            landmarkName = "speak(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
