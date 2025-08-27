@@ -7,6 +7,7 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
     private let synth = AVSpeechSynthesizer()
     private static let audioQueue = DispatchQueue(label: "Speaker.AudioSession")
     private var deactivateWorkItem: DispatchWorkItem?
+    private var sessionActive = false
 
     override init() {
         super.init()
@@ -17,13 +18,18 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
     func speak(_ text: String) {
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
-        let options: AVAudioSession.CategoryOptions = preferSilentOverride ? [.duckOthers] : []
+        // For spoken content, use .spokenAudio with ducking
+        let options: AVAudioSession.CategoryOptions = preferSilentOverride ? [.duckOthers] : [.duckOthers]
         Self.audioQueue.async { [weak self] in
             guard let self else { return }
             let session = AVAudioSession.sharedInstance()
             do {
+                // Configure once if needed (safe to call repeatedly)
                 try session.setCategory(category, mode: .spokenAudio, options: options)
-                try session.setActive(true, options: [])
+                if !self.sessionActive {
+                    try session.setActive(true, options: [])
+                    self.sessionActive = true
+                }
             } catch { }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
@@ -56,12 +62,16 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
             guard let self else { return }
             Task { @MainActor in
                 guard !self.synth.isSpeaking else { return }
-                Self.audioQueue.async {
-                    do { try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation]) } catch { }
+                Self.audioQueue.async { [weak self] in
+                    guard let self else { return }
+                    do {
+                        try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+                        self.sessionActive = false
+                    } catch { }
                 }
             }
         }
         deactivateWorkItem = work
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: work)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: work)
     }
 }
