@@ -41,7 +41,13 @@ struct HomeView: View {
                 VStack(spacing: Theme.Spacing.small) {
                     Text("Quick Actions").font(.headline).padding(.horizontal)
                     HStack(spacing: Theme.Spacing.small) {
-                        NavigationLink { LessonListView() } label: { JBButton("Continue Lesson") }
+                        NavigationLink {
+                            if let lesson = continueLesson {
+                                LessonRunnerView(lesson: lesson)
+                            } else {
+                                LessonListView()
+                            }
+                        } label: { JBButton("Continue Lesson") }
                         NavigationLink { KanaTraceView() } label: { JBButton("Trace", kind: .secondary) }
                         NavigationLink { SRSView() } label: { JBButton("Review", kind: .secondary) }
                     }
@@ -64,5 +70,9 @@ struct HomeView: View {
         let done = p.newDone + p.reviewDone
         let total = max(1, p.target.newTarget + p.target.reviewTarget)
         return Double(done) / Double(total)
+    }
+
+    private var continueLesson: Lesson? {
+        lessonStore.lessons().first { lessonStore.progress(for: $0.id).lastStep < $0.activities.count - 1 }
     }
 }

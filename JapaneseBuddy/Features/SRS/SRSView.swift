@@ -10,26 +10,29 @@ struct SRSView: View {
     var body: some View {
         VStack(spacing: 24) {
             if let card = current {
-                Text(showBack ? card.back : card.front)
-                    .font(.system(size: 80))
-                    .padding()
-                    .onTapGesture { showBack.toggle() }
+                JBCard {
+                    Text(showBack ? card.back : card.front)
+                        .font(.system(size: 80))
+                        .frame(maxWidth: .infinity, minHeight: 200)
+                        .minimumScaleFactor(0.5)
+                        .onTapGesture { showBack.toggle() }
+                }
 
-                HStack(spacing: 20) {
-                    Button("Speak") { speaker.speak(card.front) }
+                HStack(spacing: Theme.Spacing.small) {
+                    JBButton("Speak", kind: .secondary) { speaker.speak(card.front) }
                         .accessibilityLabel("Speak card")
-                    Button("Flip") { showBack.toggle() }
+                    JBButton("Flip", kind: .secondary) { showBack.toggle() }
                         .accessibilityLabel("Flip card")
                 }
 
-                HStack(spacing: 20) {
-                    Button("Hard") { grade(.hard) }
+                HStack(spacing: Theme.Spacing.small) {
+                    JBButton("Hard", kind: .secondary) { grade(.hard) }
                         .accessibilityLabel("Mark hard")
                         .accessibilityHint("Schedules sooner")
-                    Button("Good") { grade(.good) }
+                    JBButton("Good") { grade(.good) }
                         .accessibilityLabel("Mark good")
                         .accessibilityHint("Keeps normal pace")
-                    Button("Easy") { grade(.easy) }
+                    JBButton("Easy", kind: .secondary) { grade(.easy) }
                         .accessibilityLabel("Mark easy")
                         .accessibilityHint("Delays longer")
                 }

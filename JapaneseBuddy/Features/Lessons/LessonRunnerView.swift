@@ -22,6 +22,14 @@ struct LessonRunnerView: View {
             }
             if tab == 0 {
                 VStack {
+                    Picker("Step", selection: $step) {
+                        ForEach(0..<stepLabels.count, id: \.self) { idx in
+                            Text(stepLabels[idx]).tag(idx)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+
                     contentView
                     HStack {
                         if hasPrevStep {
@@ -44,6 +52,20 @@ struct LessonRunnerView: View {
         .onAppear {
             let last = lessons.progress(for: lesson.id).lastStep
             step = min(max(0, last), max(lesson.activities.count - 1, 0))
+        }
+    }
+
+    private var stepLabels: [String] {
+        lesson.activities.map { activityLabel($0) }
+    }
+
+    private func activityLabel(_ act: Lesson.Activity) -> String {
+        switch act {
+        case .objective: return "Objective"
+        case .shadow: return "Shadow"
+        case .listening: return "Listening"
+        case .reading: return "Reading"
+        case .check: return "Check"
         }
     }
 

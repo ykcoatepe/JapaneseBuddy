@@ -5,26 +5,28 @@ struct StatsView: View {
 
     var body: some View {
         let entries = store.sessionLog
-        if entries.isEmpty {
-            EmptyState(systemImage: "chart.bar", message: "No stats yet. Practice to see progress!")
-                .navigationTitle("Stats")
-        } else {
-            ScrollView {
-                VStack(alignment: .leading, spacing: Theme.Spacing.large) {
-                    HStack(spacing: Theme.Spacing.small) {
-                        StatTile(title: "Streak", value: "\(streak(entries))")
-                        StatTile(title: "This Week", value: "\(weekTotal(entries)) min")
-                    }
-                    .padding(.horizontal)
-
-                    SectionHeader("Weekly Activity")
-                    weekChart(entries)
+        return Group {
+            if entries.isEmpty {
+                EmptyState(systemImage: "chart.bar", message: "No stats yet. Practice to see progress!")
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: Theme.Spacing.large) {
+                        HStack(spacing: Theme.Spacing.small) {
+                            StatTile(title: "Streak", value: "\(streak(entries))")
+                            StatTile(title: "This Week", value: "\(weekTotal(entries)) min")
+                        }
                         .padding(.horizontal)
+
+                        SectionHeader("Weekly Activity")
+                        weekChart(entries)
+                            .padding(.horizontal)
+                    }
                 }
+                .background(Color.washi.ignoresSafeArea())
             }
-            .background(Color.washi.ignoresSafeArea())
-            .navigationTitle("Stats")
         }
+        .navigationTitle("Stats")
+        .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
     private func streak(_ entries: [SessionLogEntry], now: Date = .now, cal: Calendar = .current) -> Int {
