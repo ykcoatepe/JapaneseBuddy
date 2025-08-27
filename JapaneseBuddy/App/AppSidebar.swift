@@ -37,12 +37,15 @@ struct AppSidebar: View {
             .listStyle(.sidebar)
             .navigationTitle("JapaneseBuddy")
             .background(Color.washi.ignoresSafeArea())
+            .navigationDestination(for: NavItem.self) { item in
+                destinationView(item)
+            }
         } detail: {
             destinationView(selection ?? .home)
                 .background(Color.washi.ignoresSafeArea())
-        }
-        .navigationDestination(for: NavItem.self) { item in
-            destinationView(item)
+                .navigationDestination(for: NavItem.self) { item in
+                    destinationView(item)
+                }
         }
         .navigationSplitViewStyle(.balanced)
         .preferredColorScheme(colorScheme)

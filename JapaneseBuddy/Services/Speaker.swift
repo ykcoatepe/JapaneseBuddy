@@ -47,6 +47,8 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
     @MainActor
     private func deactivateSessionIfIdleMain() {
         guard !synth.isSpeaking else { return }
-        do { try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation]) } catch { }
+        Task.detached(priority: .background) {
+            do { try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation]) } catch { }
+        }
     }
 }
