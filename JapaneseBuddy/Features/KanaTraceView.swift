@@ -27,30 +27,12 @@ struct KanaTraceView: View {
                                 .font(.system(size: side * 0.75))
                                 .foregroundColor(.gray.opacity(0.3))
                         }
-                        if store.showStrokeHints {
+                        if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
                             StrokePreviewView(strokes: StrokeData.strokes(for: card.front), playing: $playing)
                                 .frame(width: side, height: side)
                                 .allowsHitTesting(false)
                                 .id(card.front)
                         }
-                    }
-                    HStack(spacing: 16) {
-                        if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
-                            Button(playing ? "Pause" : "Play") { playing.toggle() }
-                                .accessibilityLabel(playing ? "Pause preview" : "Play preview")
-                                .accessibilityHint("Preview stroke order")
-                        }
-                        Button("Clear") { canvas?.drawing = PKDrawing() }
-                            .accessibilityLabel("Clear drawing")
-                            .accessibilityHint("Erases your strokes")
-                        Button(showHint ? "Hide" : "Hint") { showHint.toggle() }
-                            .accessibilityLabel(showHint ? "Hide hint" : "Show hint")
-                        Button("Speak") { speaker.speak(card.front) }
-                            .accessibilityLabel("Speak character")
-                            .accessibilityHint("Plays pronunciation")
-                        Button("Check") { check() }
-                            .accessibilityLabel("Check drawing")
-                            .accessibilityHint("Grades your tracing")
                     }
                 } else {
                     Text("No cards due")
@@ -61,6 +43,30 @@ struct KanaTraceView: View {
         .onAppear(perform: next)
         .navigationTitle("Trace")
         .dynamicTypeSize(.xSmall ... .xxxLarge)
+        .safeAreaInset(edge: .bottom) {
+            if let card = current {
+                HStack(spacing: Theme.Spacing.small) {
+                    if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
+                        JBButton(playing ? "Pause" : "Play", kind: .secondary) { playing.toggle() }
+                            .accessibilityLabel(playing ? "Pause preview" : "Play preview")
+                            .accessibilityHint("Preview stroke order")
+                    }
+                    JBButton("Clear", kind: .secondary) { canvas?.drawing = PKDrawing() }
+                        .accessibilityLabel("Clear drawing")
+                        .accessibilityHint("Erases your strokes")
+                    JBButton(showHint ? "Hide" : "Hint", kind: .secondary) { showHint.toggle() }
+                        .accessibilityLabel(showHint ? "Hide hint" : "Show hint")
+                    JBButton("Speak", kind: .secondary) { speaker.speak(card.front) }
+                        .accessibilityLabel("Speak character")
+                        .accessibilityHint("Plays pronunciation")
+                    JBButton("Check") { check() }
+                        .accessibilityLabel("Check drawing")
+                        .accessibilityHint("Grades your tracing")
+                }
+                .padding()
+                .background(.ultraThinMaterial)
+            }
+        }
     }
 
     private func next() {

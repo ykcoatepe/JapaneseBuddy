@@ -6,6 +6,7 @@
     {"objective":{"text":"Introduce yourself in a short sentence."}},
     {"shadow":{"segments":["はじめまして。","わたしは アヤ です。"]}},
     {"listening":{"prompt":"What does Aya say?","choices":["Nice to meet you","Good night","Thank you"],"answer":0}},
+    {"reading":{"prompt":"Choose 'Nice to meet you'.","choices":["さようなら。","はじめまして。","ありがとう。"],"answer":1}},
     {"check":{}}
   ],
   "tips":["Use はじめまして at first meetings."],

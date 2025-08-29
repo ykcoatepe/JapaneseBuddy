@@ -6,7 +6,7 @@
     {"objective":{"text":"Ask and answer price with いくらですか"}},
     {"shadow":{"segments":["りんごは いくら ですか。","３００円 です。"]}},
     {"listening":{"prompt":"How much is the apple?","choices":["300 yen","500 yen","700 yen"],"answer":0}},
-    {"reading":{"prompt":"Choose the price for the notebook.","items":["１００円","３００円","６００円"],"answer":1}},
+    {"reading":{"prompt":"Choose the price for the notebook.","choices":["１００円","３００円","６００円"],"answer":1}},
     {"check":{}}
   ],
   "tips":["Use いくら to ask prices."],

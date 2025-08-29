@@ -44,6 +44,16 @@
 		A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */; };
 		A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */; };
 		A3FF02012FFF000000000101 /* art in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02002FFF000000000100 /* art */; };
+        BUI000112FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000012FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift */; };
+        BUI000122FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000022FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift */; };
+        BUI000132FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000032FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift */; };
+        BUI000142FFF000000000004 /* ../JapaneseBuddy/UI/Components/ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000042FFF000000000004 /* ../JapaneseBuddy/UI/Components/ProgressBar.swift */; };
+        BUI000152FFF000000000005 /* ../JapaneseBuddy/UI/Components/JBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000052FFF000000000005 /* ../JapaneseBuddy/UI/Components/JBButton.swift */; };
+        BUI000162FFF000000000006 /* ../JapaneseBuddy/UI/Components/StatTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000062FFF000000000006 /* ../JapaneseBuddy/UI/Components/StatTile.swift */; };
+        BUI000172FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000072FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift */; };
+        BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */; };
+        BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */; };
+        BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +115,16 @@
 		A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Haptics.swift; sourceTree = "<group>"; };
 		A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Log.swift; sourceTree = "<group>"; };
 		A3FF02002FFF000000000100 /* art */ = {isa = PBXFileReference; lastKnownFileType = folder; name = art; path = ../art; sourceTree = "<group>"; };
+        BUI000012FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Theme.swift; sourceTree = "<group>"; };
+        BUI000022FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/JBCard.swift; sourceTree = "<group>"; };
+        BUI000032FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/EmptyState.swift; sourceTree = "<group>"; };
+        BUI000042FFF000000000004 /* ../JapaneseBuddy/UI/Components/ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/ProgressBar.swift; sourceTree = "<group>"; };
+        BUI000052FFF000000000005 /* ../JapaneseBuddy/UI/Components/JBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/JBButton.swift; sourceTree = "<group>"; };
+        BUI000062FFF000000000006 /* ../JapaneseBuddy/UI/Components/StatTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/StatTile.swift; sourceTree = "<group>"; };
+        BUI000072FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/SectionHeader.swift; sourceTree = "<group>"; };
+        BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/StatsView.swift; sourceTree = "<group>"; };
+        BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/App/AppSidebar.swift; sourceTree = "<group>"; };
+        BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -129,7 +149,7 @@
 		42E352BF2E543E390008A8CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = (
+            files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +420,17 @@
 				A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */,
 				A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */,
 				A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */,
-			);
+				BUI000112FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift in Sources */,
+				BUI000122FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift in Sources */,
+				BUI000132FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift in Sources */,
+				BUI000142FFF000000000004 /* ../JapaneseBuddy/UI/Components/ProgressBar.swift in Sources */,
+				BUI000152FFF000000000005 /* ../JapaneseBuddy/UI/Components/JBButton.swift in Sources */,
+				BUI000162FFF000000000006 /* ../JapaneseBuddy/UI/Components/StatTile.swift in Sources */,
+                BUI000172FFF000000000007 /* ../JapaneseBuddy/UI/Components/SectionHeader.swift in Sources */,
+                BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */,
+                BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */,
+                BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */,
+            );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		42E352CC2E543E3B0008A8CD /* Sources */ = {

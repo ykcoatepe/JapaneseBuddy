@@ -11,7 +11,10 @@ struct TraceCanvas: UIViewRepresentable {
     func makeUIView(context: Context) -> PKCanvasView {
         let view = PKCanvasView()
         view.drawingPolicy = pencilOnly ? .pencilOnly : .anyInput
-        canvasView = view
+        // Avoid mutating SwiftUI state synchronously during view creation.
+        DispatchQueue.main.async {
+            self.canvasView = view
+        }
         return view
     }
 

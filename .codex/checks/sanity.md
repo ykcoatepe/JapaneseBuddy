@@ -1,6 +1,6 @@
 # Sanity Snapshot
 
-- Updated: 2025-08-29T02:56:52Z
+- Updated: 2025-08-29T15:07:11Z
 
 ## Project
 - xcodeproj: present
@@ -10,5 +10,5 @@
 - A1-04 missing in project
 
 ## Loader Checks
-16:        let fromFolder = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
-17:        let fromRoot = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil)
+17:        let fromFolder = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
+18:        let fromRoot = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil)

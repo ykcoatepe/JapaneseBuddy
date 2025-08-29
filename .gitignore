@@ -16,3 +16,6 @@ Pods/
 
 # macOS
 .DS_Store
+
+# Codex CLI session/memory artifacts
+.codex/
