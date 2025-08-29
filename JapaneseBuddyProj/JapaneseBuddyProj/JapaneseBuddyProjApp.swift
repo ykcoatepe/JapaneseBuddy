@@ -23,11 +23,17 @@ struct JapaneseBuddyProjApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AppSidebar()
-                .environmentObject(store)
-                .environmentObject(lessons)
-                .applyTheme(store.themeMode)
-                .tint(Color("AccentColor"))
+            Group {
+                if store.hasOnboarded {
+                    AppSidebar()
+                } else {
+                    OnboardingView()
+                }
+            }
+            .environmentObject(store)
+            .environmentObject(lessons)
+            .applyTheme(store.themeMode)
+            .tint(Color("AccentColor"))
         }
     }
 }
