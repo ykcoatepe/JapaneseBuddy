@@ -1,6 +1,5 @@
 # Sanity Snapshot
 
-- Updated: 2025-08-29T12:06:44Z
 
 ## Project
 - xcodeproj: present
