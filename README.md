@@ -6,6 +6,7 @@
 - [Pedagogy](docs/LESSONS_PEDAGOGY.md)
 - [Getting Started](#getting-started)
 - [Backup/Restore](#backuprestore)
+- [Localization](#localization)
 - [Contributing](CONTRIBUTING.md)
 - [License](#license)
 
@@ -110,5 +111,13 @@ First launch presents a short onboarding flow to choose decks, learn the tracing
 
 ## Pedagogy (Can-do + Shadowing)
 
-Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1–A2 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.  
+Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1–A2 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.
 → See: [docs/UI_DESIGN_SYSTEM.md](docs/UI_DESIGN_SYSTEM.md) · [docs/LESSONS_PEDAGOGY.md](docs/LESSONS_PEDAGOGY.md)
+
+## Localization
+
+String keys live in `L10n.swift` using the `JB.<Area>.<Name>` format. Add new keys there and reference them with `NSLocalizedString`.
+
+To add a language, create a new `*.lproj/Localized.strings` under `JapaneseBuddy/Resources/L10n/` and copy keys from `Base.lproj`.
+
+After adding a strings file, ensure it is part of the app target via the Xcode file inspector.

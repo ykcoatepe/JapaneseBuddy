@@ -16,21 +16,21 @@ struct SettingsView: View {
                 Stepper("Review \(store.dailyGoal.reviewTarget)", value: $store.dailyGoal.reviewTarget, in: 0...500)
             }
             Section("Reminders") {
-                Toggle("Enable", isOn: $store.notificationsEnabled)
-                DatePicker("Time", selection: timeBinding, displayedComponents: .hourAndMinute)
+                Toggle(L10n.Settings.enableReminder, isOn: $store.notificationsEnabled)
+                DatePicker(L10n.Settings.time, selection: timeBinding, displayedComponents: .hourAndMinute)
                     .disabled(!store.notificationsEnabled)
             }
             Section("Tracing") {
-                Toggle("Show Stroke Hints", isOn: $store.showStrokeHints)
+                Toggle(L10n.Settings.showStrokeHints, isOn: $store.showStrokeHints)
             }
             Section("Audio") {
                 Toggle("Play Speech in Silent Mode", isOn: $store.playSpeechInSilentMode)
             }
-            Section("Appearance") {
+            Section(L10n.Settings.appearance) {
                 Picker("Theme", selection: $store.themeMode) {
-                    Text("System").tag(ThemeMode.system)
-                    Text("Light").tag(ThemeMode.light)
-                    Text("Dark").tag(ThemeMode.dark)
+                    Text(L10n.Settings.system).tag(ThemeMode.system)
+                    Text(L10n.Settings.light).tag(ThemeMode.light)
+                    Text(L10n.Settings.dark).tag(ThemeMode.dark)
                 }
                 .pickerStyle(.segmented)
                 .accessibilityLabel("App theme")
@@ -42,7 +42,7 @@ struct SettingsView: View {
                 .accessibilityHint("Shows the welcome flow on next render")
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle(L10n.Nav.settings)
         .onChangeCompat(store.notificationsEnabled) { updateNotifications() }
         .onChangeCompat(store.reminderTime) { updateNotifications() }
         .dynamicTypeSize(.xSmall ... .xxxLarge)
@@ -97,9 +97,9 @@ struct SettingsBackupSection: View {
     @State private var alert: AlertInfo?
 
     var body: some View {
-        Section("Backup & Restore") {
-            Button("Export deck.json") { showExporter = true }
-            Button("Import deck.json") { showImporter = true }
+        Section(L10n.Settings.backupRestore) {
+            Button(L10n.Settings.exportDeck) { showExporter = true }
+            Button(L10n.Settings.importDeck) { showImporter = true }
         }
         .sheet(isPresented: $showExporter) { ActivityController(url: Self.deckURL) }
         .sheet(isPresented: $showImporter) {

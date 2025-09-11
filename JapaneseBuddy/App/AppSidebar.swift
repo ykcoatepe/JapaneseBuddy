@@ -1,13 +1,18 @@
 import SwiftUI
 
-private enum NavItem: String, CaseIterable, Identifiable {
-    case home = "Home"
-    case lessons = "Lessons"
-    case practice = "Practice"
-    case review = "Review"
-    case stats = "Stats"
-    case settings = "Settings"
-    var id: String { rawValue }
+private enum NavItem: CaseIterable, Identifiable {
+    case home, lessons, practice, review, stats, settings
+    var id: Self { self }
+    var title: String {
+        switch self {
+        case .home: return L10n.Nav.home
+        case .lessons: return L10n.Nav.lessons
+        case .practice: return L10n.Nav.practice
+        case .review: return L10n.Nav.review
+        case .stats: return L10n.Nav.stats
+        case .settings: return L10n.Nav.settings
+        }
+    }
     var systemImage: String {
         switch self {
         case .home: return "house"
@@ -29,7 +34,7 @@ struct AppSidebar: View {
             List(selection: $selection) {
                 ForEach(NavItem.allCases) { item in
                     NavigationLink(value: item) {
-                        Label(item.rawValue, systemImage: item.systemImage)
+                        Label(item.title, systemImage: item.systemImage)
                     }
                     .tag(item)
                 }

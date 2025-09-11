@@ -25,7 +25,7 @@ struct StatsView: View {
                 .background(Color.washi.ignoresSafeArea())
             }
         }
-        .navigationTitle("Stats")
+        .navigationTitle(L10n.Nav.stats)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 

@@ -19,20 +19,20 @@ struct SRSView: View {
                 }
 
                 HStack(spacing: Theme.Spacing.small) {
-                    JBButton("Speak", kind: .secondary) { speaker.speak(card.front) }
+                    JBButton(L10n.Btn.speak, kind: .secondary) { speaker.speak(card.front) }
                         .accessibilityLabel("Speak card")
                     JBButton("Flip", kind: .secondary) { showBack.toggle() }
                         .accessibilityLabel("Flip card")
                 }
 
                 HStack(spacing: Theme.Spacing.small) {
-                    JBButton("Hard", kind: .secondary) { grade(.hard) }
+                    JBButton(L10n.Btn.hard, kind: .secondary) { grade(.hard) }
                         .accessibilityLabel("Mark hard")
                         .accessibilityHint("Schedules sooner")
-                    JBButton("Good") { grade(.good) }
+                    JBButton(L10n.Btn.good) { grade(.good) }
                         .accessibilityLabel("Mark good")
                         .accessibilityHint("Keeps normal pace")
-                    JBButton("Easy", kind: .secondary) { grade(.easy) }
+                    JBButton(L10n.Btn.easy, kind: .secondary) { grade(.easy) }
                         .accessibilityLabel("Mark easy")
                         .accessibilityHint("Delays longer")
                 }
@@ -41,7 +41,7 @@ struct SRSView: View {
             }
         }
         .onAppear(perform: next)
-        .navigationTitle("SRS")
+        .navigationTitle(L10n.Nav.review)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 

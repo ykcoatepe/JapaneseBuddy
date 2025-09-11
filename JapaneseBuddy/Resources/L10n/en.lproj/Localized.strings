@@ -1,0 +1,33 @@
+"JB.Nav.Home" = "Home";
+"JB.Nav.Lessons" = "Lessons";
+"JB.Nav.Practice" = "Practice";
+"JB.Nav.Review" = "Review";
+"JB.Nav.Stats" = "Stats";
+"JB.Nav.Settings" = "Settings";
+
+"JB.Btn.ContinueLesson" = "Continue Lesson";
+"JB.Btn.StartTrace" = "Start Trace";
+"JB.Btn.StartReview" = "Start Review";
+"JB.Btn.Speak" = "Speak";
+"JB.Btn.Clear" = "Clear";
+"JB.Btn.Hint" = "Hint";
+"JB.Btn.Check" = "Check";
+"JB.Btn.Play" = "Play";
+"JB.Btn.Pause" = "Pause";
+"JB.Btn.Hard" = "Hard";
+"JB.Btn.Good" = "Good";
+"JB.Btn.Easy" = "Easy";
+
+"JB.Settings.Appearance" = "Appearance";
+"JB.Settings.System" = "System";
+"JB.Settings.Light" = "Light";
+"JB.Settings.Dark" = "Dark";
+"JB.Settings.ShowStrokeHints" = "Show Stroke Hints";
+"JB.Settings.BackupRestore" = "Backup & Restore";
+"JB.Settings.ExportDeck" = "Export deck.json";
+"JB.Settings.ImportDeck" = "Import deck.json";
+"JB.Settings.EnableReminder" = "Enable reminder";
+"JB.Settings.Time" = "Time";
+
+"JB.Home.DailyGoal" = "Daily Goal";
+"JB.Home.Greeting" = "こんにちは, %@!";

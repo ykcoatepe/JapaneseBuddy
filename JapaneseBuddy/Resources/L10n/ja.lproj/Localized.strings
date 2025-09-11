@@ -1,0 +1,33 @@
+"JB.Nav.Home" = "ホーム";
+"JB.Nav.Lessons" = "レッスン";
+"JB.Nav.Practice" = "練習";
+"JB.Nav.Review" = "復習";
+"JB.Nav.Stats" = "統計";
+"JB.Nav.Settings" = "設定";
+
+"JB.Btn.ContinueLesson" = "つづきを学ぶ";
+"JB.Btn.StartTrace" = "トレース開始";
+"JB.Btn.StartReview" = "復習を開始";
+"JB.Btn.Speak" = "読み上げ";
+"JB.Btn.Clear" = "消去";
+"JB.Btn.Hint" = "ヒント";
+"JB.Btn.Check" = "チェック";
+"JB.Btn.Play" = "再生";
+"JB.Btn.Pause" = "一時停止";
+"JB.Btn.Hard" = "むずかしい";
+"JB.Btn.Good" = "ふつう";
+"JB.Btn.Easy" = "かんたん";
+
+"JB.Settings.Appearance" = "外観";
+"JB.Settings.System" = "システム";
+"JB.Settings.Light" = "ライト";
+"JB.Settings.Dark" = "ダーク";
+"JB.Settings.ShowStrokeHints" = "筆順ヒントを表示";
+"JB.Settings.BackupRestore" = "バックアップと復元";
+"JB.Settings.ExportDeck" = "deck.jsonを書き出す";
+"JB.Settings.ImportDeck" = "deck.jsonを読み込む";
+"JB.Settings.EnableReminder" = "リマインダーを有効化";
+"JB.Settings.Time" = "時間";
+
+"JB.Home.DailyGoal" = "毎日の目標";
+"JB.Home.Greeting" = "こんにちは, %@!";
