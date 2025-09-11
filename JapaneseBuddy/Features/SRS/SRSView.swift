@@ -40,7 +40,11 @@ struct SRSView: View {
                 Text("All caught up")
             }
         }
-        .onAppear(perform: next)
+        .onAppear {
+            store.beginStudy()
+            next()
+        }
+        .onDisappear { store.endStudy(kind: .study) }
         .navigationTitle(L10n.Nav.review)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
     }

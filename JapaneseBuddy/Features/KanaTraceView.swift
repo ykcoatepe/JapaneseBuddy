@@ -40,7 +40,11 @@ struct KanaTraceView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onAppear(perform: next)
+        .onAppear {
+            store.beginStudy()
+            next()
+        }
+        .onDisappear { store.endStudy(kind: .study) }
         .navigationTitle(L10n.Nav.practice)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .safeAreaInset(edge: .bottom) {

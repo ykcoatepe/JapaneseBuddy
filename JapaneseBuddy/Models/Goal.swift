@@ -5,12 +5,13 @@ struct DailyGoal: Codable {
     var reviewTarget: Int = 10
 }
 
-enum SessionKind: String, Codable { case new, review }
+enum SessionKind: String, Codable { case new, review, study }
 
 struct SessionLogEntry: Codable {
     let date: Date
     let kind: SessionKind
-    let cardID: UUID
+    let cardID: UUID?
+    let durationSec: Int?
 }
 
 struct GoalProgress {

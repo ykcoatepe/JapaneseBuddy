@@ -21,6 +21,7 @@ final class DeckStore: ObservableObject {
 
     private let url: URL
     private var saveTask: AnyCancellable?
+    private var studyStart: Date?
 
     struct State: Codable {
         var cards: [Card]
@@ -137,11 +138,11 @@ final class DeckStore: ObservableObject {
     }
 
     func logNew(for card: Card, date: Date = .now) {
-        sessionLog.append(SessionLogEntry(date: date, kind: .new, cardID: card.id))
+        sessionLog.append(SessionLogEntry(date: date, kind: .new, cardID: card.id, durationSec: nil))
     }
 
     func logReview(for card: Card, date: Date = .now) {
-        sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id))
+        sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id, durationSec: nil))
     }
 
     func progressToday(now: Date = .now, cal: Calendar = .current) -> GoalProgress {
@@ -200,5 +201,52 @@ extension DeckStore {
             d = prev
         }
         return streak
+    }
+}
+
+// MARK: - Stopwatch & Minutes
+extension DeckStore {
+    func beginStudy(now: Date = .now) { studyStart = now }
+
+    func endStudy(kind: SessionKind = .study, now: Date = .now) {
+        guard let s = studyStart else { return }
+        let dur = max(0, Int(now.timeIntervalSince(s)))
+        sessionLog.append(SessionLogEntry(date: now, kind: kind, cardID: nil, durationSec: dur))
+        studyStart = nil
+    }
+
+    func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {
+        sessionLog
+            .filter { cal.isDate($0.date, inSameDayAs: now) }
+            .map { ($0.durationSec ?? 0) / 60 }
+            .reduce(0, +)
+    }
+
+    func weeklyMinutes(now: Date = .now, cal: Calendar = .current) -> [Int] {
+        let startToday = cal.startOfDay(for: now)
+        let days = (0..<7).reversed().compactMap { cal.date(byAdding: .day, value: -$0, to: startToday) }
+        return days.map { day in
+            sessionLog
+                .filter { cal.isDate($0.date, inSameDayAs: day) }
+                .map { ($0.durationSec ?? 0) / 60 }
+                .reduce(0, +)
+        }
+    }
+
+    func bestStreak(cal: Calendar = .current) -> Int {
+        let days = Set(sessionLog.map { cal.startOfDay(for: $0.date) })
+        let sorted = days.sorted()
+        var best = 0, cur = 0
+        var prev: Date?
+        for d in sorted {
+            if let p = prev, cal.date(byAdding: .day, value: 1, to: p) == d {
+                cur += 1
+            } else {
+                cur = 1
+            }
+            best = max(best, cur)
+            prev = d
+        }
+        return best
     }
 }
