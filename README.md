@@ -9,6 +9,33 @@
 - [Contributing](CONTRIBUTING.md)
 - [License](#license)
 
+## Screenshots
+
+> Replace these placeholders with real captures when ready.  
+> See [docs/screenshots/README.md](docs/screenshots/README.md).
+
+<table>
+  <tr>
+    <td>
+      <img src="./docs/screenshots/home.svg"
+           alt="Home screen placeholder" width="420"/>
+    </td>
+    <td>
+      <img src="./docs/screenshots/lessons.svg"
+           alt="Lessons screen placeholder" width="420"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="./docs/screenshots/trace.svg"
+           alt="Trace screen placeholder" width="420"/>
+    </td>
+    <td>
+      <img src="./docs/screenshots/srs.svg"
+           alt="SRS screen placeholder" width="420"/>
+    </td>
+  </tr>
+</table>
 Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
 
 ## Run
