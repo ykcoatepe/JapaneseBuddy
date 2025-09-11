@@ -1,0 +1,33 @@
+"JB.Nav.Home" = "Ana ekran";
+"JB.Nav.Lessons" = "Dersler";
+"JB.Nav.Practice" = "Yazım";
+"JB.Nav.Review" = "Tekrar";
+"JB.Nav.Stats" = "İstatistikler";
+"JB.Nav.Settings" = "Ayarlar";
+
+"JB.Btn.ContinueLesson" = "Derse devam";
+"JB.Btn.StartTrace" = "Yazı çalış";
+"JB.Btn.StartReview" = "Tekrara başla";
+"JB.Btn.Speak" = "Seslendir";
+"JB.Btn.Clear" = "Sil";
+"JB.Btn.Hint" = "İpucu";
+"JB.Btn.Check" = "Kontrol";
+"JB.Btn.Play" = "Oynat";
+"JB.Btn.Pause" = "Duraklat";
+"JB.Btn.Hard" = "Zor";
+"JB.Btn.Good" = "İyi";
+"JB.Btn.Easy" = "Kolay";
+
+"JB.Settings.Appearance" = "Görünüm";
+"JB.Settings.System" = "Sistem";
+"JB.Settings.Light" = "Açık";
+"JB.Settings.Dark" = "Koyu";
+"JB.Settings.ShowStrokeHints" = "Vuruş ipuçlarını göster";
+"JB.Settings.BackupRestore" = "Yedekle & Geri Yükle";
+"JB.Settings.ExportDeck" = "deck.json’u dışa aktar";
+"JB.Settings.ImportDeck" = "deck.json’u içe aktar";
+"JB.Settings.EnableReminder" = "Hatırlatıcıyı etkinleştir";
+"JB.Settings.Time" = "Saat";
+
+"JB.Home.DailyGoal" = "Günlük hedef";
+"JB.Home.Greeting" = "こんにちは, %@!";

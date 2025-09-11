@@ -30,7 +30,7 @@ struct LessonListView: View {
                 }
             }
         }
-        .navigationTitle("Lessons")
+        .navigationTitle(L10n.Nav.lessons)
     }
 
     private var filtered: [Lesson] {

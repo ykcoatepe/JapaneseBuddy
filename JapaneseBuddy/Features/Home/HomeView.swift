@@ -9,7 +9,7 @@ struct HomeView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.large) {
                 if let name = store.displayName, !name.isEmpty {
-                    Typography.title("こんにちは, \(name)!")
+                    Typography.title(String(format: L10n.Home.greeting, name))
                         .padding(.horizontal)
                 }
 
@@ -25,7 +25,7 @@ struct HomeView: View {
 
                 JBCard {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Daily Goal").font(.headline)
+                        Text(L10n.Home.dailyGoal).font(.headline)
                         HStack {
                             Label("New \(progress.newDone)/\(progress.target.newTarget)", systemImage: "sparkles")
                             Spacer()
@@ -47,9 +47,9 @@ struct HomeView: View {
                             } else {
                                 LessonListView()
                             }
-                        } label: { JBButton("Continue Lesson") }
-                        NavigationLink { KanaTraceView() } label: { JBButton("Trace", kind: .secondary) }
-                        NavigationLink { SRSView() } label: { JBButton("Review", kind: .secondary) }
+                        } label: { JBButton(L10n.Btn.continueLesson) }
+                        NavigationLink { KanaTraceView() } label: { JBButton(L10n.Btn.startTrace, kind: .secondary) }
+                        NavigationLink { SRSView() } label: { JBButton(L10n.Btn.startReview, kind: .secondary) }
                     }
                     .padding(.horizontal)
                 }
@@ -57,7 +57,7 @@ struct HomeView: View {
             }
         }
         .background(Color.washi.ignoresSafeArea())
-        .navigationTitle("Home")
+        .navigationTitle(L10n.Nav.home)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .toolbar { }
     }
