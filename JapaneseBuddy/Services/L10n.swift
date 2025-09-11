@@ -39,5 +39,7 @@ enum L10n {
         static var dailyGoal: String { NSLocalizedString("JB.Home.DailyGoal", comment: "") }
         static var greeting: String { NSLocalizedString("JB.Home.Greeting", comment: "") }
     }
+    enum Stats {
+        static var streakFmt: String { NSLocalizedString("JB.Stats.StreakFmt", comment: "") }
+    }
 }
-

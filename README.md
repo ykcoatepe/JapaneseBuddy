@@ -6,7 +6,7 @@
 - [Pedagogy](docs/LESSONS_PEDAGOGY.md)
 - [Getting Started](#getting-started)
 - [Backup/Restore](#backuprestore)
-- [Localization](#localization)
+ - [Localization](#localization)
 - [Contributing](CONTRIBUTING.md)
 - [License](#license)
 
@@ -121,3 +121,5 @@ String keys live in `L10n.swift` using the `JB.<Area>.<Name>` format. Add new ke
 To add a language, create a new `*.lproj/Localized.strings` under `JapaneseBuddy/Resources/L10n/` and copy keys from `Base.lproj`.
 
 After adding a strings file, ensure it is part of the app target via the Xcode file inspector.
+
+- Added `JB.Stats.StreakFmt` for the Home streak label (Base/en/tr/ja).

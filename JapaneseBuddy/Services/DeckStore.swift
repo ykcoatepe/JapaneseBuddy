@@ -171,3 +171,34 @@ final class DeckStore: ObservableObject {
         kanjiProgress[lessonID] = p
     }
 }
+
+// MARK: - Streak & Weekly Activity
+extension DeckStore {
+    // Returns 7 counts (oldest → newest) for the last 7 calendar days.
+    func weeklyActivity(now: Date = .now, cal: Calendar = .current) -> [Int] {
+        let startToday = cal.startOfDay(for: now)
+        let days = (0..<7).reversed().compactMap {
+            cal.date(byAdding: .day, value: -$0, to: startToday)
+        }
+        return days.map { day in
+            sessionLog.filter { cal.isDate($0.date, inSameDayAs: day) }.count
+        }
+    }
+
+    // Counts consecutive non-empty days ending today.
+    func currentStreak(now: Date = .now, cal: Calendar = .current) -> Int {
+        var streak = 0
+        var d = cal.startOfDay(for: now)
+        while true {
+            let c = sessionLog.filter { cal.isDate($0.date, inSameDayAs: d) }.count
+            if c > 0 {
+                streak += 1
+            } else {
+                break
+            }
+            guard let prev = cal.date(byAdding: .day, value: -1, to: d) else { break }
+            d = prev
+        }
+        return streak
+    }
+}

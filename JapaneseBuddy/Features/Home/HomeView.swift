@@ -38,6 +38,22 @@ struct HomeView: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Daily goal progress")
 
+                // Streak row + 7‑day sparkline
+                let counts = store.weeklyActivity()
+                let maxVal = max(1, counts.max() ?? 1)
+                let normalized = counts.map { Double($0) / Double(maxVal) }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(format: L10n.Stats.streakFmt, store.currentStreak()))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(String(format: L10n.Stats.streakFmt, store.currentStreak()))
+                    Sparkline(values: normalized)
+                        .frame(height: 36)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal)
+
                 VStack(spacing: Theme.Spacing.small) {
                     Text("Quick Actions").font(.headline).padding(.horizontal)
                     HStack(spacing: Theme.Spacing.small) {

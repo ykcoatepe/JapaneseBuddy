@@ -31,3 +31,6 @@
 
 "JB.Home.DailyGoal" = "毎日の目標";
 "JB.Home.Greeting" = "こんにちは, %@!";
+
+/* Home Streak label */
+"JB.Stats.StreakFmt" = "連続: %d 日";
