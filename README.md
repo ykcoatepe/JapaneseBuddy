@@ -18,25 +18,26 @@
 <table>
   <tr>
     <td>
-      <img src="./docs/screenshots/home.svg"
-           alt="Home screen placeholder" width="420"/>
+      <img src="./docs/screenshots/home.png"
+           alt="Home screen" width="420"/>
     </td>
     <td>
-      <img src="./docs/screenshots/lessons.svg"
-           alt="Lessons screen placeholder" width="420"/>
+      <img src="./docs/screenshots/lessons.png"
+           alt="Lessons screen" width="420"/>
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./docs/screenshots/trace.svg"
-           alt="Trace screen placeholder" width="420"/>
+      <img src="./docs/screenshots/trace.png"
+           alt="Trace screen" width="420"/>
     </td>
     <td>
-      <img src="./docs/screenshots/srs.svg"
-           alt="SRS screen placeholder" width="420"/>
+      <img src="./docs/screenshots/srs.png"
+           alt="SRS screen" width="420"/>
     </td>
   </tr>
 </table>
+Note: SVG placeholders remain in this folder as a fallback (`*.svg`).
 Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
 
 ## Run
@@ -66,6 +67,11 @@ Set daily targets for new and review cards and track progress on the Home screen
 
 ## Backup & Restore
 Use **Settings ▸ Backup & Restore** to export or import your study deck. Export shares `deck.json` from the Documents folder via the system share sheet. Import validates the file then replaces the existing deck. All data stays local on your device.
+
+## Audio Packs
+- Optional local audio for shadowing lives under `JapaneseBuddy/Resources/audio/<lessonID>/seg-<n>.m4a`.
+- When present, the app plays the file; otherwise it falls back to ja‑JP TTS.
+- Files stay on‑device; no external services are used.
 
 ## Stroke Order
 Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.
@@ -113,6 +119,9 @@ First launch presents a short onboarding flow to choose decks, learn the tracing
 
 Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1–A2 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.
 → See: [docs/UI_DESIGN_SYSTEM.md](docs/UI_DESIGN_SYSTEM.md) · [docs/LESSONS_PEDAGOGY.md](docs/LESSONS_PEDAGOGY.md)
+
+## Content Provenance
+- All B1 lessons (B1-01…B1-06) are original content created for this app. If dictionary readings are ever incorporated, see THIRDPARTY-LICENSES.md for attribution guidance.
 
 ## Localization
 

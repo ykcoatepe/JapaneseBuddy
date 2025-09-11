@@ -1,0 +1,32 @@
+{
+  "id": "B1-06",
+  "title": "Errands and Reservations",
+  "canDo": "Make a simple reservation and run an errand",
+  "activities": [
+    { "objective": { "text": "Reserve a table and confirm time and people." } },
+    { "shadow": { "segments": [
+      "よる７時に 二人で 予約を おねがいします。",
+      "お名前と 電話番号を おねがいします。"
+    ] } },
+    { "listening": {
+      "prompt": "How many people is the reservation for?",
+      "choices": ["One", "Two", "Three"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the polite expression used in reservations.",
+      "choices": [
+        "予約を おねがいします。",
+        "予約 して。",
+        "予約 だ。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-06-予", "kanji": "予", "reading": "よ", "meaning": "beforehand" },
+    { "id": "B1-06-約", "kanji": "約", "reading": "やく", "meaning": "promise/appointment" },
+    { "id": "B1-06-電", "kanji": "電", "reading": "でん", "meaning": "electric/phone" }
+  ]
+}

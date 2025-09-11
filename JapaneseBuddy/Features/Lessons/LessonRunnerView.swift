@@ -78,7 +78,7 @@ struct LessonRunnerView: View {
             case let .objective(text):
                 ObjectiveView(text: text)
             case let .shadow(segments):
-                ShadowingView(segments: segments)
+                ShadowingView(lessonID: lesson.id, segments: segments)
             case let .listening(prompt, choices, answer):
                 ListeningView(prompt: prompt, choices: choices, answer: answer, selection: $selection)
             case let .reading(prompt, items, answer):
