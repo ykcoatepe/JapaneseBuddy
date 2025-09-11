@@ -34,3 +34,7 @@
 
 /* Home Streak label */
 "JB.Stats.StreakFmt" = "連続: %d 日";
+"JB.Stats.TodayMinutesFmt" = "きょう: %d 分";
+"JB.Stats.WeekMinutesFmt" = "１週間: %d 分";
+"JB.Stats.StreakBestFmt" = "最高: %d 日";
+"JB.Stats.NoData" = "まだデータがありません";

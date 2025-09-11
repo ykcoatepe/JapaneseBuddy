@@ -34,3 +34,7 @@
 
 /* Home Streak label */
 "JB.Stats.StreakFmt" = "Seri: %d gün";
+"JB.Stats.TodayMinutesFmt" = "Bugün: %d dk";
+"JB.Stats.WeekMinutesFmt" = "Hafta: %d dk";
+"JB.Stats.StreakBestFmt" = "En iyi: %d gün";
+"JB.Stats.NoData" = "Henüz veri yok";

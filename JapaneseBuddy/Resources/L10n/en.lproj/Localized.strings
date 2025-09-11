@@ -34,3 +34,7 @@
 
 /* Home Streak label */
 "JB.Stats.StreakFmt" = "Streak: %d days";
+"JB.Stats.TodayMinutesFmt" = "Today: %d min";
+"JB.Stats.WeekMinutesFmt" = "Week: %d min";
+"JB.Stats.StreakBestFmt" = "Best: %d days";
+"JB.Stats.NoData" = "No data yet";
