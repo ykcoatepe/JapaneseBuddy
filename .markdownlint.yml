@@ -1,0 +1,4 @@
+default: true
+MD013: { line_length: 120 }
+MD033: false  # allow inline HTML if needed
+MD041: false  # no need for first-line heading in small docs

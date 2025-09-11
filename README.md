@@ -1,5 +1,14 @@
 # JapaneseBuddy
 
+## Table of Contents
+- [UI Design System](docs/UI_DESIGN_SYSTEM.md)
+- [UX](#ux)
+- [Pedagogy](docs/LESSONS_PEDAGOGY.md)
+- [Getting Started](#getting-started)
+- [Backup/Restore](#backuprestore)
+- [Contributing](CONTRIBUTING.md)
+- [License](#license)
+
 Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
 
 ## Run
