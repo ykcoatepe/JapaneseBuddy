@@ -38,3 +38,8 @@ All acceptance criteria verified as present and functioning per code review. No 
 - `JapaneseBuddy/Features/KanaTraceView.swift`
 - `JapaneseBuddy/Services/Haptics.swift`
 - `JapaneseBuddy/Features/SRS/SRSView.swift`
+
+## Notes & small tidy-ups
+- Theme is applied at the root via `.applyTheme(store.themeMode)`; remove any redundant local `.preferredColorScheme` if present.  
+- Verify VoiceOver order on Trace and SRS after Dynamic Type XXL.  
+- Confirm pass rule unchanged (≥0.6 + stroke gate) in KanaTraceView.
