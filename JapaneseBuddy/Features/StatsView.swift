@@ -15,11 +15,11 @@ struct StatsView: View {
                     VStack(alignment: .leading, spacing: Theme.Spacing.large) {
                         HStack(spacing: Theme.Spacing.small) {
                             StatTile(title: String(format: L10n.Stats.weekMinutesFmt, weekTotal), value: "")
-                            StatTile(title: "Best Streak", value: "\(store.bestStreak())")
+                            StatTile(title: String(format: L10n.Stats.streakBestFmt, store.bestStreak()), value: "")
                         }
                         .padding(.horizontal)
 
-                        SectionHeader("Weekly Minutes")
+                        SectionHeader(String(format: L10n.Stats.weekMinutesFmt, weekTotal))
                         HStack(alignment: .bottom, spacing: Theme.Spacing.small) {
                             ForEach(0..<mins.count, id: \.self) { i in
                                 VStack {

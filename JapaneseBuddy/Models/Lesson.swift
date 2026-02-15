@@ -81,7 +81,7 @@ struct Lesson: Codable, Identifiable {
         title = try container.decode(String.self, forKey: .title)
         canDo = try container.decode(String.self, forKey: .canDo)
         activities = try container.decode([Activity].self, forKey: .activities)
-        tips = try container.decode([String].self, forKey: .tips)
+        tips = try container.decodeIfPresent([String].self, forKey: .tips) ?? []
         if let words = try container.decodeIfPresent([KanjiWord].self, forKey: .kanjiWords) {
             kanjiWords = words
         } else if let strings = try container.decodeIfPresent([String].self, forKey: .kanjiWords) {

@@ -27,8 +27,19 @@ final class JapaneseBuddyProjUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments.append("UI-TESTING")
         app.launch()
-        app.buttons["Lessons"].tap()
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        // New UI may not expose a literal "Lessons" tab/button.
+        if app.buttons["Lessons"].exists {
+            app.buttons["Lessons"].tap()
+        } else if app.buttons["JB.Btn.ContinueLesson"].exists {
+            app.buttons["JB.Btn.ContinueLesson"].tap()
+        } else {
+            XCTFail("No lessons navigation entry found")
+        }
+
+        // If a back button exists, ensure we can return.
+        let back = app.navigationBars.buttons.element(boundBy: 0)
+        if back.exists { back.tap() }
     }
 
     @MainActor

@@ -41,5 +41,8 @@ enum L10n {
     }
     enum Stats {
         static var streakFmt: String { NSLocalizedString("JB.Stats.StreakFmt", comment: "") }
+        static var noData: String { NSLocalizedString("JB.Stats.NoData", comment: "") }
+        static var weekMinutesFmt: String { NSLocalizedString("JB.Stats.WeekMinutesFmt", comment: "") }
+        static var streakBestFmt: String { NSLocalizedString("JB.Stats.StreakBestFmt", comment: "") }
     }
 }

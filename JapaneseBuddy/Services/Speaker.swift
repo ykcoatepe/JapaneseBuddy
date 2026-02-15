@@ -12,27 +12,14 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
     override init() {
         super.init()
         synth.delegate = self
-}
-
-// MARK: - Shadowing audio fallback
-extension Speaker {
-    // Plays a pre-recorded segment if bundled, otherwise falls back to TTS.
-    func playSegment(lessonID: String, index: Int, text: String) {
-        if let url = AudioEngine.shared.findAudio(lessonID: lessonID, index: index) {
-            // Stop any ongoing TTS if needed (no-op if not speaking)
-            synth.stopSpeaking(at: .immediate)
-            AudioEngine.shared.play(url: url)
-        } else {
-            speak(text)
-        }
     }
-}
+
     @MainActor
     func speak(_ text: String) {
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
         // For spoken content, use .spokenAudio with ducking
-        let options: AVAudioSession.CategoryOptions = preferSilentOverride ? [.duckOthers] : [.duckOthers]
+        let options: AVAudioSession.CategoryOptions = [.duckOthers]
         Self.audioQueue.async { [weak self] in
             guard let self else { return }
             let session = AVAudioSession.sharedInstance()
@@ -86,5 +73,20 @@ extension Speaker {
         }
         deactivateWorkItem = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: work)
+    }
+}
+
+// MARK: - Shadowing audio fallback
+extension Speaker {
+    // Plays a pre-recorded segment if bundled, otherwise falls back to TTS.
+    @MainActor
+    func playSegment(lessonID: String, index: Int, text: String) {
+        if let url = AudioEngine.shared.findAudio(lessonID: lessonID, index: index) {
+            // Stop any ongoing TTS if needed (no-op if not speaking)
+            synth.stopSpeaking(at: .immediate)
+            AudioEngine.shared.play(url: url)
+        } else {
+            speak(text)
+        }
     }
 }

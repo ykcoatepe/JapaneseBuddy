@@ -47,9 +47,13 @@ final class DeckStore: ObservableObject {
 
     struct KanjiProgress: Codable { var correct: Int = 0; var total: Int = 0 }
 
-    init() {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        url = docs.appendingPathComponent("deck.json")
+    init(stateURL: URL? = nil, saveDebounce: DispatchQueue.SchedulerTimeType.Stride = .seconds(1)) {
+        if let stateURL {
+            url = stateURL
+        } else {
+            let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            url = docs.appendingPathComponent("deck.json")
+        }
         load()
         // Mirror audio preference to UserDefaults for lightweight access in Speaker
         UserDefaults.standard.set(playSpeechInSilentMode, forKey: "playSpeechInSilentMode")
@@ -63,7 +67,7 @@ final class DeckStore: ObservableObject {
             .combineLatest($displayName)
             .combineLatest($hasOnboarded)
             .combineLatest($themeMode)
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
+            .debounce(for: saveDebounce, scheduler: DispatchQueue.global())
             .sink { [weak self] _ in
                 // Keep UserDefaults in sync for the Speaker to read.
                 if let self = self {

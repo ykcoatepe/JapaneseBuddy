@@ -1,6 +1,6 @@
 # Project Progress
 
-- Updated: aspect-fit onboarding hero with tappable hotspot
+- Updated: 2026-02-15T18:22:13Z
 
 ## Current Plan
 
@@ -23,8 +23,8 @@ See `.codex/state.json` for machine-readable plan. This section is auto-updated 
 
 ## Next Up
 
-- Generate AppIcon set locally: `bash scripts/make_appicon.sh "art/app icon.png"`.
-- Run tests (Cmd+U) and on-device smoke for A1 lessons.
+- Open RC1 PR (title/body ready in `PR_TITLE.txt` and `PR_BODY.md`).
+- Run quick on-device A1 smoke (launch, Lessons nav, one lesson flow) before merge.
 - Keep repo memory up-to-date via `.codex/` and CI workflow.
 
 ## Blockers
