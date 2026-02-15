@@ -1,21 +1,24 @@
 name: iOS CI
+
 on:
-push:
+  push:
     branches:
       - main
       - dev_yordam
+      - dev_yordamv2
       - 'feature/**'
-pull_request:
+  pull_request:
     branches:
       - main
       - dev_yordam
+      - dev_yordamv2
 
 concurrency:
-group: ci-${{ github.workflow }}-${{ github.ref }}
-cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-build-test:
+  build-test:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
