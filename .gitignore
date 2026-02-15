@@ -19,3 +19,6 @@ Pods/
 
 # Codex CLI session/memory artifacts
 .codex/
+
+# Local runtime logs
+logs/
