@@ -86,6 +86,8 @@ extension Speaker {
             synth.stopSpeaking(at: .immediate)
             AudioEngine.shared.play(url: url)
         } else {
+            // Ensure local audio is stopped before TTS fallback to avoid overlap.
+            AudioEngine.shared.stop()
             speak(text)
         }
     }

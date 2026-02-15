@@ -222,20 +222,22 @@ extension DeckStore {
     }
 
     func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {
-        sessionLog
+        let totalSeconds = sessionLog
             .filter { cal.isDate($0.date, inSameDayAs: now) }
-            .map { ($0.durationSec ?? 0) / 60 }
+            .map { $0.durationSec ?? 0 }
             .reduce(0, +)
+        return totalSeconds / 60
     }
 
     func weeklyMinutes(now: Date = .now, cal: Calendar = .current) -> [Int] {
         let startToday = cal.startOfDay(for: now)
         let days = (0..<7).reversed().compactMap { cal.date(byAdding: .day, value: -$0, to: startToday) }
         return days.map { day in
-            sessionLog
+            let totalSeconds = sessionLog
                 .filter { cal.isDate($0.date, inSameDayAs: day) }
-                .map { ($0.durationSec ?? 0) / 60 }
+                .map { $0.durationSec ?? 0 }
                 .reduce(0, +)
+            return totalSeconds / 60
         }
     }
 
