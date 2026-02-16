@@ -43,7 +43,7 @@ extension GoalProgress {
     static func compute(entries: [SessionLogEntry], on day: Date, goal: DailyGoal, cal: Calendar = .current) -> GoalProgress {
         let today = entries.filter { cal.isDate($0.date, inSameDayAs: day) }
         let newDone = today.filter { $0.kind == .new }.count
-        let reviewDone = today.filter { $0.kind == .review }.count
+        let reviewDone = today.filter { $0.kind == .review && $0.durationSec == nil }.count
         return GoalProgress(newDone: newDone, reviewDone: reviewDone, target: goal)
     }
 }

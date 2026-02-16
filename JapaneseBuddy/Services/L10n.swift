@@ -7,7 +7,8 @@ private extension L10n {
     }
 
     static var localizationBundle: Bundle {
-        for language in Bundle.main.preferredLocalizations {
+        let preferredLanguages = NSLocale.preferredLanguages + Bundle.main.preferredLocalizations
+        for language in preferredLanguages {
             if let bundle = preferredBundle(for: language) {
                 return bundle
             }

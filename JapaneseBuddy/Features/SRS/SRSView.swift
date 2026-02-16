@@ -42,8 +42,8 @@ struct SRSView: View {
             }
         }
         .onAppear {
-            store.beginStudy()
             next()
+            if current != nil { store.beginStudy() }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
