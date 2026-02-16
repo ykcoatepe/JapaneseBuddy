@@ -5,7 +5,7 @@ struct StatsView: View {
 
     var body: some View {
         let mins = store.weeklyMinutes()
-        let weekTotal = mins.reduce(0, +)
+        let weekTotal = store.weeklyTotalMinutes()
         let maxM = max(1, mins.max() ?? 1)
         return Group {
             if store.sessionLog.isEmpty {

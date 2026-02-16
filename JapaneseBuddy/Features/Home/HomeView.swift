@@ -44,6 +44,10 @@ struct HomeView: View {
                 let normalized = counts.map { Double($0) / Double(maxVal) }
 
                 VStack(alignment: .leading, spacing: 8) {
+                    Text(String(format: L10n.Stats.todayMinutesFmt, store.minutesToday()))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(String(format: L10n.Stats.todayMinutesFmt, store.minutesToday()))
                     Text(String(format: L10n.Stats.streakFmt, store.currentStreak()))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)

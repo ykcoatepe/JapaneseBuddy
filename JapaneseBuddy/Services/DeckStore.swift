@@ -272,6 +272,25 @@ extension DeckStore {
         }
     }
 
+    func weeklyTotalMinutes(now: Date = .now, cal: Calendar = .current) -> Int {
+        let startToday = cal.startOfDay(for: now)
+        guard let windowStart = cal.date(byAdding: .day, value: -6, to: startToday) else { return 0 }
+
+        var totalSeconds = sessionLog
+            .filter { $0.date >= windowStart && $0.date <= now }
+            .map { $0.durationSec ?? 0 }
+            .reduce(0, +)
+
+        if let start = studyStart, now > start {
+            let effectiveStart = max(start, windowStart)
+            if now > effectiveStart {
+                totalSeconds += Int(now.timeIntervalSince(effectiveStart))
+            }
+        }
+
+        return totalSeconds / 60
+    }
+
     func bestStreak(cal: Calendar = .current) -> Int {
         let days = Set(sessionLog.map { cal.startOfDay(for: $0.date) })
         let sorted = days.sorted()

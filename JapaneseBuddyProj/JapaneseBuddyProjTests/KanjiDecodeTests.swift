@@ -73,5 +73,27 @@ struct KanjiDecodeTests {
         // 15 in-flight minutes should be visible before endStudy is called.
         #expect(store.minutesToday(now: now, cal: cal) >= 15)
     }
+
+    @Test func weeklyTotalMinutesRoundsAfterAggregatingWeekSeconds() {
+        let stateURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("deck-week-total-\(UUID().uuidString).json")
+        try? FileManager.default.removeItem(at: stateURL)
+        let store = DeckStore(stateURL: stateURL, saveDebounce: .seconds(999))
+
+        let cal = Calendar.current
+        let startToday = cal.startOfDay(for: Date())
+        let now = cal.date(byAdding: .hour, value: 12, to: startToday)!
+
+        for dayOffset in 0..<7 {
+            let day = cal.date(byAdding: .day, value: -dayOffset, to: startToday)!
+            let start = cal.date(byAdding: .second, value: 1, to: day)!
+            let end = cal.date(byAdding: .second, value: 59, to: start)! // 59 seconds
+            store.beginStudy(now: start)
+            store.endStudy(now: end, cal: cal)
+        }
+
+        #expect(store.weeklyMinutes(now: now, cal: cal).reduce(0, +) == 0)
+        #expect(store.weeklyTotalMinutes(now: now, cal: cal) == 6)
+    }
 }
 

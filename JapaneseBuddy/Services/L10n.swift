@@ -76,6 +76,7 @@ enum L10n {
     enum Stats {
         static var streakFmt: String { localized("JB.Stats.StreakFmt") }
         static var noData: String { localized("JB.Stats.NoData") }
+        static var todayMinutesFmt: String { localized("JB.Stats.TodayMinutesFmt") }
         static var weekMinutesFmt: String { localized("JB.Stats.WeekMinutesFmt") }
         static var streakBestFmt: String { localized("JB.Stats.StreakBestFmt") }
     }
