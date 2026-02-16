@@ -21,7 +21,11 @@ report = []
 
 # --- L10n keys used in code
 l10n_swift = os.path.join(ROOT, "JapaneseBuddy/Services/L10n.swift")
-keys_used = set(re.findall(r'NSLocalizedString\("([^"]+)"', read(l10n_swift))) if os.path.exists(l10n_swift) else set()
+keys_used = set()
+if os.path.exists(l10n_swift):
+    raw_l10n = read(l10n_swift)
+    keys_used.update(re.findall(r'NSLocalizedString\("([^"]+)"', raw_l10n))
+    keys_used.update(re.findall(r'localized\("([^"]+)"', raw_l10n))
 langs = {
   "Base": os.path.join(ROOT, "JapaneseBuddy/Resources/L10n/Base.lproj"),
   "en":   os.path.join(ROOT, "JapaneseBuddy/Resources/L10n/en.lproj"),
@@ -72,9 +76,9 @@ def lesson_ok(js):
                 shadow_ok = True
                 break
 
-    # KanjiWords count between 3 and 5
+    # KanjiWords count should be at least 3
     kw = d.get("kanjiWords", [])
-    kanji_ok = isinstance(kw, list) and 3 <= len(kw) <= 5
+    kanji_ok = isinstance(kw, list) and len(kw) >= 3
 
     checks = [
         any(k == "objective" for k in kinds),

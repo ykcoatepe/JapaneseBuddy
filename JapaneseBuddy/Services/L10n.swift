@@ -7,19 +7,27 @@ private extension L10n {
     }
 
     static var localizationBundle: Bundle {
-        if
-            let language = Locale.current.languageCode,
-            let path = Bundle.main.path(forResource: language, ofType: "lproj", inDirectory: "L10n"),
+        for language in Bundle.main.preferredLocalizations {
+            if let bundle = preferredBundle(for: language) {
+                return bundle
+            }
+        }
+        return preferredBundle(for: "Base") ?? Bundle.main
+    }
+
+    static func preferredBundle(for language: String) -> Bundle? {
+        if let path = Bundle.main.path(forResource: language, ofType: "lproj", inDirectory: "L10n"),
            let bundle = Bundle(path: path) {
             return bundle
         }
 
-        if let path = Bundle.main.path(forResource: "Base", ofType: "lproj", inDirectory: "L10n"),
+        let code = language.split(separator: "-").first.map(String.init)
+        if let code,
+           let path = Bundle.main.path(forResource: code, ofType: "lproj", inDirectory: "L10n"),
            let bundle = Bundle(path: path) {
             return bundle
         }
-
-        return Bundle.main
+        return nil
     }
 }
 
