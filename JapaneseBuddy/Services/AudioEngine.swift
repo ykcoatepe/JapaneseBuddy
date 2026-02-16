@@ -5,6 +5,7 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
     static let shared = AudioEngine()
     private var player: AVAudioPlayer?
     private(set) var isPlaying = false
+    @MainActor var onPlaybackEnded: (() -> Void)?
     private var sessionCategory: AVAudioSession.Category {
         let playInSilentMode = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         return playInSilentMode ? .playback : .soloAmbient
@@ -41,6 +42,9 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
         player?.stop()
         player = nil
         isPlaying = false
+        Task { @MainActor [weak self] in
+            self?.onPlaybackEnded?()
+        }
     }
 
     // Locate bundled audio: Resources/audio/<lessonID>/seg-<index>.m4a
@@ -58,10 +62,16 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
     // MARK: - AVAudioPlayerDelegate
     nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         isPlaying = false
+        Task { @MainActor [weak self] in
+            self?.onPlaybackEnded?()
+        }
     }
 
     nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         isPlaying = false
         self.player = nil
+        Task { @MainActor [weak self] in
+            self?.onPlaybackEnded?()
+        }
     }
 }

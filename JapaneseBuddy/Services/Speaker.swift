@@ -16,6 +16,7 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     @MainActor
     func speak(_ text: String) {
+        AudioEngine.shared.onPlaybackEnded = nil
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
         // For spoken content, use .spokenAudio with ducking
@@ -90,6 +91,9 @@ extension Speaker {
             deactivateWorkItem = nil
             // Stop any ongoing TTS if needed (no-op if not speaking)
             synth.stopSpeaking(at: .immediate)
+            AudioEngine.shared.onPlaybackEnded = { [weak self] in
+                self?.deactivateSessionIfIdleMain()
+            }
             let played = AudioEngine.shared.play(url: url)
             guard played else {
                 AudioEngine.shared.stop()
