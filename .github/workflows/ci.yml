@@ -42,6 +42,17 @@ jobs:
       - name: Install xcpretty
         run: sudo gem install xcpretty --no-document
 
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
+            -scheme JapaneseBuddyProj \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build | xcpretty
+
       - name: Select simulator
         id: sim
         run: |
@@ -59,18 +70,6 @@ jobs:
           ")
           echo "Using simulator UDID: ${SIM_UDID}"
           echo "udid=${SIM_UDID}" >> "$GITHUB_OUTPUT"
-          # Boot the simulator so xcodebuild can resolve it
-          xcrun simctl boot "${SIM_UDID}" || true
-
-      - name: Build
-        run: |
-          set -o pipefail
-          xcodebuild \
-            -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
-            -scheme JapaneseBuddyProj \
-            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
-            CODE_SIGNING_ALLOWED=NO \
-            build | xcpretty
 
       - name: Test
         run: |
@@ -78,6 +77,7 @@ jobs:
           xcodebuild \
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
+            -sdk iphonesimulator \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
