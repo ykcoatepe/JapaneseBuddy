@@ -57,13 +57,19 @@ jobs:
         id: sim
         run: |
           set -euo pipefail
-          SIM_NAME=$(xcrun simctl list devices available | grep -E '^[[:space:]]*iPhone' | head -n1 | sed -E 's/^[[:space:]]*([^\(]+) \(.*/\1/' | xargs)
-          if [ -z "${SIM_NAME}" ]; then
-            echo "No available iPhone simulator found" >&2
-            exit 1
-          fi
-          echo "Using simulator: ${SIM_NAME}"
-          echo "name=${SIM_NAME}" >> "$GITHUB_OUTPUT"
+          # Pick the first available iPhone from the newest iOS runtime by UDID
+          SIM_UDID=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)['devices']
+          ios = sorted([k for k in data if 'iOS' in k and 'visionOS' not in k and 'watchOS' not in k and 'tvOS' not in k], reverse=True)
+          for rt in ios:
+              for d in data[rt]:
+                  if 'iPhone' in d['name'] and d.get('isAvailable', False):
+                      print(d['udid']); sys.exit(0)
+          sys.exit(1)
+          ")
+          echo "Using simulator UDID: ${SIM_UDID}"
+          echo "udid=${SIM_UDID}" >> "$GITHUB_OUTPUT"
 
       - name: Test
         run: |
@@ -72,6 +78,6 @@ jobs:
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
-            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
