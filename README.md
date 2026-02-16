@@ -69,7 +69,7 @@ Set daily targets for new and review cards and track progress on the Home screen
 Use **Settings ▸ Backup & Restore** to export or import your study deck. Export shares `deck.json` from the Documents folder via the system share sheet. Import validates the file then replaces the existing deck. All data stays local on your device.
 
 ## Audio Packs
-- Optional local audio for shadowing lives under `JapaneseBuddy/Resources/audio/<lessonID>/seg-<n>.m4a`.
+- Optional local audio for shadowing lives under `JapaneseBuddy/Resources/lessons/audio/<lessonID>/seg-<n>.m4a`.
 - When present, the app plays the file; otherwise it falls back to ja‑JP TTS.
 - Files stay on‑device; no external services are used.
 
