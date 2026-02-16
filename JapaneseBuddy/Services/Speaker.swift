@@ -61,7 +61,7 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
         let work = DispatchWorkItem { [weak self] in
             guard let self else { return }
             Task { @MainActor in
-                guard !self.synth.isSpeaking else { return }
+                guard !self.synth.isSpeaking && !AudioEngine.shared.isPlaying else { return }
                 Self.audioQueue.async { [weak self] in
                     guard let self else { return }
                     do {
@@ -82,6 +82,8 @@ extension Speaker {
     @MainActor
     func playSegment(lessonID: String, index: Int, text: String) {
         if let url = AudioEngine.shared.findAudio(lessonID: lessonID, index: index) {
+            deactivateWorkItem?.cancel()
+            deactivateWorkItem = nil
             // Stop any ongoing TTS if needed (no-op if not speaking)
             synth.stopSpeaking(at: .immediate)
             let played = AudioEngine.shared.play(url: url)

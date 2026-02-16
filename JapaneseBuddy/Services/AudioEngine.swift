@@ -4,6 +4,7 @@ import AVFoundation
 final class AudioEngine: NSObject, AVAudioPlayerDelegate {
     static let shared = AudioEngine()
     private var player: AVAudioPlayer?
+    private(set) var isPlaying = false
     private var sessionCategory: AVAudioSession.Category {
         let playInSilentMode = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         return playInSilentMode ? .playback : .soloAmbient
@@ -17,17 +18,21 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
     func play(url: URL) -> Bool {
         configureSessionCategory()
         stop()
+        isPlaying = false
         do {
             player = try AVAudioPlayer(contentsOf: url)
             player?.delegate = self
             player?.prepareToPlay()
             if player?.play() == true {
+                isPlaying = true
                 return true
             }
             player = nil
+            isPlaying = false
             return false
         } catch {
             player = nil
+            isPlaying = false
             return false
         }
     }
@@ -35,6 +40,7 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
     func stop() {
         player?.stop()
         player = nil
+        isPlaying = false
     }
 
     // Locate bundled audio: Resources/audio/<lessonID>/seg-<index>.m4a
@@ -47,5 +53,15 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
         do {
             try AVAudioSession.sharedInstance().setCategory(sessionCategory)
         } catch {}
+    }
+
+    // MARK: - AVAudioPlayerDelegate
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        isPlaying = false
+    }
+
+    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        isPlaying = false
+        self.player = nil
     }
 }
