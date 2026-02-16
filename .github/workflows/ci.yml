@@ -60,14 +60,7 @@ jobs:
           DESTINATION=$(xcodebuild -showdestinations \
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj | \
-            python3 -c 'import re,sys
-for line in sys.stdin:
-  if "platform:iOS Simulator" in line and "name:iPhone" in line and "OS:" in line:
-    os = re.search(r"OS:([^,}]+)", line)
-    name = re.search(r"name:([^,}]+)", line)
-    if os and name:
-      print(f"platform=iOS Simulator,name={name.group(1).strip()},OS={os.group(1).strip()}")
-      break')
+            python3 -c "import re,sys; import itertools as it; lines=(ln for ln in sys.stdin if 'platform:iOS Simulator' in ln and 'name:iPhone' in ln and 'OS:' in ln); ln=next(lines,''); m1=re.search(r'OS:([^,}]+)',ln); m2=re.search(r'name:([^,}]+)',ln); print(f'platform=iOS Simulator,name={m2.group(1).strip()},OS={m1.group(1).strip()}' if (m1 and m2) else '')")
           if [ -z "${DESTINATION}" ]; then
             DESTINATION='platform=iOS Simulator,name=iPhone 16,OS=latest'
           fi
