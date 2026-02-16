@@ -1,13 +1,14 @@
 # Sanity Snapshot
 
-- Updated: 2026-02-16T04:12:56Z
+- Updated: 2026-02-16T04:34:26Z
 
 ## Project
 - xcodeproj: present
 
 ## Lessons Wiring
-- A1-01 missing in project
-- A1-04 missing in project
+- lessons folder reference present in project (blue folder)
+- A1-01 present via folder reference
+- A1-04 present via folder reference
 
 ## Loader Checks
 17:        let fromFolder = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
