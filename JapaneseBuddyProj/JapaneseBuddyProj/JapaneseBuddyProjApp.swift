@@ -11,7 +11,6 @@ import SwiftUI
 struct JapaneseBuddyProjApp: App {
     @StateObject private var store: DeckStore
     @StateObject private var lessons: LessonStore
-    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         let deck = DeckStore()
@@ -35,16 +34,6 @@ struct JapaneseBuddyProjApp: App {
             .environmentObject(lessons)
             .applyTheme(store.themeMode)
             .tint(Color("AccentColor"))
-            .onChange(of: scenePhase) { _, phase in
-                switch phase {
-                case .active:
-                    store.beginStudy()
-                case .inactive, .background:
-                    store.endStudy(kind: .study)
-                @unknown default:
-                    break
-                }
-            }
         }
     }
 }

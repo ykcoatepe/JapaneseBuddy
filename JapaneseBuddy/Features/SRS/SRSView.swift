@@ -3,6 +3,7 @@ import SwiftUI
 /// Simple SRS review screen with grading buttons.
 struct SRSView: View {
     @EnvironmentObject var store: DeckStore
+    @Environment(\.scenePhase) private var scenePhase
     @State private var current: Card?
     @State private var showBack = false
     private let speaker = Speaker()
@@ -43,6 +44,16 @@ struct SRSView: View {
         .onAppear {
             store.beginStudy()
             next()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .inactive, .background:
+                store.endStudy(kind: .study)
+            case .active:
+                if current != nil { store.beginStudy() }
+            @unknown default:
+                break
+            }
         }
         .onDisappear { store.endStudy(kind: .study) }
         .navigationTitle(L10n.Nav.review)

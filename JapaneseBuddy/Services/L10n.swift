@@ -1,48 +1,71 @@
 import Foundation
 
+private extension L10n {
+    @inline(__always)
+    static func localized(_ key: String) -> String {
+        localizationBundle.localizedString(forKey: key, value: "", table: "Localized")
+    }
+
+    static var localizationBundle: Bundle {
+        if
+            let language = Locale.current.languageCode,
+            let path = Bundle.main.path(forResource: language, ofType: "lproj", inDirectory: "L10n"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        }
+
+        if let path = Bundle.main.path(forResource: "Base", ofType: "lproj", inDirectory: "L10n"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        }
+
+        return Bundle.main
+    }
+}
+
 enum L10n {
     enum Nav {
-        static var home: String { NSLocalizedString("JB.Nav.Home", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var lessons: String { NSLocalizedString("JB.Nav.Lessons", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var practice: String { NSLocalizedString("JB.Nav.Practice", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var review: String { NSLocalizedString("JB.Nav.Review", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var stats: String { NSLocalizedString("JB.Nav.Stats", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var settings: String { NSLocalizedString("JB.Nav.Settings", tableName: "Localized", bundle: .main, value: "", comment: "") }
+        static var home: String { localized("JB.Nav.Home") }
+        static var lessons: String { localized("JB.Nav.Lessons") }
+        static var practice: String { localized("JB.Nav.Practice") }
+        static var review: String { localized("JB.Nav.Review") }
+        static var stats: String { localized("JB.Nav.Stats") }
+        static var settings: String { localized("JB.Nav.Settings") }
     }
     enum Btn {
-        static var continueLesson: String { NSLocalizedString("JB.Btn.ContinueLesson", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var startTrace: String { NSLocalizedString("JB.Btn.StartTrace", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var startReview: String { NSLocalizedString("JB.Btn.StartReview", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var speak: String { NSLocalizedString("JB.Btn.Speak", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var clear: String { NSLocalizedString("JB.Btn.Clear", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var hint: String { NSLocalizedString("JB.Btn.Hint", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var check: String { NSLocalizedString("JB.Btn.Check", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var play: String { NSLocalizedString("JB.Btn.Play", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var pause: String { NSLocalizedString("JB.Btn.Pause", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var hard: String { NSLocalizedString("JB.Btn.Hard", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var good: String { NSLocalizedString("JB.Btn.Good", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var easy: String { NSLocalizedString("JB.Btn.Easy", tableName: "Localized", bundle: .main, value: "", comment: "") }
+        static var continueLesson: String { localized("JB.Btn.ContinueLesson") }
+        static var startTrace: String { localized("JB.Btn.StartTrace") }
+        static var startReview: String { localized("JB.Btn.StartReview") }
+        static var speak: String { localized("JB.Btn.Speak") }
+        static var clear: String { localized("JB.Btn.Clear") }
+        static var hint: String { localized("JB.Btn.Hint") }
+        static var check: String { localized("JB.Btn.Check") }
+        static var play: String { localized("JB.Btn.Play") }
+        static var pause: String { localized("JB.Btn.Pause") }
+        static var hard: String { localized("JB.Btn.Hard") }
+        static var good: String { localized("JB.Btn.Good") }
+        static var easy: String { localized("JB.Btn.Easy") }
     }
     enum Settings {
-        static var appearance: String { NSLocalizedString("JB.Settings.Appearance", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var system: String { NSLocalizedString("JB.Settings.System", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var light: String { NSLocalizedString("JB.Settings.Light", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var dark: String { NSLocalizedString("JB.Settings.Dark", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var showStrokeHints: String { NSLocalizedString("JB.Settings.ShowStrokeHints", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var backupRestore: String { NSLocalizedString("JB.Settings.BackupRestore", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var exportDeck: String { NSLocalizedString("JB.Settings.ExportDeck", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var importDeck: String { NSLocalizedString("JB.Settings.ImportDeck", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var enableReminder: String { NSLocalizedString("JB.Settings.EnableReminder", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var time: String { NSLocalizedString("JB.Settings.Time", tableName: "Localized", bundle: .main, value: "", comment: "") }
+        static var appearance: String { localized("JB.Settings.Appearance") }
+        static var system: String { localized("JB.Settings.System") }
+        static var light: String { localized("JB.Settings.Light") }
+        static var dark: String { localized("JB.Settings.Dark") }
+        static var showStrokeHints: String { localized("JB.Settings.ShowStrokeHints") }
+        static var backupRestore: String { localized("JB.Settings.BackupRestore") }
+        static var exportDeck: String { localized("JB.Settings.ExportDeck") }
+        static var importDeck: String { localized("JB.Settings.ImportDeck") }
+        static var enableReminder: String { localized("JB.Settings.EnableReminder") }
+        static var time: String { localized("JB.Settings.Time") }
     }
     enum Home {
-        static var dailyGoal: String { NSLocalizedString("JB.Home.DailyGoal", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var greeting: String { NSLocalizedString("JB.Home.Greeting", tableName: "Localized", bundle: .main, value: "", comment: "") }
+        static var dailyGoal: String { localized("JB.Home.DailyGoal") }
+        static var greeting: String { localized("JB.Home.Greeting") }
     }
     enum Stats {
-        static var streakFmt: String { NSLocalizedString("JB.Stats.StreakFmt", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var noData: String { NSLocalizedString("JB.Stats.NoData", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var weekMinutesFmt: String { NSLocalizedString("JB.Stats.WeekMinutesFmt", tableName: "Localized", bundle: .main, value: "", comment: "") }
-        static var streakBestFmt: String { NSLocalizedString("JB.Stats.StreakBestFmt", tableName: "Localized", bundle: .main, value: "", comment: "") }
+        static var streakFmt: String { localized("JB.Stats.StreakFmt") }
+        static var noData: String { localized("JB.Stats.NoData") }
+        static var weekMinutesFmt: String { localized("JB.Stats.WeekMinutesFmt") }
+        static var streakBestFmt: String { localized("JB.Stats.StreakBestFmt") }
     }
 }

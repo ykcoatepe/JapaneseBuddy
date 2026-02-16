@@ -5,6 +5,7 @@ import UIKit
 /// Practice view for tracing kana characters.
 struct KanaTraceView: View {
     @EnvironmentObject var store: DeckStore
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var current: Card?
     @State private var canvas: PKCanvasView?
@@ -43,6 +44,16 @@ struct KanaTraceView: View {
         .onAppear {
             store.beginStudy()
             next()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .inactive, .background:
+                store.endStudy(kind: .study)
+            case .active:
+                if current != nil { store.beginStudy() }
+            @unknown default:
+                break
+            }
         }
         .onDisappear { store.endStudy(kind: .study) }
         .navigationTitle(L10n.Nav.practice)
