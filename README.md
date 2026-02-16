@@ -1,5 +1,43 @@
 # JapaneseBuddy
 
+## Table of Contents
+- [UI Design System](docs/UI_DESIGN_SYSTEM.md)
+- [UX](#ux)
+- [Pedagogy](docs/LESSONS_PEDAGOGY.md)
+- [Getting Started](#getting-started)
+- [Backup/Restore](#backuprestore)
+ - [Localization](#localization)
+- [Contributing](CONTRIBUTING.md)
+- [License](#license)
+
+## Screenshots
+
+> Replace these placeholders with real captures when ready.  
+> See [docs/screenshots/README.md](docs/screenshots/README.md).
+
+<table>
+  <tr>
+    <td>
+      <img src="./docs/screenshots/home.svg"
+           alt="Home screen" width="420"/>
+    </td>
+    <td>
+      <img src="./docs/screenshots/lessons.svg"
+           alt="Lessons screen" width="420"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="./docs/screenshots/trace.svg"
+           alt="Trace screen" width="420"/>
+    </td>
+    <td>
+      <img src="./docs/screenshots/srs.svg"
+           alt="SRS screen" width="420"/>
+    </td>
+  </tr>
+</table>
+Note: SVG placeholders remain in this folder as a fallback (`*.svg`).
 Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
 
 ## Run
@@ -30,6 +68,11 @@ Set daily targets for new and review cards and track progress on the Home screen
 ## Backup & Restore
 Use **Settings ▸ Backup & Restore** to export or import your study deck. Export shares `deck.json` from the Documents folder via the system share sheet. Import validates the file then replaces the existing deck. All data stays local on your device.
 
+## Audio Packs
+- Optional local audio for shadowing lives under `JapaneseBuddy/Resources/lessons/audio/<lessonID>/seg-<n>.m4a`.
+- When present, the app plays the file; otherwise it falls back to ja‑JP TTS.
+- Files stay on‑device; no external services are used.
+
 ## Stroke Order
 Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.
 
@@ -55,27 +98,37 @@ Type the reading in hiragana; tap Speak to hear it; correct answers join your SR
 ## Onboarding
 First launch presents a short onboarding flow to choose decks, learn the tracing pass rule, set goals, and optionally save your name.
 
-## UI Design System
-- Tokens: defined in `UI/Theme.swift`
-  - Colors: `Color.accentColor`, `Color.washi` (background), `Color.wasabi` (support), `Color.cardBackground` (cards)
-  - Spacing: `Theme.Spacing` (xsmall/small/medium/large)
-  - CornerRadius: `Theme.CornerRadius` (small/medium/large)
-  - Shadow: `Theme.Shadow.card`
-  - Typography helpers: `Typography.title/_header/_label`
-- Components: under `UI/Components/`
-  - `JBButton` (primary/secondary)
-  - `JBCard` (material card with border + shadow)
-  - `ProgressBar` (thin semantic progress)
-  - `SectionHeader` (title + trailing action slot)
-  - `StatTile` (value+label in a card)
-  - `EmptyState` (icon + message)
-- Navigation: `App/AppSidebar.swift` uses `NavigationSplitView` with sidebar items Home, Lessons, Practice, Review, Stats, Settings.
-- Views:
-  - Home: greeting, DailyGoal card, quick actions (Continue Lesson / Trace / Review)
-  - Lessons: filter chips A1/A2/All, progress stars
-  - Runner: segmented header (Objective/Shadow/Listening/Reading/Kanji/Check)
-  - Trace: fixed bottom toolbar (Clear/Hint/Speak/Check), respects Reduce Motion
-  - SRS: large type card + haptics
-  - Stats: streak + weekly chart, falls back to EmptyState
-  - Settings: theme toggle (System/Light/Dark)
-- Accessibility: supports Dynamic Type up to XXXLarge, VoiceOver hints, haptics, and Reduce Motion
+## UI Design System (iPad-first)
+
+- **Shell:** `NavigationSplitView` sidebar → Home, Lessons, Practice (Trace), Review (SRS), Stats, Settings  
+- **Theme:** System/Light/Dark via `ThemeMode` (persisted in `DeckStore.State`); app-wide `.tint(Color("AccentColor"))`  
+- **Tokens:** see `JapaneseBuddy/UI/Theme.swift` for spacing, radii, shadow, typography helpers; colors include `washiBg`, `cardBg`, accent  
+- **Components:** `JBButton` (primary/secondary), `JBCard`, `StatTile`, `ProgressBar`, `SectionHeader`, `EmptyState`  
+- **Accessibility:** labels/hints on primary actions; Dynamic Type to XXXL; Reduce Motion disables stroke preview animation
+
+## UX at a glance
+
+- **Home:** greeting (“こんにちは, <Name>!”), Daily Goal, quick actions (Continue Lesson / Start Trace / Review)  
+- **Lessons:** A1/A2 filter chips, star rating + step progress; runner with segmented header (Objective / Shadow / Listening / Reading / Kanji / Check)  
+- **Practice (Trace):** responsive square board, hint overlay (toggle), fixed bottom toolbar (Clear / Hint / Speak / Check)  
+- **Review (SRS):** large card (front/back, Speak), grade buttons (Hard/Good/Easy), haptic on tap  
+- **Stats:** streak, 7-day bars (falls back to EmptyState)  
+- **Settings:** profile (name), theme, goals & reminder, tracing options, Backup & Restore (export/import `deck.json`)
+
+## Pedagogy (Can-do + Shadowing)
+
+Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1–A2 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.
+→ See: [docs/UI_DESIGN_SYSTEM.md](docs/UI_DESIGN_SYSTEM.md) · [docs/LESSONS_PEDAGOGY.md](docs/LESSONS_PEDAGOGY.md)
+
+## Content Provenance
+- All B1 lessons (B1-01…B1-06) are original content created for this app. If dictionary readings are ever incorporated, see THIRDPARTY-LICENSES.md for attribution guidance.
+
+## Localization
+
+String keys live in `L10n.swift` using the `JB.<Area>.<Name>` format. Add new keys there and reference them with `NSLocalizedString`.
+
+To add a language, create a new `*.lproj/Localized.strings` under `JapaneseBuddy/Resources/L10n/` and copy keys from `Base.lproj`.
+
+After adding a strings file, ensure it is part of the app target via the Xcode file inspector.
+
+- Added `JB.Stats.StreakFmt` for the Home streak label (Base/en/tr/ja).

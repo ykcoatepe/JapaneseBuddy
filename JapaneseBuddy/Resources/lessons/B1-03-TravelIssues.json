@@ -1,0 +1,32 @@
+{
+  "id": "B1-03",
+  "title": "Travel Issues",
+  "canDo": "Explain a simple problem and ask for help while traveling",
+  "activities": [
+    { "objective": { "text": "Report a delay and ask how to transfer." } },
+    { "shadow": { "segments": [
+      "電車が おくれて しまって、乗りかえに 間に合いません。",
+      "つぎの 便で 行けますか。どう すれば いいですか。"
+    ] } },
+    { "listening": {
+      "prompt": "What happened to the train?",
+      "choices": ["It’s canceled", "It’s delayed", "It’s early"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the helpful response.",
+      "choices": [
+        "しりません。",
+        "駅員に 聞いて ください。",
+        "とにかく 走ってください。"
+      ],
+      "answer": 1
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-03-電", "kanji": "電", "reading": "でん", "meaning": "electric/train" },
+    { "id": "B1-03-遅", "kanji": "遅", "reading": "おく", "meaning": "late/delay" },
+    { "id": "B1-03-間", "kanji": "間", "reading": "ま", "meaning": "interval/time" }
+  ]
+}

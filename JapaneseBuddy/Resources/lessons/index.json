@@ -1,0 +1,17 @@
+{
+  "A1": [
+    "A1-01-Greetings",
+    "A1-04-WhereYouLive",
+    "A1-05-Prices",
+    "A1-06-TimeDate",
+    "A1-07-Ordering"
+  ],
+  "B1": [
+    "B1-01-InvitationsPlans",
+    "B1-02-WorkplaceChat",
+    "B1-03-TravelIssues",
+    "B1-04-AdviceRequests",
+    "B1-05-WeekendPlans",
+    "B1-06-ErrandsReservations"
+  ]
+}

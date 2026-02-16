@@ -9,7 +9,7 @@ struct HomeView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.large) {
                 if let name = store.displayName, !name.isEmpty {
-                    Typography.title("こんにちは, \(name)!")
+                    Typography.title(String(format: L10n.Home.greeting, name))
                         .padding(.horizontal)
                 }
 
@@ -25,7 +25,7 @@ struct HomeView: View {
 
                 JBCard {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Daily Goal").font(.headline)
+                        Text(L10n.Home.dailyGoal).font(.headline)
                         HStack {
                             Label("New \(progress.newDone)/\(progress.target.newTarget)", systemImage: "sparkles")
                             Spacer()
@@ -38,6 +38,26 @@ struct HomeView: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Daily goal progress")
 
+                // Streak row + 7‑day sparkline
+                let counts = store.weeklyActivity()
+                let maxVal = max(1, counts.max() ?? 1)
+                let normalized = counts.map { Double($0) / Double(maxVal) }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(format: L10n.Stats.todayMinutesFmt, store.minutesToday()))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(String(format: L10n.Stats.todayMinutesFmt, store.minutesToday()))
+                    Text(String(format: L10n.Stats.streakFmt, store.currentStreak()))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(String(format: L10n.Stats.streakFmt, store.currentStreak()))
+                    HomeSparkline(values: normalized)
+                        .frame(height: 36)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal)
+
                 VStack(spacing: Theme.Spacing.small) {
                     Text("Quick Actions").font(.headline).padding(.horizontal)
                     HStack(spacing: Theme.Spacing.small) {
@@ -47,9 +67,9 @@ struct HomeView: View {
                             } else {
                                 LessonListView()
                             }
-                        } label: { JBButton("Continue Lesson") }
-                        NavigationLink { KanaTraceView() } label: { JBButton("Trace", kind: .secondary) }
-                        NavigationLink { SRSView() } label: { JBButton("Review", kind: .secondary) }
+                        } label: { JBButton(L10n.Btn.continueLesson) }
+                        NavigationLink { KanaTraceView() } label: { JBButton(L10n.Btn.startTrace, kind: .secondary) }
+                        NavigationLink { SRSView() } label: { JBButton(L10n.Btn.startReview, kind: .secondary) }
                     }
                     .padding(.horizontal)
                 }
@@ -57,7 +77,7 @@ struct HomeView: View {
             }
         }
         .background(Color.washi.ignoresSafeArea())
-        .navigationTitle("Home")
+        .navigationTitle(L10n.Nav.home)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .toolbar { }
     }
@@ -74,5 +94,32 @@ struct HomeView: View {
 
     private var continueLesson: Lesson? {
         lessonStore.lessons().first { lessonStore.progress(for: $0.id).lastStep < $0.activities.count - 1 }
+    }
+}
+
+private struct HomeSparkline: View {
+    let values: [Double]
+    private let lineWidth: CGFloat = 3
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width
+            let h = geo.size.height
+            let n = max(1, values.count - 1)
+            let pts: [CGPoint] = values.enumerated().map { (i, v) in
+                let x = CGFloat(i) / CGFloat(n) * w
+                let y = h - CGFloat(v) * h
+                return CGPoint(x: x, y: y)
+            }
+            Path { p in
+                guard let first = pts.first else { return }
+                p.move(to: first)
+                for pt in pts.dropFirst() { p.addLine(to: pt) }
+            }
+            .stroke(Color.accentColor,
+                    style: StrokeStyle(lineWidth: lineWidth,
+                                       lineCap: .round,
+                                       lineJoin: .round))
+        }
     }
 }

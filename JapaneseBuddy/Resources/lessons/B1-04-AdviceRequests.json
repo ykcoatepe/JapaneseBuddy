@@ -1,0 +1,32 @@
+{
+  "id": "B1-04",
+  "title": "Advice and Requests",
+  "canDo": "Ask for and give simple advice politely",
+  "activities": [
+    { "objective": { "text": "Ask for advice about a small problem and respond." } },
+    { "shadow": { "segments": [
+      "ねつが 少し あります。どう したら いいですか。",
+      "きょうは ゆっくり 休んだ ほうが いいですよ。"
+    ] } },
+    { "listening": {
+      "prompt": "What advice was given?",
+      "choices": ["Go running", "Rest today", "Go to work"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the polite way to ask for advice.",
+      "choices": [
+        "どう して？",
+        "どう 思う？",
+        "どう したら いいですか。"
+      ],
+      "answer": 2
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-04-熱", "kanji": "熱", "reading": "ねつ", "meaning": "fever" },
+    { "id": "B1-04-休", "kanji": "休", "reading": "やす", "meaning": "rest" },
+    { "id": "B1-04-良", "kanji": "良", "reading": "よ", "meaning": "good" }
+  ]
+}

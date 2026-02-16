@@ -1,0 +1,32 @@
+{
+  "id": "B1-01",
+  "title": "Invitations and Plans",
+  "canDo": "Invite someone politely and confirm plans",
+  "activities": [
+    { "objective": { "text": "Invite a colleague and confirm a meeting time." } },
+    { "shadow": { "segments": [
+      "こんどの金ようび、よかったら いっしょに 夕ごはん どうですか。",
+      "１９時 ごろは どうですか。駅で 会いましょう。"
+    ] } },
+    { "listening": {
+      "prompt": "What time do they suggest meeting?",
+      "choices": ["17:00", "19:00", "21:00"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that politely invites someone.",
+      "choices": [
+        "夕ごはん いく？",
+        "夕ごはん 行きなさい。",
+        "夕ごはん いっしょに どうですか。"
+      ],
+      "answer": 2
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-01-金", "kanji": "金", "reading": "きん", "meaning": "Friday" },
+    { "id": "B1-01-夕", "kanji": "夕", "reading": "ゆう", "meaning": "evening" },
+    { "id": "B1-01-会", "kanji": "会", "reading": "あ", "meaning": "meet" }
+  ]
+}

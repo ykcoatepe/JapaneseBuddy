@@ -44,3 +44,29 @@ Example: `make format && make lint && make test` before opening a PR.
 - Keep modules small and focused; follow existing folder layout.
 - Memory helpers: `scripts/memory.sh init|append|sanity|progress|recall` to maintain `.codex/` state.
 
+## Localization & Accessibility
+- Maintain localization parity for new strings across `Base`, `en`, `tr`, and `ja`.
+- Respect Reduce Motion; avoid non-essential animations when enabled.
+- Keep haptics optional and user‑controllable.
+
+## Lessons & Content Health
+- Update `JapaneseBuddy/Resources/lessons/index.json` when adding/removing lessons.
+- Each lesson should include: objectives, shadowing segments (≥2), MCQs, checks, and `kanjiWords` (≥3 entries when applicable).
+- Run `scripts/postmerge_sanity.py` to validate index, segment counts, and structure after content changes.
+
+## Audio Behavior
+- Prefer local audio packs for shadowing when present; fall back to TTS when missing.
+- Ensure TTS is cancelled when switching to local playback to avoid overlap.
+- Do not introduce third‑party audio SDKs.
+
+## Study Stats
+- Pair `beginStudy`/`endStudy` calls for study views to avoid double counting.
+- Keep time tracking fields optional to preserve backup/restore compatibility.
+
+## Documentation & Screenshots
+- Keep README screenshots grid updated (PNG assets under `docs/screenshots/`).
+- Keep docs index (`docs/README.md`) and reports up to date (e.g., `REPORT-FE.md`, `REPORT-POSTMERGE.md`).
+
+## PRs & Releases
+- Use Conventional Commits; include clear PR descriptions with QA notes and screenshots for UI changes.
+- Release notes should cover: UI layout, ThemeMode, lessons added, audio fallback, stats (streak/weekly minutes), backup/restore, localization, and docs.

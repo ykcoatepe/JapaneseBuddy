@@ -5,6 +5,7 @@ import UIKit
 /// Practice view for tracing kana characters.
 struct KanaTraceView: View {
     @EnvironmentObject var store: DeckStore
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var current: Card?
     @State private var canvas: PKCanvasView?
@@ -40,26 +41,44 @@ struct KanaTraceView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onAppear(perform: next)
-        .navigationTitle("Trace")
+        .onAppear {
+            next()
+            if let current {
+                store.beginStudy(for: current)
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .inactive, .background:
+                store.endStudy(kind: .study)
+            case .active:
+                if let current {
+                    store.beginStudy(for: current)
+                }
+            @unknown default:
+                break
+            }
+        }
+        .onDisappear { store.endStudy(kind: .study) }
+        .navigationTitle(L10n.Nav.practice)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .safeAreaInset(edge: .bottom) {
             if let card = current {
                 HStack(spacing: Theme.Spacing.small) {
                     if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
-                        JBButton(playing ? "Pause" : "Play", kind: .secondary) { playing.toggle() }
+                        JBButton(playing ? L10n.Btn.pause : L10n.Btn.play, kind: .secondary) { playing.toggle() }
                             .accessibilityLabel(playing ? "Pause preview" : "Play preview")
                             .accessibilityHint("Preview stroke order")
                     }
-                    JBButton("Clear", kind: .secondary) { canvas?.drawing = PKDrawing() }
+                    JBButton(L10n.Btn.clear, kind: .secondary) { canvas?.drawing = PKDrawing() }
                         .accessibilityLabel("Clear drawing")
                         .accessibilityHint("Erases your strokes")
-                    JBButton(showHint ? "Hide" : "Hint", kind: .secondary) { showHint.toggle() }
+                    JBButton(showHint ? "Hide" : L10n.Btn.hint, kind: .secondary) { showHint.toggle() }
                         .accessibilityLabel(showHint ? "Hide hint" : "Show hint")
-                    JBButton("Speak", kind: .secondary) { speaker.speak(card.front) }
+                    JBButton(L10n.Btn.speak, kind: .secondary) { speaker.speak(card.front) }
                         .accessibilityLabel("Speak character")
                         .accessibilityHint("Plays pronunciation")
-                    JBButton("Check") { check() }
+                    JBButton(L10n.Btn.check) { check() }
                         .accessibilityLabel("Check drawing")
                         .accessibilityHint("Grades your tracing")
                 }
@@ -71,6 +90,11 @@ struct KanaTraceView: View {
 
     private func next() {
         current = store.dueCards(type: store.currentType).first
+        if let current {
+            store.beginStudy(for: current)
+        } else {
+            store.endStudy(kind: .study)
+        }
         canvas?.drawing = PKDrawing()
         showHint = true
         playing = false

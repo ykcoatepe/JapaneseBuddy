@@ -21,6 +21,8 @@ final class DeckStore: ObservableObject {
 
     private let url: URL
     private var saveTask: AnyCancellable?
+    private var studyStart: Date?
+    private var studyCardID: UUID?
 
     struct State: Codable {
         var cards: [Card]
@@ -46,9 +48,13 @@ final class DeckStore: ObservableObject {
 
     struct KanjiProgress: Codable { var correct: Int = 0; var total: Int = 0 }
 
-    init() {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        url = docs.appendingPathComponent("deck.json")
+    init(stateURL: URL? = nil, saveDebounce: DispatchQueue.SchedulerTimeType.Stride = .seconds(1)) {
+        if let stateURL {
+            url = stateURL
+        } else {
+            let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            url = docs.appendingPathComponent("deck.json")
+        }
         load()
         // Mirror audio preference to UserDefaults for lightweight access in Speaker
         UserDefaults.standard.set(playSpeechInSilentMode, forKey: "playSpeechInSilentMode")
@@ -62,7 +68,7 @@ final class DeckStore: ObservableObject {
             .combineLatest($displayName)
             .combineLatest($hasOnboarded)
             .combineLatest($themeMode)
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.global())
+            .debounce(for: saveDebounce, scheduler: DispatchQueue.global())
             .sink { [weak self] _ in
                 // Keep UserDefaults in sync for the Speaker to read.
                 if let self = self {
@@ -137,11 +143,11 @@ final class DeckStore: ObservableObject {
     }
 
     func logNew(for card: Card, date: Date = .now) {
-        sessionLog.append(SessionLogEntry(date: date, kind: .new, cardID: card.id))
+        sessionLog.append(SessionLogEntry(date: date, kind: .new, cardID: card.id, durationSec: nil))
     }
 
     func logReview(for card: Card, date: Date = .now) {
-        sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id))
+        sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id, durationSec: nil))
     }
 
     func progressToday(now: Date = .now, cal: Calendar = .current) -> GoalProgress {
@@ -169,5 +175,136 @@ final class DeckStore: ObservableObject {
         var p = kanjiProgress[lessonID] ?? KanjiProgress()
         p.correct += 1
         kanjiProgress[lessonID] = p
+    }
+}
+
+// MARK: - Streak & Weekly Activity
+extension DeckStore {
+    // Returns 7 counts (oldest → newest) for the last 7 calendar days.
+    func weeklyActivity(now: Date = .now, cal: Calendar = .current) -> [Int] {
+        let startToday = cal.startOfDay(for: now)
+        let days = (0..<7).reversed().compactMap {
+            cal.date(byAdding: .day, value: -$0, to: startToday)
+        }
+        return days.map { day in
+            sessionLog.filter { cal.isDate($0.date, inSameDayAs: day) }.count
+        }
+    }
+
+    // Counts consecutive non-empty days ending today.
+    func currentStreak(now: Date = .now, cal: Calendar = .current) -> Int {
+        var streak = 0
+        var d = cal.startOfDay(for: now)
+        while true {
+            let c = sessionLog.filter { cal.isDate($0.date, inSameDayAs: d) }.count
+            if c > 0 {
+                streak += 1
+            } else {
+                break
+            }
+            guard let prev = cal.date(byAdding: .day, value: -1, to: d) else { break }
+            d = prev
+        }
+        return streak
+    }
+}
+
+// MARK: - Stopwatch & Minutes
+extension DeckStore {
+    func beginStudy(for card: Card? = nil, now: Date = .now) {
+        if let card { studyCardID = card.id }
+        if studyStart == nil {
+            studyStart = now
+        }
+    }
+
+    func endStudy(kind: SessionKind = .study, now: Date = .now, cal: Calendar = .current) {
+        guard let start = studyStart else { return }
+        studyStart = nil
+        let card = studyCardID
+        studyCardID = nil
+        guard now > start else { return }
+
+        // Split a long study session at day boundaries so daily metrics/streaks stay accurate.
+        var segmentStart = start
+        while segmentStart < now {
+            guard let nextMidnight = cal.date(byAdding: .day, value: 1, to: cal.startOfDay(for: segmentStart)) else {
+                break
+            }
+            let segmentEnd = min(now, nextMidnight)
+            guard segmentEnd > segmentStart else { break }
+
+            let duration = Int(segmentEnd.timeIntervalSince(segmentStart))
+            if duration > 0 {
+                sessionLog.append(SessionLogEntry(date: segmentStart, kind: kind, cardID: card, durationSec: duration))
+            }
+            segmentStart = segmentEnd
+        }
+    }
+
+    func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {
+        var totalSeconds = sessionLog
+            .filter { cal.isDate($0.date, inSameDayAs: now) }
+            .map { $0.durationSec ?? 0 }
+            .reduce(0, +)
+
+        // Include in-flight study duration so the metric updates live while studying.
+        if let start = studyStart, now > start {
+            let startOfToday = cal.startOfDay(for: now)
+            let effectiveStart = max(start, startOfToday)
+            if now > effectiveStart {
+                totalSeconds += Int(now.timeIntervalSince(effectiveStart))
+            }
+        }
+
+        return totalSeconds / 60
+    }
+
+    func weeklyMinutes(now: Date = .now, cal: Calendar = .current) -> [Int] {
+        let startToday = cal.startOfDay(for: now)
+        let days = (0..<7).reversed().compactMap { cal.date(byAdding: .day, value: -$0, to: startToday) }
+        return days.map { day in
+            let totalSeconds = sessionLog
+                .filter { cal.isDate($0.date, inSameDayAs: day) }
+                .map { $0.durationSec ?? 0 }
+                .reduce(0, +)
+            return totalSeconds / 60
+        }
+    }
+
+    func weeklyTotalMinutes(now: Date = .now, cal: Calendar = .current) -> Int {
+        let startToday = cal.startOfDay(for: now)
+        guard let windowStart = cal.date(byAdding: .day, value: -6, to: startToday) else { return 0 }
+
+        var totalSeconds = sessionLog
+            .filter { $0.date >= windowStart && $0.date <= now }
+            .map { $0.durationSec ?? 0 }
+            .reduce(0, +)
+
+        if let start = studyStart, now > start {
+            let effectiveStart = max(start, windowStart)
+            if now > effectiveStart {
+                totalSeconds += Int(now.timeIntervalSince(effectiveStart))
+            }
+        }
+
+        return totalSeconds / 60
+    }
+
+    func bestStreak(cal: Calendar = .current) -> Int {
+        let days = Set(sessionLog.map { cal.startOfDay(for: $0.date) })
+        let sorted = days.sorted()
+        var best = 0, cur = 0
+        var prev: Date?
+        for d in sorted {
+            if let p = prev, cal.date(byAdding: .day, value: 1, to: p) == d {
+                cur += 1
+            } else {
+                cur = 1
+            }
+            best = max(best, cur)
+            prev = d
+        }
+        return best
     }
 }

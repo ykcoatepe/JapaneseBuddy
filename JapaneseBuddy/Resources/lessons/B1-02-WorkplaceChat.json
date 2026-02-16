@@ -1,0 +1,32 @@
+{
+  "id": "B1-02",
+  "title": "Workplace Chat",
+  "canDo": "Handle small talk and simple requests at work",
+  "activities": [
+    { "objective": { "text": "Ask a quick favor and respond politely in an office." } },
+    { "shadow": { "segments": [
+      "この書類、きょう中に 確認 できますか。",
+      "はい、午後までに 見て、お返事 します。"
+    ] } },
+    { "listening": {
+      "prompt": "By when will they check the document?",
+      "choices": ["Morning", "By afternoon", "Tomorrow"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the polite request.",
+      "choices": [
+        "これ、見て。",
+        "これを 確認して いただけますか。",
+        "これ、あとで。"
+      ],
+      "answer": 1
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-02-書", "kanji": "書", "reading": "しょ", "meaning": "document/write" },
+    { "id": "B1-02-確", "kanji": "確", "reading": "かく", "meaning": "confirm" },
+    { "id": "B1-02-午", "kanji": "午", "reading": "ご", "meaning": "noon" }
+  ]
+}

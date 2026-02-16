@@ -1,0 +1,32 @@
+{
+  "id": "B1-05",
+  "title": "Weekend Plans",
+  "canDo": "Discuss simple weekend plans and preferences",
+  "activities": [
+    { "objective": { "text": "Talk about what to do this weekend." } },
+    { "shadow": { "segments": [
+      "土よう日は でかけたい んですが、どこが いいですか。",
+      "公園で ピクニック は どうですか。天気も よさそうです。"
+    ] } },
+    { "listening": {
+      "prompt": "What do they plan to do?",
+      "choices": ["Picnic in the park", "Go to the museum", "Stay home"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the phrase that suggests a plan politely.",
+      "choices": [
+        "行こうよ。",
+        "行け。",
+        "行くのは どうですか。"
+      ],
+      "answer": 2
+    } },
+    { "check": {} }
+  ],
+  "kanjiWords": [
+    { "id": "B1-05-土", "kanji": "土", "reading": "ど", "meaning": "Saturday/earth" },
+    { "id": "B1-05-園", "kanji": "園", "reading": "えん", "meaning": "park" },
+    { "id": "B1-05-天", "kanji": "天", "reading": "てん", "meaning": "sky/heaven" }
+  ]
+}

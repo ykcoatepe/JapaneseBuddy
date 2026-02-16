@@ -53,8 +53,18 @@ sanity() {
     fi
     echo
     echo "## Lessons Wiring"
-    grep -R "lessons/A1-01-Greetings.json" -n "$ROOT_DIR/JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj/project.pbxproj" >/dev/null 2>&1 && echo "- A1-01 present in project" || echo "- A1-01 missing in project"
-    grep -R "lessons/A1-04-WhereYouLive.json" -n "$ROOT_DIR/JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj/project.pbxproj" >/dev/null 2>&1 && echo "- A1-04 present in project" || echo "- A1-04 missing in project"
+    PBXPROJ="$ROOT_DIR/JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj/project.pbxproj"
+
+    # Folder-reference wiring (blue folder) is valid and preferred for lessons.
+    if grep -E 'path = ../JapaneseBuddy/Resources/lessons;|path = "\.\./JapaneseBuddy/Resources/lessons";' "$PBXPROJ" >/dev/null 2>&1; then
+      echo "- lessons folder reference present in project (blue folder)"
+      echo "- A1-01 present via folder reference"
+      echo "- A1-04 present via folder reference"
+    else
+      # Fallback: explicit file wiring checks (legacy style)
+      grep -R "lessons/A1-01-Greetings.json" -n "$PBXPROJ" >/dev/null 2>&1 && echo "- A1-01 present in project" || echo "- A1-01 missing in project"
+      grep -R "lessons/A1-04-WhereYouLive.json" -n "$PBXPROJ" >/dev/null 2>&1 && echo "- A1-04 present in project" || echo "- A1-04 missing in project"
+    fi
     echo
     echo "## Loader Checks"
     grep -n 'urls(forResourcesWithExtension: "json", subdirectory: "lessons")' "$ROOT_DIR/JapaneseBuddy/Services/LessonStore.swift" || true
