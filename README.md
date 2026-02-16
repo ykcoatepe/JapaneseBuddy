@@ -18,21 +18,21 @@
 <table>
   <tr>
     <td>
-      <img src="./docs/screenshots/home.png"
+      <img src="./docs/screenshots/home.svg"
            alt="Home screen" width="420"/>
     </td>
     <td>
-      <img src="./docs/screenshots/lessons.png"
+      <img src="./docs/screenshots/lessons.svg"
            alt="Lessons screen" width="420"/>
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./docs/screenshots/trace.png"
+      <img src="./docs/screenshots/trace.svg"
            alt="Trace screen" width="420"/>
     </td>
     <td>
-      <img src="./docs/screenshots/srs.png"
+      <img src="./docs/screenshots/srs.svg"
            alt="SRS screen" width="420"/>
     </td>
   </tr>

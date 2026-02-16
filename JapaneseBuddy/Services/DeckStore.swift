@@ -218,14 +218,28 @@ extension DeckStore {
         }
     }
 
-    func endStudy(kind: SessionKind = .study, now: Date = .now) {
-        guard let s = studyStart else { return }
+    func endStudy(kind: SessionKind = .study, now: Date = .now, cal: Calendar = .current) {
+        guard let start = studyStart else { return }
         studyStart = nil
-        let dur = max(0, Int(now.timeIntervalSince(s)))
         let card = studyCardID
         studyCardID = nil
-        guard dur > 0 else { return }
-        sessionLog.append(SessionLogEntry(date: now, kind: kind, cardID: card, durationSec: dur))
+        guard now > start else { return }
+
+        // Split a long study session at day boundaries so daily metrics/streaks stay accurate.
+        var segmentStart = start
+        while segmentStart < now {
+            guard let nextMidnight = cal.date(byAdding: .day, value: 1, to: cal.startOfDay(for: segmentStart)) else {
+                break
+            }
+            let segmentEnd = min(now, nextMidnight)
+            guard segmentEnd > segmentStart else { break }
+
+            let duration = Int(segmentEnd.timeIntervalSince(segmentStart))
+            if duration > 0 {
+                sessionLog.append(SessionLogEntry(date: segmentStart, kind: kind, cardID: card, durationSec: duration))
+            }
+            segmentStart = segmentEnd
+        }
     }
 
     func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {

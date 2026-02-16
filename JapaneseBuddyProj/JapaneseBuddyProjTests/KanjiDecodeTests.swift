@@ -36,4 +36,26 @@ struct KanjiDecodeTests {
         let persisted = reloaded.kanjiProgress[lessonID]?.correct ?? 0
         #expect(persisted == after)
     }
+
+    @Test func splitsStudyDurationsAcrossMidnight() {
+        let stateURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("deck-midnight-\(UUID().uuidString).json")
+        try? FileManager.default.removeItem(at: stateURL)
+        let store = DeckStore(stateURL: stateURL, saveDebounce: .seconds(999))
+
+        let cal = Calendar.current
+        let dayStart = cal.startOfDay(for: Date())
+        let start = cal.date(byAdding: .minute, value: 23 * 60 + 50, to: dayStart)!
+        let end = cal.date(byAdding: .minute, value: 20, to: start)! // crosses midnight
+
+        store.beginStudy(now: start)
+        store.endStudy(now: end, cal: cal)
+
+        let nextDay = cal.date(byAdding: .day, value: 1, to: dayStart)!
+        #expect(store.minutesToday(now: dayStart, cal: cal) == 10)
+        #expect(store.minutesToday(now: nextDay, cal: cal) == 10)
+
+        let studyEntries = store.sessionLog.filter { $0.kind == .study }
+        #expect(studyEntries.count == 2)
+    }
 }
