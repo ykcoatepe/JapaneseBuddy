@@ -157,10 +157,14 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    // Locate bundled audio: Resources/audio/<lessonID>/seg-<index>.m4a
+    // Locate bundled audio with multiple bundle-safe fallbacks.
     func findAudio(lessonID: String, index: Int) -> URL? {
-        let path = "audio/\(lessonID)/seg-\(index).m4a"
-        return Bundle.main.url(forResource: path, withExtension: nil)
+        let candidates = [
+            "audio/\(lessonID)/seg-\(index).m4a",
+            "Resources/audio/\(lessonID)/seg-\(index).m4a",
+            "lessons/audio/\(lessonID)/seg-\(index).m4a"
+        ]
+        return candidates.compactMap { Bundle.main.url(forResource: $0, withExtension: nil) }.first
     }
 
     private func configureSessionCategory() {
@@ -189,7 +193,49 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
 private extension L10n {
     @inline(__always)
     static func localized(_ key: String) -> String {
-        localizationBundle.localizedString(forKey: key, value: "", table: "Localized")
+        let value = localizationBundle.localizedString(forKey: key, value: "", table: "Localized")
+        return value == key ? fallbackValue(for: key) : value
+    }
+
+    static func fallbackValue(for key: String) -> String {
+        switch key {
+        case "JB.Nav.Home": return "Home"
+        case "JB.Nav.Lessons": return "Lessons"
+        case "JB.Nav.Practice": return "Practice"
+        case "JB.Nav.Review": return "Review"
+        case "JB.Nav.Stats": return "Stats"
+        case "JB.Nav.Settings": return "Settings"
+        case "JB.Btn.ContinueLesson": return "Continue"
+        case "JB.Btn.StartTrace": return "Trace"
+        case "JB.Btn.StartReview": return "Review"
+        case "JB.Btn.Speak": return "Speak"
+        case "JB.Btn.Clear": return "Clear"
+        case "JB.Btn.Hint": return "Hint"
+        case "JB.Btn.Check": return "Check"
+        case "JB.Btn.Play": return "Play"
+        case "JB.Btn.Pause": return "Pause"
+        case "JB.Btn.Hard": return "Hard"
+        case "JB.Btn.Good": return "Good"
+        case "JB.Btn.Easy": return "Easy"
+        case "JB.Settings.Appearance": return "Appearance"
+        case "JB.Settings.System": return "System"
+        case "JB.Settings.Light": return "Light"
+        case "JB.Settings.Dark": return "Dark"
+        case "JB.Settings.ShowStrokeHints": return "Show stroke hints"
+        case "JB.Settings.BackupRestore": return "Backup & Restore"
+        case "JB.Settings.ExportDeck": return "Export deck"
+        case "JB.Settings.ImportDeck": return "Import deck"
+        case "JB.Settings.EnableReminder": return "Enable reminder"
+        case "JB.Settings.Time": return "Time"
+        case "JB.Home.DailyGoal": return "Daily Goal"
+        case "JB.Home.Greeting": return "Hi, %@"
+        case "JB.Stats.StreakFmt": return "Streak: %d"
+        case "JB.Stats.NoData": return "No data"
+        case "JB.Stats.TodayMinutesFmt": return "Today: %d min"
+        case "JB.Stats.WeekMinutesFmt": return "Week: %d min"
+        case "JB.Stats.StreakBestFmt": return "Best streak: %d"
+        default: return key
+        }
     }
 
     static var localizationBundle: Bundle {
@@ -204,16 +250,21 @@ private extension L10n {
     }
 
     static func preferredBundle(for language: String) -> Bundle? {
-        if let path = Bundle.main.path(forResource: language, ofType: "lproj", inDirectory: "L10n"),
-           let bundle = Bundle(path: path) {
-            return bundle
-        }
+        let l10nDirectories = ["L10n", "lessons/L10n"]
+        let candidates = [language, language.split(separator: "-").first.map(String.init)].compactMap { $0 }
 
-        let code = language.split(separator: "-").first.map(String.init)
-        if let code,
-           let path = Bundle.main.path(forResource: code, ofType: "lproj", inDirectory: "L10n"),
-           let bundle = Bundle(path: path) {
-            return bundle
+        for candidate in candidates {
+            if let path = Bundle.main.path(forResource: candidate, ofType: "lproj"),
+               let bundle = Bundle(path: path) {
+                return bundle
+            }
+
+            for directory in l10nDirectories {
+                if let path = Bundle.main.path(forResource: candidate, ofType: "lproj", inDirectory: directory),
+                   let bundle = Bundle(path: path) {
+                    return bundle
+                }
+            }
         }
         return nil
     }
