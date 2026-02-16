@@ -42,8 +42,8 @@ struct KanaTraceView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .onAppear {
-            store.beginStudy()
             next()
+            if current != nil { store.beginStudy() }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
@@ -86,6 +86,10 @@ struct KanaTraceView: View {
 
     private func next() {
         current = store.dueCards(type: store.currentType).first
+        if current == nil {
+            store.endStudy(kind: .study)
+            return
+        }
         canvas?.drawing = PKDrawing()
         showHint = true
         playing = false

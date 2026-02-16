@@ -63,6 +63,9 @@ struct SRSView: View {
     private func next() {
         current = store.dueCards(type: store.currentType).first
         showBack = false
+        if current == nil {
+            store.endStudy(kind: .study)
+        }
     }
 
     private func grade(_ rating: Rating) {
