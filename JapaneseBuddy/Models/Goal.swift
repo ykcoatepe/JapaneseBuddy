@@ -5,7 +5,26 @@ struct DailyGoal: Codable {
     var reviewTarget: Int = 10
 }
 
-enum SessionKind: String, Codable { case new, review, study }
+enum SessionKind: String, Codable {
+    case new, review, study
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = (try? container.decode(String.self)) ?? SessionKind.review.rawValue
+        self = SessionKind(rawValue: rawValue) ?? .review
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .new, .review:
+            try container.encode(rawValue)
+        case .study:
+            // Keep persisted values backward-compatible for older app versions.
+            try container.encode(SessionKind.review.rawValue)
+        }
+    }
+}
 
 struct SessionLogEntry: Codable {
     let date: Date
