@@ -7,8 +7,10 @@ private extension L10n {
     }
 
     static var localizationBundle: Bundle {
-        let preferredLanguages = NSLocale.preferredLanguages + Bundle.main.preferredLocalizations
-        for language in preferredLanguages {
+        // Respect app-level language first, then fall back to device preferences.
+        let orderedLanguages = Bundle.main.preferredLocalizations + NSLocale.preferredLanguages
+        var seen = Set<String>()
+        for language in orderedLanguages where seen.insert(language).inserted {
             if let bundle = preferredBundle(for: language) {
                 return bundle
             }

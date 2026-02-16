@@ -21,8 +21,11 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
             player = try AVAudioPlayer(contentsOf: url)
             player?.delegate = self
             player?.prepareToPlay()
-            player?.play()
-            return true
+            if player?.play() == true {
+                return true
+            }
+            player = nil
+            return false
         } catch {
             player = nil
             return false
