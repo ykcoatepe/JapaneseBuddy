@@ -50,6 +50,7 @@ jobs:
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
+            IPHONEOS_DEPLOYMENT_TARGET=17.0 \
             CODE_SIGNING_ALLOWED=NO \
             build | xcpretty
 
@@ -71,5 +72,6 @@ jobs:
             -sdk iphonesimulator \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -only-testing:JapaneseBuddyProjTests \
+            IPHONEOS_DEPLOYMENT_TARGET=17.0 \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
