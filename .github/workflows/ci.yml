@@ -54,23 +54,31 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build | xcpretty
 
-      - name: Select simulator
-        id: sim
-        run: |
-          set -euo pipefail
-          # Pick the first available iPhone from the newest iOS runtime by UDID
-          SIM_UDID=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; data=json.load(sys.stdin)["devices"]; ios=sorted([k for k in data if "iOS" in k and "visionOS" not in k and "watchOS" not in k and "tvOS" not in k], reverse=True); print(next(d["udid"] for rt in ios for d in data[rt] if "iPhone" in d["name"] and d.get("isAvailable", False)))')
-          echo "Using simulator UDID: ${SIM_UDID}"
-          echo "udid=${SIM_UDID}" >> "$GITHUB_OUTPUT"
-
       - name: Test (unit tests only)
         run: |
+          set -euo pipefail
+          DESTINATION=$(xcodebuild -showdestinations \
+            -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
+            -scheme JapaneseBuddyProj | \
+            python3 -c 'import re,sys
+for line in sys.stdin:
+  if "platform:iOS Simulator" in line and "name:iPhone" in line and "OS:" in line:
+    os = re.search(r"OS:([^,}]+)", line)
+    name = re.search(r"name:([^,}]+)", line)
+    if os and name:
+      print(f"platform=iOS Simulator,name={name.group(1).strip()},OS={os.group(1).strip()}")
+      break')
+          if [ -z "${DESTINATION}" ]; then
+            DESTINATION='platform=iOS Simulator,name=iPhone 16,OS=latest'
+          fi
+          echo "Using destination: ${DESTINATION}"
+
           set -o pipefail
           xcodebuild \
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
-            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -destination "${DESTINATION}" \
             -only-testing:JapaneseBuddyProjTests \
             IPHONEOS_DEPLOYMENT_TARGET=17.0 \
             CODE_SIGNING_ALLOWED=NO \
