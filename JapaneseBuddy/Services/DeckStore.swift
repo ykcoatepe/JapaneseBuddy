@@ -22,6 +22,7 @@ final class DeckStore: ObservableObject {
     private let url: URL
     private var saveTask: AnyCancellable?
     private var studyStart: Date?
+    private var studyCardID: UUID?
 
     struct State: Codable {
         var cards: [Card]
@@ -210,15 +211,20 @@ extension DeckStore {
 
 // MARK: - Stopwatch & Minutes
 extension DeckStore {
-    func beginStudy(now: Date = .now) {
-        if studyStart == nil { studyStart = now }
+    func beginStudy(for card: Card? = nil, now: Date = .now) {
+        if let card { studyCardID = card.id }
+        if studyStart == nil {
+            studyStart = now
+        }
     }
 
     func endStudy(kind: SessionKind = .study, now: Date = .now) {
         guard let s = studyStart else { return }
         studyStart = nil
         let dur = max(0, Int(now.timeIntervalSince(s)))
-        sessionLog.append(SessionLogEntry(date: now, kind: kind, cardID: nil, durationSec: dur))
+        let card = studyCardID
+        studyCardID = nil
+        sessionLog.append(SessionLogEntry(date: now, kind: kind, cardID: card, durationSec: dur))
     }
 
     func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {

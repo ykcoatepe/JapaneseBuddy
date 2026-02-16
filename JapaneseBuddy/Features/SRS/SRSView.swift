@@ -43,14 +43,18 @@ struct SRSView: View {
         }
         .onAppear {
             next()
-            if current != nil { store.beginStudy() }
+            if let current {
+                store.beginStudy(for: current)
+            }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .inactive, .background:
                 store.endStudy(kind: .study)
             case .active:
-                if current != nil { store.beginStudy() }
+                if let current {
+                    store.beginStudy(for: current)
+                }
             @unknown default:
                 break
             }
@@ -63,7 +67,9 @@ struct SRSView: View {
     private func next() {
         current = store.dueCards(type: store.currentType).first
         showBack = false
-        if current == nil {
+        if let current {
+            store.beginStudy(for: current)
+        } else {
             store.endStudy(kind: .study)
         }
     }

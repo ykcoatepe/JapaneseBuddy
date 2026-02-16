@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
 		6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */; };
+		6A1A9C8A2F0F000000000008 /* KanjiDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C892F0F000000000007 /* KanjiDecodeTests.swift */; };
 		A10000042FFF000000000004 /* ../JapaneseBuddy/Features/Home/HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000122FFF000000000012 /* ../JapaneseBuddy/Features/Home/HomeView.swift */; };
 		A10000052FFF000000000005 /* ../JapaneseBuddy/Features/Home/DailyGoalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000132FFF000000000013 /* ../JapaneseBuddy/Features/Home/DailyGoalCard.swift */; };
 		A10000062FFF000000000006 /* ../JapaneseBuddy/Features/KanaTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000142FFF000000000014 /* ../JapaneseBuddy/Features/KanaTraceView.swift */; };
@@ -83,6 +84,7 @@
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
 		6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRSProgressionTests.swift; sourceTree = "<group>"; };
+		6A1A9C892F0F000000000007 /* KanjiDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanjiDecodeTests.swift; sourceTree = "<group>"; };
 		A100000B2FFF00000000000B /* ../JapaneseBuddy/Models/Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Card.swift; sourceTree = "<group>"; };
 		A100000D2FFF00000000000D /* ../JapaneseBuddy/Models/Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Goal.swift; sourceTree = "<group>"; };
 		A100000F2FFF00000000000F /* ../JapaneseBuddy/Models/SRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/SRS.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			files = (
 				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
 				6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */,
+				6A1A9C8A2F0F000000000008 /* KanjiDecodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
