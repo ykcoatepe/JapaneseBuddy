@@ -1,43 +1,15 @@
 {
   "plan": [
-    {
-      "step": "Wire lessons bundle",
-      "status": "done"
-    },
-    {
-      "step": "Harden LessonStore",
-      "status": "done"
-    },
-    {
-      "step": "Tidy xcodeproj",
-      "status": "done"
-    },
-    {
-      "step": "Add repo memory",
-      "status": "done"
-    },
-    {
-      "step": "Welcome hero image",
-      "status": "done"
-    },
-    {
-      "step": "AppIcon generator",
-      "status": "done"
-    },
-    {
-      "step": "Onboarding hotspot mapping",
-      "status": "done"
-    },
-    {
-      "step": "Run tests + smoke",
-      "status": "done"
-    },
-    {
-      "step": "Prep PR + release notes",
-      "status": "done"
-    }
+    { "step": "Wire lessons bundle", "status": "done" },
+    { "step": "Harden LessonStore", "status": "done" },
+    { "step": "Tidy xcodeproj", "status": "done" },
+    { "step": "Add repo memory", "status": "done" },
+    { "step": "Welcome hero image", "status": "done" },
+    { "step": "AppIcon generator", "status": "done" },
+    { "step": "Onboarding hotspot mapping", "status": "done" },
+    { "step": "Run tests + smoke", "status": "in_progress" }
   ],
-  "next_step": "Open PR for rc1",
+  "next_step": "Run tests + smoke",
   "blockers": [],
   "decisions": [
     "Use blue folder 'lessons' in bundle",
@@ -50,20 +22,9 @@
     "Use Data.write options [.atomic]",
     "Bundle art/ for runtime welcome hero",
     "Generate icons with sips via script; remove PDF icon",
-    "Onboarding hero uses aspect-fit; proportional tappable hotspot overlay",
-    "FE redesign with NavigationSplitView + ThemeMode landed",
-    "Added six original B1 lessons and updated lessons index",
-    "Audio packs preferred with fallback to TTS for shadowing",
-    "Streak + weekly minutes tracking added; sparkline on Home/Stats",
-    "Localization updated for Base/en/tr/ja for new Stats keys",
-    "Prepared PR title/body and RELEASE_NOTES_v0.3.0-rc1",
-    "Lesson decode now tolerates missing tips with [] fallback for backward compatibility",
-    "Removed duplicate KanjiDecodeTests explicit source reference from xcodeproj",
-    "Localized Stats labels (Best Streak / Weekly Minutes) via L10n keys",
-    "Simplified Speaker audio options by removing dead ternary branch"
+    "Onboarding hero uses aspect-fit; proportional tappable hotspot overlay"
   ],
-  "context_notes": [
-    "15/02/2026: Full test suite passed on iPhone 17 simulator after warning cleanup (tips decode fallback + duplicate test source ref cleanup + localization polish)."
-  ],
-  "last_updated": "2026-02-16T04:28:10Z",
+  "context_notes": [],
+
 }
+  "last_updated": "2026-02-16T04:12:56Z",
