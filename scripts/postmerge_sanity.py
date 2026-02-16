@@ -20,12 +20,19 @@ def load_strings(path):
 report = []
 
 # --- L10n keys used in code
-l10n_swift = os.path.join(ROOT, "JapaneseBuddy/Services/L10n.swift")
+l10n_sources = [
+    os.path.join(ROOT, "JapaneseBuddy/Services/L10n.swift"),
+    os.path.join(ROOT, "JapaneseBuddy/Services/Speaker.swift"),
+]
 keys_used = set()
-if os.path.exists(l10n_swift):
-    raw_l10n = read(l10n_swift)
+parsed_sources = []
+for src in l10n_sources:
+    if not os.path.exists(src):
+        continue
+    raw_l10n = read(src)
     keys_used.update(re.findall(r'NSLocalizedString\("([^"]+)"', raw_l10n))
     keys_used.update(re.findall(r'localized\("([^"]+)"', raw_l10n))
+    parsed_sources.append(os.path.relpath(src, ROOT))
 langs = {
   "Base": os.path.join(ROOT, "JapaneseBuddy/Resources/L10n/Base.lproj"),
   "en":   os.path.join(ROOT, "JapaneseBuddy/Resources/L10n/en.lproj"),
@@ -36,7 +43,8 @@ missing = { lg: sorted(list(keys_used - set(load_strings(path).keys()))) for lg,
 extra   = { lg: sorted(list(set(load_strings(path).keys()) - keys_used)) for lg, path in langs.items() }
 
 report.append("## Localization")
-report.append(f"Keys in L10n.swift: {len(keys_used)}")
+report.append("Parsed key sources: " + (", ".join(parsed_sources) if parsed_sources else "none"))
+report.append(f"Keys discovered: {len(keys_used)}")
 for lg in ["Base","en","tr","ja"]:
     report.append(f"- {lg}: missing {len(missing[lg])}, extra {len(extra[lg])}")
 

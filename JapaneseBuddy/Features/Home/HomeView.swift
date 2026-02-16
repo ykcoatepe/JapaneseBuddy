@@ -52,7 +52,7 @@ struct HomeView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .accessibilityLabel(String(format: L10n.Stats.streakFmt, store.currentStreak()))
-                    Sparkline(values: normalized)
+                    HomeSparkline(values: normalized)
                         .frame(height: 36)
                         .accessibilityHidden(true)
                 }
@@ -97,7 +97,7 @@ struct HomeView: View {
     }
 }
 
-private struct Sparkline: View {
+private struct HomeSparkline: View {
     let values: [Double]
     private let lineWidth: CGFloat = 3
 
