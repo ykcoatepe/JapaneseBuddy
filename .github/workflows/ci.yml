@@ -60,7 +60,9 @@ jobs:
           xcodebuild \
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
-            -destination 'platform=macOS,arch=arm64' \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
             -only-testing:JapaneseBuddyProjTests \
+            IPHONEOS_DEPLOYMENT_TARGET=17.0 \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
