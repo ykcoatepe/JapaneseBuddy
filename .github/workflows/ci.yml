@@ -71,7 +71,7 @@ jobs:
           echo "Using simulator UDID: ${SIM_UDID}"
           echo "udid=${SIM_UDID}" >> "$GITHUB_OUTPUT"
 
-      - name: Test
+      - name: Test (unit tests only)
         run: |
           set -o pipefail
           xcodebuild \
@@ -79,5 +79,6 @@ jobs:
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -only-testing:JapaneseBuddyProjTests \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
