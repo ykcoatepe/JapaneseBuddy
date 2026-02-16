@@ -49,7 +49,7 @@ jobs:
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             CODE_SIGNING_ALLOWED=NO \
             build | xcpretty
 
@@ -60,6 +60,6 @@ jobs:
             -project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj \
             -scheme JapaneseBuddyProj \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             CODE_SIGNING_ALLOWED=NO \
             test | xcpretty
