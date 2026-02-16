@@ -16,7 +16,9 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
 
     @MainActor
     func speak(_ text: String) {
+        // Prevent overlap: if local audio is playing, stop it before TTS.
         AudioEngine.shared.onPlaybackEnded = nil
+        AudioEngine.shared.stop()
         let preferSilentOverride = (UserDefaults.standard.object(forKey: "playSpeechInSilentMode") as? Bool) ?? true
         let category: AVAudioSession.Category = preferSilentOverride ? .playback : .soloAmbient
         // For spoken content, use .spokenAudio with ducking
