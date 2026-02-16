@@ -14,7 +14,7 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
         configureSessionCategory()
     }
 
-    func play(url: URL) {
+    func play(url: URL) -> Bool {
         configureSessionCategory()
         stop()
         do {
@@ -22,8 +22,10 @@ final class AudioEngine: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
             player?.prepareToPlay()
             player?.play()
+            return true
         } catch {
             player = nil
+            return false
         }
     }
 

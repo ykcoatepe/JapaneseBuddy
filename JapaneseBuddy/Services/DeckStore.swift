@@ -224,6 +224,7 @@ extension DeckStore {
         let dur = max(0, Int(now.timeIntervalSince(s)))
         let card = studyCardID
         studyCardID = nil
+        guard dur > 0 else { return }
         sessionLog.append(SessionLogEntry(date: now, kind: kind, cardID: card, durationSec: dur))
     }
 

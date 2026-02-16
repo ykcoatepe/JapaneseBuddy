@@ -84,7 +84,12 @@ extension Speaker {
         if let url = AudioEngine.shared.findAudio(lessonID: lessonID, index: index) {
             // Stop any ongoing TTS if needed (no-op if not speaking)
             synth.stopSpeaking(at: .immediate)
-            AudioEngine.shared.play(url: url)
+            let played = AudioEngine.shared.play(url: url)
+            guard played else {
+                AudioEngine.shared.stop()
+                speak(text)
+                return
+            }
         } else {
             // Ensure local audio is stopped before TTS fallback to avoid overlap.
             AudioEngine.shared.stop()
