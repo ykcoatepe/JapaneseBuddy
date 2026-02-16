@@ -8,7 +8,7 @@ struct StatsView: View {
         let weekTotal = mins.reduce(0, +)
         let maxM = max(1, mins.max() ?? 1)
         return Group {
-            if weekTotal == 0 {
+            if store.sessionLog.isEmpty {
                 EmptyState(systemImage: "chart.bar", message: L10n.Stats.noData)
             } else {
                 ScrollView {

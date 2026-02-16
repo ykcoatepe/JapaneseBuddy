@@ -36,8 +36,13 @@ struct JapaneseBuddyProjApp: App {
             .applyTheme(store.themeMode)
             .tint(Color("AccentColor"))
             .onChange(of: scenePhase) { _, phase in
-                if phase != .active {
+                switch phase {
+                case .active:
+                    store.beginStudy()
+                case .inactive, .background:
                     store.endStudy(kind: .study)
+                @unknown default:
+                    break
                 }
             }
         }
