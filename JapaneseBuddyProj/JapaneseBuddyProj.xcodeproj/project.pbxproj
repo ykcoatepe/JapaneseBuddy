@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C7C2F0F000000000003 /* WiringTests.swift */; };
 		6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */; };
-		6A1A9C8A2F0F000000000008 /* KanjiDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A9C892F0F000000000007 /* KanjiDecodeTests.swift */; };
 		A10000042FFF000000000004 /* ../JapaneseBuddy/Features/Home/HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000122FFF000000000012 /* ../JapaneseBuddy/Features/Home/HomeView.swift */; };
 		A10000052FFF000000000005 /* ../JapaneseBuddy/Features/Home/DailyGoalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000132FFF000000000013 /* ../JapaneseBuddy/Features/Home/DailyGoalCard.swift */; };
 		A10000062FFF000000000006 /* ../JapaneseBuddy/Features/KanaTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000142FFF000000000014 /* ../JapaneseBuddy/Features/KanaTraceView.swift */; };
@@ -33,6 +32,7 @@
 		A2FF00072FFF000000000007 /* ../JapaneseBuddy/Models/Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */; };
 		A2FF00092FFF000000000009 /* ../JapaneseBuddy/Services/LessonStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */; };
 		A2FF000B2FFF00000000000B /* lessons in Resources */ = {isa = PBXBuildFile; fileRef = A2FF000A2FFF00000000000A /* lessons */; };
+		A2FF000D2FFF00000000000D /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */; };
 		A2FF000F2FFF00000000000F /* ../JapaneseBuddy/Models/LessonProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */; };
 		A2FF00112FFF000000000011 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */; };
 		A2FF00132FFF000000000013 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */; };
@@ -43,10 +43,7 @@
 		A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */; };
 		A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */; };
 		A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */; };
-		A3FF01062FFF000000000006 /* ../JapaneseBuddy/Services/AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01072FFF000000000007 /* ../JapaneseBuddy/Services/AudioEngine.swift */; };
 		A3FF02012FFF000000000101 /* art in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02002FFF000000000100 /* art */; };
-		A3FF02032FFF000000000103 /* L10n in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02022FFF000000000102 /* L10n */; };
-		A3FF02052FFF000000000104 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = A3FF02042FFF000000000104 /* audio */; };
         BUI000112FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000012FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift */; };
         BUI000122FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000022FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift */; };
         BUI000132FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000032FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift */; };
@@ -57,8 +54,6 @@
         BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */; };
         BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */; };
         BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */; };
-        BUI000B22FFF00000000000C /* ../JapaneseBuddy/UI/Components/Sparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000B12FFF00000000000B /* ../JapaneseBuddy/UI/Components/Sparkline.swift */; };
-        BUI000C22FFF00000000000D /* ../JapaneseBuddy/Services/L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = BUI000C12FFF00000000000C /* ../JapaneseBuddy/Services/L10n.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +80,6 @@
 		6A1A9C7A2F0F000000000001 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6A1A9C7C2F0F000000000003 /* WiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringTests.swift; sourceTree = "<group>"; };
 		6A1A9C802F0F000000000005 /* SRSProgressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRSProgressionTests.swift; sourceTree = "<group>"; };
-		6A1A9C892F0F000000000007 /* KanjiDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProjTests/KanjiDecodeTests.swift; sourceTree = "<group>"; };
 		A100000B2FFF00000000000B /* ../JapaneseBuddy/Models/Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Card.swift; sourceTree = "<group>"; };
 		A100000D2FFF00000000000D /* ../JapaneseBuddy/Models/Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Goal.swift; sourceTree = "<group>"; };
 		A100000F2FFF00000000000F /* ../JapaneseBuddy/Models/SRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/SRS.swift; sourceTree = "<group>"; };
@@ -109,6 +103,7 @@
 		A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/Lesson.swift; sourceTree = "<group>"; };
 		A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/LessonStore.swift; sourceTree = "<group>"; };
 		A2FF000A2FFF00000000000A /* lessons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lessons; path = ../JapaneseBuddy/Resources/lessons; sourceTree = "<group>"; };
+		A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift; sourceTree = "<group>"; };
 		A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Models/LessonProgress.swift; sourceTree = "<group>"; };
 		A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift; sourceTree = "<group>"; };
 		A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/ShadowingView.swift; sourceTree = "<group>"; };
@@ -119,10 +114,7 @@
 		A3FF01002FFF000000000000 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
 		A3FF01022FFF000000000002 /* ../JapaneseBuddy/Services/Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Haptics.swift; sourceTree = "<group>"; };
 		A3FF01042FFF000000000004 /* ../JapaneseBuddy/Services/Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/Log.swift; sourceTree = "<group>"; };
-		A3FF01072FFF000000000007 /* ../JapaneseBuddy/Services/AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/AudioEngine.swift; sourceTree = "<group>"; };
 		A3FF02002FFF000000000100 /* art */ = {isa = PBXFileReference; lastKnownFileType = folder; name = art; path = ../art; sourceTree = "<group>"; };
-		A3FF02022FFF000000000102 /* L10n */ = {isa = PBXFileReference; lastKnownFileType = folder; name = L10n; path = ../JapaneseBuddy/Resources/L10n; sourceTree = "<group>"; };
-		A3FF02042FFF000000000104 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = ../JapaneseBuddy/Resources/audio; sourceTree = "<group>"; };
         BUI000012FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Theme.swift; sourceTree = "<group>"; };
         BUI000022FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/JBCard.swift; sourceTree = "<group>"; };
         BUI000032FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/EmptyState.swift; sourceTree = "<group>"; };
@@ -133,8 +125,6 @@
         BUI000082FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/StatsView.swift; sourceTree = "<group>"; };
         BUI000092FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/App/AppSidebar.swift; sourceTree = "<group>"; };
         BUI000A12FFF00000000000A /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift; sourceTree = "<group>"; };
-        BUI000B12FFF00000000000B /* ../JapaneseBuddy/UI/Components/Sparkline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/UI/Components/Sparkline.swift; sourceTree = "<group>"; };
-        BUI000C12FFF00000000000C /* ../JapaneseBuddy/Services/L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../JapaneseBuddy/Services/L10n.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -206,6 +196,7 @@
 				A2FF00062FFF000000000006 /* ../JapaneseBuddy/Models/Lesson.swift */,
 				A2FF00082FFF000000000008 /* ../JapaneseBuddy/Services/LessonStore.swift */,
 				A2FF000A2FFF00000000000A /* lessons */,
+				A2FF000C2FFF00000000000C /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift */,
 				A2FF000E2FFF00000000000E /* ../JapaneseBuddy/Models/LessonProgress.swift */,
 				A2FF00102FFF000000000010 /* ../JapaneseBuddy/Features/Lessons/ObjectiveView.swift */,
 				A2FF00122FFF000000000012 /* ../JapaneseBuddy/Features/Lessons/ShadowingView.swift */,
@@ -214,8 +205,6 @@
 				A2FF00182FFF000000000018 /* ../JapaneseBuddy/Features/Lessons/CheckView.swift */,
 				A2FF001A2FFF00000000001A /* ../JapaneseBuddy/Features/Lessons/LessonListView.swift */,
 				A3FF02002FFF000000000100 /* art */,
-				A3FF02022FFF000000000102 /* L10n */,
-				A3FF02042FFF000000000104 /* audio */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -375,8 +364,6 @@
 			files = (
 				A2FF000B2FFF00000000000B /* lessons in Resources */,
 				A3FF02012FFF000000000101 /* art in Resources */,
-				A3FF02032FFF000000000103 /* L10n in Resources */,
-				A3FF02052FFF000000000104 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +420,6 @@
 				A3FF01012FFF000000000001 /* ../JapaneseBuddy/Features/Onboarding/OnboardingView.swift in Sources */,
 				A3FF01032FFF000000000003 /* ../JapaneseBuddy/Services/Haptics.swift in Sources */,
 				A3FF01052FFF000000000005 /* ../JapaneseBuddy/Services/Log.swift in Sources */,
-				A3FF01062FFF000000000006 /* ../JapaneseBuddy/Services/AudioEngine.swift in Sources */,
 				BUI000112FFF000000000001 /* ../JapaneseBuddy/UI/Theme.swift in Sources */,
 				BUI000122FFF000000000002 /* ../JapaneseBuddy/UI/Components/JBCard.swift in Sources */,
 				BUI000132FFF000000000003 /* ../JapaneseBuddy/UI/Components/EmptyState.swift in Sources */,
@@ -444,8 +430,6 @@
                 BUI000182FFF000000000008 /* ../JapaneseBuddy/Features/StatsView.swift in Sources */,
                 BUI000192FFF000000000009 /* ../JapaneseBuddy/App/AppSidebar.swift in Sources */,
                 BUI000A22FFF00000000000B /* ../JapaneseBuddy/Features/Lessons/LessonListRedesignedView.swift in Sources */,
-                BUI000B22FFF00000000000C /* ../JapaneseBuddy/UI/Components/Sparkline.swift in Sources */,
-                BUI000C22FFF00000000000D /* ../JapaneseBuddy/Services/L10n.swift in Sources */,
             );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +439,7 @@
 			files = (
 				6A1A9C7D2F0F000000000004 /* WiringTests.swift in Sources */,
 				6A1A9C812F0F000000000006 /* SRSProgressionTests.swift in Sources */,
-				6A1A9C8A2F0F000000000008 /* KanjiDecodeTests.swift in Sources */,
+				A2FF000D2FFF00000000000D /* JapaneseBuddyProj/JapaneseBuddyProjTests/KanjiDecodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,7 +604,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -659,7 +643,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -684,7 +668,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G7T9BSQY9K;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yordam.JapaneseBuddyProjTests;
@@ -707,7 +691,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G7T9BSQY9K;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yordam.JapaneseBuddyProjTests;
@@ -729,7 +713,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G7T9BSQY9K;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yordam.JapaneseBuddyProjUITests;
@@ -751,7 +735,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G7T9BSQY9K;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yordam.JapaneseBuddyProjUITests;
