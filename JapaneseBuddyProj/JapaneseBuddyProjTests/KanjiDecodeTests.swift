@@ -58,4 +58,20 @@ struct KanjiDecodeTests {
         let studyEntries = store.sessionLog.filter { $0.kind == .study }
         #expect(studyEntries.count == 2)
     }
+
+    @Test func minutesTodayIncludesInFlightStudyTime() {
+        let stateURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("deck-live-minutes-\(UUID().uuidString).json")
+        try? FileManager.default.removeItem(at: stateURL)
+        let store = DeckStore(stateURL: stateURL, saveDebounce: .seconds(999))
+
+        let cal = Calendar.current
+        let now = Date()
+        let start = cal.date(byAdding: .minute, value: -15, to: now)!
+        store.beginStudy(now: start)
+
+        // 15 in-flight minutes should be visible before endStudy is called.
+        #expect(store.minutesToday(now: now, cal: cal) >= 15)
+    }
 }
+

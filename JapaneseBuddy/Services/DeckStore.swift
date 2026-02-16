@@ -243,10 +243,20 @@ extension DeckStore {
     }
 
     func minutesToday(now: Date = .now, cal: Calendar = .current) -> Int {
-        let totalSeconds = sessionLog
+        var totalSeconds = sessionLog
             .filter { cal.isDate($0.date, inSameDayAs: now) }
             .map { $0.durationSec ?? 0 }
             .reduce(0, +)
+
+        // Include in-flight study duration so the metric updates live while studying.
+        if let start = studyStart, now > start {
+            let startOfToday = cal.startOfDay(for: now)
+            let effectiveStart = max(start, startOfToday)
+            if now > effectiveStart {
+                totalSeconds += Int(now.timeIntervalSince(effectiveStart))
+            }
+        }
+
         return totalSeconds / 60
     }
 

@@ -61,7 +61,11 @@ final class Speaker: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable 
         let work = DispatchWorkItem { [weak self] in
             guard let self else { return }
             Task { @MainActor in
-                guard !self.synth.isSpeaking && !AudioEngine.shared.isPlaying else { return }
+                // If speech/local audio is still active, retry deactivation a bit later.
+                guard !self.synth.isSpeaking && !AudioEngine.shared.isPlaying else {
+                    self.deactivateSessionIfIdleMain()
+                    return
+                }
                 Self.audioQueue.async { [weak self] in
                     guard let self else { return }
                     do {
