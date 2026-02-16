@@ -26,13 +26,18 @@ final class JapaneseBuddyProjUITests: XCTestCase {
     func testNavigateLessons() throws {
         let app = XCUIApplication()
         app.launchArguments.append("UI-TESTING")
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
 
         // New UI may not expose a literal "Lessons" tab/button.
+        let continueLessonButton = app.buttons.matching(
+            NSPredicate(format: "label == %@", "Continue Lesson")
+        ).firstMatch
+
         if app.buttons["Lessons"].exists {
             app.buttons["Lessons"].tap()
-        } else if app.buttons["JB.Btn.ContinueLesson"].exists {
-            app.buttons["JB.Btn.ContinueLesson"].tap()
+        } else if continueLessonButton.exists {
+            continueLessonButton.tap()
         } else {
             XCTFail("No lessons navigation entry found")
         }
