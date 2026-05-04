@@ -1,12 +1,13 @@
 # JapaneseBuddy
 
 ## Table of Contents
+- [Documentation](docs/README.md)
 - [UI Design System](docs/UI_DESIGN_SYSTEM.md)
 - [UX](#ux)
 - [Pedagogy](docs/LESSONS_PEDAGOGY.md)
 - [Getting Started](#getting-started)
 - [Backup/Restore](#backuprestore)
- - [Localization](#localization)
+- [Localization](#localization)
 - [Contributing](CONTRIBUTING.md)
 - [License](#license)
 
@@ -38,7 +39,11 @@
   </tr>
 </table>
 Note: SVG placeholders remain in this folder as a fallback (`*.svg`).
-Private iPad app for kana and kanji practice with Apple Pencil and a spaced repetition system. Includes Japanese text-to-speech and works fully offline.
+Private iPad app for guided Japanese study from zero through intermediate daily-life skills. It combines an A1/A2/B1 lesson path, kana tracing with Apple Pencil, kanji/vocab practice, spaced repetition, Japanese text-to-speech, local audio-pack fallback, daily goals, and stats. It works fully offline.
+
+## Documentation
+
+Start with the [docs index](docs/README.md) for architecture, pedagogy, UI system notes, screenshots guidance, audio packs, and the latest goal-completion audit.
 
 ## Run
 Open in Xcode, select the `JapaneseBuddyProj` scheme, pick an iPad simulator or device, and press **Run**.
@@ -78,7 +83,7 @@ Use **Settings ▸ Backup & Restore** to export or import your study deck. Expor
 Trace practice shows optional stroke hints with numbered overlays and an animated preview. Use the Play/Pause button before tracing; disable hints in Settings if preferred.
 
 ## Lessons
-Learn with short can-do based lessons. Each lesson starts with an objective, runs through activities like shadowing with Japanese TTS, listening or reading checks, then ends with a self-rated star review. Progress and stars save offline per lesson.
+Learn with a guided A1/A2/B1 path of 22 short can-do based lessons. Each lesson starts with an objective, runs through activities like shadowing with local audio or Japanese TTS, listening or reading checks, then ends with a self-rated star review. Progress and stars save offline per lesson, and only the next incomplete lesson is unlocked.
 
 ## Authoring lessons
 Lessons live in `JapaneseBuddy/Resources/lessons/` as JSON.

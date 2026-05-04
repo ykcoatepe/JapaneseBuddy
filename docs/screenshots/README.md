@@ -11,14 +11,14 @@ Replace the placeholder SVGs with real captures when ready.
 2) Export to your Mac
 - AirDrop from device, or drag the Simulator-captured images to Finder.
 
-3) Prepare files (PNG)
+3) Prepare files (PNG, when replacing placeholders)
 - Target names: home.png, lessons.png, trace.png, srs.png
 - Place them in: docs/screenshots/
 - Recommended size: 2048×1536 (iPad landscape) or similar aspect ratio.
 
-4) README uses PNGs by default
-- README’s Screenshots section embeds the PNGs.
-- The existing SVGs remain as fallbacks/placeholders.
+4) README currently uses SVG placeholders
+- README’s Screenshots section embeds `home.svg`, `lessons.svg`, `trace.svg`, and `srs.svg` until real captures are ready.
+- When replacing them with PNGs, update README and keep the SVGs as lightweight fallbacks/placeholders.
 
 5) Optional: Large files and LFS
 - If any PNG exceeds ~10 MB, consider using Git LFS.
