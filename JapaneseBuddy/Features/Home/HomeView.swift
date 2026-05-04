@@ -13,30 +13,18 @@ struct HomeView: View {
                         .padding(.horizontal)
                 }
 
-                Picker("Deck", selection: $store.currentType) {
-                    Text("Hiragana").tag(CardType.hiragana)
-                    Text("Katakana").tag(CardType.katakana)
+                Picker(L10n.Home.deck, selection: $store.currentType) {
+                    Text(L10n.Common.hiragana).tag(CardType.hiragana)
+                    Text(L10n.Common.katakana).tag(CardType.katakana)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
 
-                Toggle("Pencil only", isOn: $store.pencilOnly)
+                Toggle(L10n.Home.pencilOnly, isOn: $store.pencilOnly)
                     .padding(.horizontal)
 
-                JBCard {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.Home.dailyGoal).font(.headline)
-                        HStack {
-                            Label("New \(progress.newDone)/\(progress.target.newTarget)", systemImage: "sparkles")
-                            Spacer()
-                            Label("Review \(progress.reviewDone)/\(progress.target.reviewTarget)", systemImage: "arrow.triangle.2.circlepath")
-                        }.font(.subheadline)
-                        ProgressBar(value: ratio(progress))
-                    }
-                }
-                .padding(.horizontal)
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("Daily goal progress")
+                DailyGoalCard(progress: progress)
+                    .padding(.horizontal)
 
                 // Streak row + 7‑day sparkline
                 let counts = store.weeklyActivity()
@@ -58,20 +46,43 @@ struct HomeView: View {
                 }
                 .padding(.horizontal)
 
-                VStack(spacing: Theme.Spacing.small) {
-                    Text("Quick Actions").font(.headline).padding(.horizontal)
-                    HStack(spacing: Theme.Spacing.small) {
-                        NavigationLink {
-                            if let lesson = continueLesson {
+                if let lesson = continueLesson {
+                    JBCard {
+                        VStack(alignment: .leading, spacing: Theme.Spacing.small) {
+                            Text(L10n.Home.nextLesson)
+                                .font(.headline)
+                            Text("\(lesson.pathCode) \(lesson.title)")
+                                .font(.title3.bold())
+                            Text(lesson.canDo)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            NavigationLink {
                                 LessonRunnerView(lesson: lesson)
-                            } else {
-                                LessonListView()
+                            } label: {
+                                JBButton(L10n.Btn.continueLesson)
                             }
-                        } label: { JBButton(L10n.Btn.continueLesson) }
-                        NavigationLink { KanaTraceView() } label: { JBButton(L10n.Btn.startTrace, kind: .secondary) }
-                        NavigationLink { SRSView() } label: { JBButton(L10n.Btn.startReview, kind: .secondary) }
+                        }
                     }
                     .padding(.horizontal)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(L10n.Home.nextLesson), \(lesson.title), \(lesson.canDo)")
+                }
+
+                JBCard {
+                    VStack(alignment: .leading, spacing: Theme.Spacing.medium) {
+                        Text(L10n.Home.courseProgress)
+                            .font(.headline)
+                        ForEach(courseLevels, id: \.self) { level in
+                            courseProgressRow(level)
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .accessibilityElement(children: .contain)
+
+                VStack(spacing: Theme.Spacing.small) {
+                    Text(L10n.Home.quickActions).font(.headline).padding(.horizontal)
+                    quickActions
                 }
                 .padding(.bottom, Theme.Spacing.large)
             }
@@ -82,18 +93,54 @@ struct HomeView: View {
         .toolbar { }
     }
 
-    private var traceCount: Int { store.dueCards(type: store.currentType).count }
-    private var srsCount: Int { traceCount }
-    private var lessonCount: Int { lessonStore.lessons().count }
     private var progress: GoalProgress { store.progressToday() }
-    private func ratio(_ p: GoalProgress) -> Double {
-        let done = p.newDone + p.reviewDone
-        let total = max(1, p.target.newTarget + p.target.reviewTarget)
-        return Double(done) / Double(total)
+
+    private var quickActionColumns: [GridItem] {
+        [
+            GridItem(.adaptive(minimum: 180), spacing: Theme.Spacing.small)
+        ]
+    }
+
+    private var quickActions: some View {
+        LazyVGrid(columns: quickActionColumns, spacing: Theme.Spacing.small) {
+            NavigationLink {
+                if let lesson = continueLesson {
+                    LessonRunnerView(lesson: lesson)
+                } else {
+                    LessonListView()
+                }
+            } label: { JBButton(L10n.Btn.continueLesson) }
+            NavigationLink { KanaTraceView() } label: { JBButton(L10n.Btn.startTrace, kind: .secondary) }
+            NavigationLink { SRSView() } label: { JBButton(L10n.Btn.startReview, kind: .secondary) }
+        }
+        .padding(.horizontal)
     }
 
     private var continueLesson: Lesson? {
-        lessonStore.lessons().first { lessonStore.progress(for: $0.id).lastStep < $0.activities.count - 1 }
+        lessonStore.nextLesson()
+    }
+
+    private var courseLevels: [Lesson.Level] {
+        Lesson.Level.allCases.filter { lessonStore.levelProgress(for: $0).total > 0 }
+    }
+
+    private func courseProgressRow(_ level: Lesson.Level) -> some View {
+        let levelProgress = lessonStore.levelProgress(for: level)
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(level.title)
+                    .font(.subheadline.bold())
+                Spacer()
+                Text("\(levelProgress.completed)/\(levelProgress.total)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            ProgressBar(value: levelProgress.ratio)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(level.title), \(String(format: L10n.Common.countProgressFmt, levelProgress.completed, levelProgress.total))"
+        )
     }
 }
 
@@ -103,18 +150,20 @@ private struct HomeSparkline: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let n = max(1, values.count - 1)
-            let pts: [CGPoint] = values.enumerated().map { (i, v) in
-                let x = CGFloat(i) / CGFloat(n) * w
-                let y = h - CGFloat(v) * h
-                return CGPoint(x: x, y: y)
+            let width = geo.size.width
+            let height = geo.size.height
+            let segmentCount = max(1, values.count - 1)
+            let points: [CGPoint] = values.enumerated().map { (index, value) in
+                let positionX = CGFloat(index) / CGFloat(segmentCount) * width
+                let positionY = height - CGFloat(value) * height
+                return CGPoint(x: positionX, y: positionY)
             }
-            Path { p in
-                guard let first = pts.first else { return }
-                p.move(to: first)
-                for pt in pts.dropFirst() { p.addLine(to: pt) }
+            Path { path in
+                guard let first = points.first else { return }
+                path.move(to: first)
+                for point in points.dropFirst() {
+                    path.addLine(to: point)
+                }
             }
             .stroke(Color.accentColor,
                     style: StrokeStyle(lineWidth: lineWidth,

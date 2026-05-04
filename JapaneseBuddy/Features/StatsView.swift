@@ -19,53 +19,21 @@ struct StatsView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Theme.Spacing.large) {
                         if hasMinuteData {
-                            HStack(spacing: Theme.Spacing.small) {
-                                StatTile(title: String(format: L10n.Stats.weekMinutesFmt, weekTotal), value: "")
-                                StatTile(title: String(format: L10n.Stats.streakBestFmt, store.bestStreak()), value: "")
-                            }
-                            .padding(.horizontal)
-
-                            SectionHeader(String(format: L10n.Stats.weekMinutesFmt, weekTotal))
-                            HStack(alignment: .bottom, spacing: Theme.Spacing.small) {
-                                ForEach(0..<mins.count, id: \.self) { i in
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: Theme.CornerRadius.small)
-                                            .fill(Color.accentColor)
-                                            .frame(width: 18, height: CGFloat(8 + Int(60 * (CGFloat(mins[i]) / CGFloat(maxM)))))
-                                        Text(shortDay(i))
-                                            .font(.caption2)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    .accessibilityElement(children: .ignore)
-                                    .accessibilityLabel("Day \(i+1) \(mins[i]) min")
-                                }
-                            }
-                            .padding(.horizontal)
+                            statTiles(primary: String(format: L10n.Stats.weekMinutesFmt, weekTotal))
+                            chart(
+                                title: String(format: L10n.Stats.weekMinutesFmt, weekTotal),
+                                values: mins,
+                                maxValue: maxM,
+                                unit: L10n.Stats.minutesUnit
+                            )
                         } else {
-                            HStack(spacing: Theme.Spacing.small) {
-                                StatTile(title: String(format: L10n.Stats.streakFmt, store.currentStreak()), value: "")
-                                StatTile(title: String(format: L10n.Stats.streakBestFmt, store.bestStreak()), value: "")
-                            }
-                            .padding(.horizontal)
-
-                            SectionHeader(L10n.Nav.stats)
-                            HStack(alignment: .bottom, spacing: Theme.Spacing.small) {
-                                ForEach(0..<activity.count, id: \.self) { i in
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: Theme.CornerRadius.small)
-                                            .fill(Color.accentColor)
-                                            .frame(width: 18, height: CGFloat(8 + Int(60 * (CGFloat(activity[i]) / CGFloat(maxA)))))
-                                        Text(shortDay(i))
-                                            .font(.caption2)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    .accessibilityElement(children: .ignore)
-                                    .accessibilityLabel("Day \(i+1) \(activity[i]) sessions")
-                                }
-                            }
-                            .padding(.horizontal)
+                            statTiles(primary: String(format: L10n.Stats.streakFmt, store.currentStreak()))
+                            chart(title: L10n.Nav.stats, values: activity, maxValue: maxA, unit: L10n.Stats.sessionsUnit)
                         }
                     }
+                    .frame(maxWidth: 760)
+                    .padding(Theme.Spacing.large)
+                    .frame(maxWidth: .infinity)
                 }
                 .background(Color.washi.ignoresSafeArea())
             }
@@ -74,10 +42,42 @@ struct StatsView: View {
         .dynamicTypeSize(.xSmall ... .xxxLarge)
     }
 
+    private func statTiles(primary: String) -> some View {
+        HStack(spacing: Theme.Spacing.small) {
+            StatTile(title: primary, value: "")
+            StatTile(title: String(format: L10n.Stats.streakBestFmt, store.bestStreak()), value: "")
+        }
+    }
+
+    private func chart(title: String, values: [Int], maxValue: Int, unit: String) -> some View {
+        JBCard {
+            VStack(alignment: .leading, spacing: Theme.Spacing.medium) {
+                SectionHeader(title)
+                HStack(alignment: .bottom, spacing: Theme.Spacing.small) {
+                    ForEach(0..<values.count, id: \.self) { index in
+                        VStack {
+                            RoundedRectangle(cornerRadius: Theme.CornerRadius.small)
+                                .fill(Color.accentColor)
+                                .frame(width: 18, height: CGFloat(8 + Int(60 * (CGFloat(values[index]) / CGFloat(maxValue)))))
+                            Text(shortDay(index))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(String(format: L10n.Stats.dayValueFmt, index + 1, values[index], unit))
+                    }
+                }
+            }
+        }
+    }
+
     private func shortDay(_ offset: Int) -> String {
         let cal = Calendar.current
         let now = Date()
         let day = cal.date(byAdding: .day, value: -6 + offset, to: cal.startOfDay(for: now)) ?? now
-        let df = DateFormatter(); df.dateFormat = "E"; return df.string(from: day)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E"
+        return formatter.string(from: day)
     }
 }

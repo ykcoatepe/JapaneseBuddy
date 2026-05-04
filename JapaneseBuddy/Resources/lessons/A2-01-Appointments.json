@@ -1,0 +1,38 @@
+{
+  "id": "A2-01",
+  "title": "Appointments",
+  "canDo": "Make and confirm a simple appointment",
+  "activities": [
+    { "objective": { "text": "Ask for an appointment and confirm the time politely." } },
+    { "shadow": { "segments": [
+      "来週の 火ようびに 予約を したいです。",
+      "午後三時は あいていますか。",
+      "はい、火ようびの 三時で おねがいします。"
+    ] } },
+    { "listening": {
+      "prompt": "What day does the speaker want an appointment?",
+      "choices": ["Monday", "Tuesday", "Friday"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that confirms the appointment time.",
+      "choices": [
+        "火ようびの 三時で おねがいします。",
+        "火ようびは どこですか。",
+        "三時を 食べます。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "Use 予約を したいです to say you would like to make an appointment.",
+    "あいていますか asks whether a time is available."
+  ],
+  "kanjiWords": [
+    { "id": "A2-01-来", "kanji": "来", "reading": "らい", "meaning": "come / next" },
+    { "id": "A2-01-週", "kanji": "週", "reading": "しゅう", "meaning": "week" },
+    { "id": "A2-01-予", "kanji": "予", "reading": "よ", "meaning": "in advance" },
+    { "id": "A2-01-約", "kanji": "約", "reading": "やく", "meaning": "appointment / promise" }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "A1-02",
+  "title": "Classroom Phrases",
+  "canDo": "Ask for repetition and say you understand",
+  "activities": [
+    { "objective": { "text": "Use simple classroom phrases when you need help or understand." } },
+    { "shadow": { "segments": [
+      "もう 一度 おねがいします。",
+      "ゆっくり おねがいします。",
+      "はい、わかりました。ありがとうございます。"
+    ] } },
+    { "listening": {
+      "prompt": "What does the learner ask for?",
+      "choices": ["One more time", "A ticket", "A price"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that means 'Please slowly.'",
+      "choices": [
+        "ゆっくり おねがいします。",
+        "お水を おねがいします。",
+        "わたしは アヤです。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "もう一度 means one more time.",
+    "ゆっくり is useful when speech is too fast.",
+    "わかりました politely says that you understood."
+  ],
+  "kanjiWords": [
+    { "id": "A1-02-一", "kanji": "一", "reading": "いち", "meaning": "one" },
+    { "id": "A1-02-度", "kanji": "度", "reading": "ど", "meaning": "time / degree" },
+    { "id": "A1-02-分", "kanji": "分", "reading": "わ", "meaning": "understand / part" },
+    { "id": "A1-02-本", "kanji": "本", "reading": "ほん", "meaning": "book / origin" }
+  ]
+}

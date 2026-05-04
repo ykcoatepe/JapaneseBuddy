@@ -1,0 +1,39 @@
+{
+  "id": "A1-03",
+  "title": "Family and People",
+  "canDo": "Introduce a family member or friend",
+  "activities": [
+    { "objective": { "text": "Say who someone is and describe a simple relationship." } },
+    { "shadow": { "segments": [
+      "こちらは 母です。",
+      "こちらは 友だちの ケンです。",
+      "ケンさんは 日本語を 勉強しています。"
+    ] } },
+    { "listening": {
+      "prompt": "Who is introduced first?",
+      "choices": ["A mother", "A teacher", "A doctor"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that introduces a friend.",
+      "choices": [
+        "こちらは 友だちの ケンです。",
+        "新宿までの 切符を おねがいします。",
+        "頭が 痛いです。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "こちらは is a polite way to introduce someone near you.",
+    "友だちの marks the relationship before a name.",
+    "さん is a safe polite suffix for other people."
+  ],
+  "kanjiWords": [
+    { "id": "A1-03-母", "kanji": "母", "reading": "はは", "meaning": "mother" },
+    { "id": "A1-03-友", "kanji": "友", "reading": "とも", "meaning": "friend" },
+    { "id": "A1-03-日本", "kanji": "日本", "reading": "にほん", "meaning": "Japan" },
+    { "id": "A1-03-語", "kanji": "語", "reading": "ご", "meaning": "language" }
+  ]
+}

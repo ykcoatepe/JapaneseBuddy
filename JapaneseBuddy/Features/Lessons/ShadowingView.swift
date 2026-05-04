@@ -19,6 +19,7 @@ struct ShadowingView: View {
                     } label: {
                         Image(systemName: "play.circle").font(.title2)
                     }
+                    .accessibilityLabel(String(format: L10n.Lessons.playSegmentFmt, seg.idx))
                 }
             }
             Spacer()

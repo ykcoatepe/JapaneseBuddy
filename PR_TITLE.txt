@@ -1,2 +1,1 @@
-feat: FE redesign + B1 lessons + audio fallback + docs
-
+feat: expand JapaneseBuddy into guided iPad learning app

@@ -8,5 +8,9 @@
 
 ## Dev quickstart
 - Open `JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj`
-- Scheme `JapaneseBuddyProj` → Run on simulator or device
-- For content, see `JapaneseBuddy/Resources/lessons/*.json`
+- Scheme `JapaneseBuddyProj` → Run on an iPad simulator or device
+- Build with `make build`
+- Test with `make test` (prefers an available iPad simulator; set `SIM_DEVICE` to override)
+- Run content/localization/iPad sanity checks with `make sanity`
+- For content, see `JapaneseBuddy/Resources/lessons/*.json` and update `JapaneseBuddy/Resources/lessons/index.json`
+- Put active Xcode target tests under `JapaneseBuddyProj/JapaneseBuddyProjTests/`; keep legacy helper coverage in `JapaneseBuddyTests/` only when it is intentionally outside the active project target.

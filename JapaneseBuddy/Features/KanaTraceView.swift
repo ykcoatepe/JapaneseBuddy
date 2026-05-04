@@ -15,32 +15,54 @@ struct KanaTraceView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let side = min(max(min(geo.size.width, geo.size.height) - 160, 420), 900)
-            VStack(spacing: 24) {
-                if let card = current {
-                    Text(card.front).font(.largeTitle)
-                    ZStack {
-                        TraceCanvas(canvasView: $canvas, pencilOnly: store.pencilOnly)
-                            .frame(width: side, height: side)
-                            .background(RoundedRectangle(cornerRadius: 20).stroke(Color.secondary))
-                        if showHint {
-                            Text(card.front)
-                                .font(.system(size: side * 0.75))
-                                .foregroundColor(.gray.opacity(0.3))
+            let side = canvasSide(for: geo.size)
+            ScrollView {
+                VStack(spacing: Theme.Spacing.large) {
+                    if let card = current {
+                        JBCard {
+                            VStack(spacing: Theme.Spacing.medium) {
+                                traceHeader(card)
+                                ZStack {
+                                    TraceCanvas(canvasView: $canvas, pencilOnly: store.pencilOnly)
+                                        .frame(width: side, height: side)
+                                        .background(RoundedRectangle(cornerRadius: 20).stroke(Color.secondary))
+                                    if showHint {
+                                        Text(card.front)
+                                            .font(.system(size: side * 0.75))
+                                            .foregroundColor(.gray.opacity(0.3))
+                                            .accessibilityHidden(true)
+                                    }
+                                    if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
+                                        StrokePreviewView(strokes: StrokeData.strokes(for: card.front), playing: $playing)
+                                            .frame(width: side, height: side)
+                                            .allowsHitTesting(false)
+                                            .id(card.front)
+                                    }
+                                }
+                                .accessibilityLabel(String(format: L10n.Trace.canvasFmt, card.front))
+                                controls(for: card)
+                            }
                         }
-                        if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
-                            StrokePreviewView(strokes: StrokeData.strokes(for: card.front), playing: $playing)
-                                .frame(width: side, height: side)
-                                .allowsHitTesting(false)
-                                .id(card.front)
+                    } else {
+                        JBCard {
+                            VStack(spacing: Theme.Spacing.small) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.largeTitle)
+                                    .foregroundStyle(Color.accentColor)
+                                    .accessibilityHidden(true)
+                                Text(L10n.Trace.noCards)
+                                    .font(.headline)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 220)
                         }
                     }
-                } else {
-                    Text("No cards due")
                 }
+                .frame(maxWidth: 980)
+                .padding(Theme.Spacing.large)
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .background(Color.washi.ignoresSafeArea())
         .onAppear {
             next()
             if let current {
@@ -62,30 +84,57 @@ struct KanaTraceView: View {
         .onDisappear { store.endStudy(kind: .study) }
         .navigationTitle(L10n.Nav.practice)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
-        .safeAreaInset(edge: .bottom) {
-            if let card = current {
-                HStack(spacing: Theme.Spacing.small) {
-                    if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
-                        JBButton(playing ? L10n.Btn.pause : L10n.Btn.play, kind: .secondary) { playing.toggle() }
-                            .accessibilityLabel(playing ? "Pause preview" : "Play preview")
-                            .accessibilityHint("Preview stroke order")
-                    }
-                    JBButton(L10n.Btn.clear, kind: .secondary) { canvas?.drawing = PKDrawing() }
-                        .accessibilityLabel("Clear drawing")
-                        .accessibilityHint("Erases your strokes")
-                    JBButton(showHint ? "Hide" : L10n.Btn.hint, kind: .secondary) { showHint.toggle() }
-                        .accessibilityLabel(showHint ? "Hide hint" : "Show hint")
-                    JBButton(L10n.Btn.speak, kind: .secondary) { speaker.speak(card.front) }
-                        .accessibilityLabel("Speak character")
-                        .accessibilityHint("Plays pronunciation")
-                    JBButton(L10n.Btn.check) { check() }
-                        .accessibilityLabel("Check drawing")
-                        .accessibilityHint("Grades your tracing")
-                }
-                .padding()
-                .background(.ultraThinMaterial)
+    }
+
+    private func traceHeader(_ card: Card) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading, spacing: Theme.Spacing.xsmall) {
+                Text(card.front)
+                    .font(.largeTitle.bold())
+                Text(card.reading)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
             }
+            Spacer()
+            Text(deckTitle)
+                .font(.caption.bold())
+                .padding(.horizontal, Theme.Spacing.small)
+                .padding(.vertical, Theme.Spacing.xsmall)
+                .background(Color.accentColor.opacity(0.12), in: Capsule())
         }
+    }
+
+    private var deckTitle: String {
+        switch store.currentType {
+        case .hiragana: return L10n.Common.hiragana
+        case .katakana: return L10n.Common.katakana
+        case .vocab: return L10n.Practice.review
+        }
+    }
+
+    private func controls(for card: Card) -> some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 132), spacing: Theme.Spacing.small)], spacing: Theme.Spacing.small) {
+            if store.showStrokeHints && !UIAccessibility.isReduceMotionEnabled {
+                JBButton(playing ? L10n.Btn.pause : L10n.Btn.play, kind: .secondary) { playing.toggle() }
+                    .accessibilityLabel(playing ? L10n.Trace.pausePreview : L10n.Trace.playPreview)
+                    .accessibilityHint(L10n.Trace.previewHint)
+            }
+            JBButton(L10n.Btn.clear, kind: .secondary) { canvas?.drawing = PKDrawing() }
+                .accessibilityLabel(L10n.Trace.clearDrawing)
+                .accessibilityHint(L10n.Trace.clearHint)
+            JBButton(showHint ? L10n.Trace.hideHint : L10n.Btn.hint, kind: .secondary) { showHint.toggle() }
+                .accessibilityLabel(showHint ? L10n.Trace.hideHint : L10n.Trace.showHint)
+            JBButton(L10n.Btn.speak, kind: .secondary) { speaker.speak(card.front) }
+                .accessibilityLabel(L10n.Trace.speakCharacter)
+                .accessibilityHint(L10n.Trace.speakHint)
+            JBButton(L10n.Btn.check) { check() }
+                .accessibilityLabel(L10n.Trace.checkDrawing)
+                .accessibilityHint(L10n.Trace.checkHint)
+        }
+    }
+
+    private func canvasSide(for size: CGSize) -> CGFloat {
+        min(max(min(size.width - 64, size.height - 220), 320), 760)
     }
 
     private func next() {

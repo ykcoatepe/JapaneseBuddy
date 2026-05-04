@@ -4,54 +4,88 @@ import SwiftUI
 struct LessonRunnerView: View {
     @EnvironmentObject var lessons: LessonStore
     @EnvironmentObject var deck: DeckStore
+    @Environment(\.scenePhase) private var scenePhase
     let lesson: Lesson
 
     @State private var step = 0
     @State private var selection: Int?
     @State private var tab = 0
+    @State private var completedStars: Int?
 
     var body: some View {
-        VStack {
-            if lesson.kanjiWords?.isEmpty == false {
-                Picker("Mode", selection: $tab) {
-                    Text("Lesson").tag(0)
-                    Text("Kanji").tag(1)
-                }
-                .pickerStyle(.segmented)
-                .padding()
-            }
-            if tab == 0 {
-                VStack {
-                    Picker("Step", selection: $step) {
-                        ForEach(0..<stepLabels.count, id: \.self) { idx in
-                            Text(stepLabels[idx]).tag(idx)
-                        }
+        ScrollView {
+            VStack(spacing: Theme.Spacing.large) {
+                if lesson.kanjiWords?.isEmpty == false {
+                    Picker(L10n.Lessons.mode, selection: $tab) {
+                        Text(L10n.Lessons.lessonMode).tag(0)
+                        Text(L10n.Lessons.kanjiMode).tag(1)
                     }
                     .pickerStyle(.segmented)
-                    .padding()
-
-                    contentView
-                    HStack {
-                        if hasPrevStep {
-                            Button("Back") { back() }
-                        }
-                        Spacer()
-                        if !isCheck && hasNextStep {
-                            Button("Next") { next() }
-                                .disabled(disableNext)
-                        }
-                    }
-                    .padding()
+                    .frame(maxWidth: 420)
                 }
-            } else if let words = lesson.kanjiWords {
-                KanjiPracticeView(words: words, lessonID: lesson.id, store: deck)
+
+                if tab == 0 {
+                    lessonPanel
+                } else if let words = lesson.kanjiWords {
+                    KanjiPracticeView(words: words, lessonID: lesson.id, store: deck)
+                        .frame(maxWidth: 760)
+                }
             }
+            .frame(maxWidth: 820)
+            .padding(Theme.Spacing.large)
+            .frame(maxWidth: .infinity)
         }
+        .background(Color.washi.ignoresSafeArea())
         .navigationTitle(lesson.title)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
         .onAppear {
             let last = lessons.progress(for: lesson.id).lastStep
             step = min(max(0, last), max(lesson.activities.count - 1, 0))
+            deck.beginStudy()
+        }
+        .onDisappear {
+            deck.endStudy(kind: .study)
+        }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .inactive, .background:
+                deck.endStudy(kind: .study)
+            case .active:
+                deck.beginStudy()
+            @unknown default:
+                break
+            }
+        }
+    }
+
+    private var lessonPanel: some View {
+        JBCard {
+            VStack(spacing: Theme.Spacing.medium) {
+                Picker(L10n.Lessons.step, selection: stepBinding) {
+                    ForEach(0..<stepLabels.count, id: \.self) { index in
+                        Text(stepLabels[index]).tag(index)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                contentView
+                    .frame(maxWidth: .infinity, minHeight: 360)
+
+                Divider()
+
+                HStack {
+                    if hasPrevStep {
+                        JBButton(L10n.Lessons.back, kind: .secondary) { back() }
+                            .frame(maxWidth: 180)
+                    }
+                    Spacer()
+                    if !isCheck && hasNextStep {
+                        JBButton(L10n.Lessons.next) { next() }
+                            .frame(maxWidth: 180)
+                            .disabled(disableNext)
+                    }
+                }
+            }
         }
     }
 
@@ -59,20 +93,27 @@ struct LessonRunnerView: View {
         lesson.activities.map { activityLabel($0) }
     }
 
-    private func activityLabel(_ act: Lesson.Activity) -> String {
-        switch act {
-        case .objective: return "Objective"
-        case .shadow: return "Shadow"
-        case .listening: return "Listening"
-        case .reading: return "Reading"
-        case .check: return "Check"
+    private var stepBinding: Binding<Int> {
+        Binding(
+            get: { step },
+            set: { move(to: $0) }
+        )
+    }
+
+    private func activityLabel(_ activity: Lesson.Activity) -> String {
+        switch activity {
+        case .objective: return L10n.Lessons.objective
+        case .shadow: return L10n.Lessons.shadow
+        case .listening: return L10n.Lessons.listening
+        case .reading: return L10n.Lessons.reading
+        case .check: return L10n.Lessons.check
         }
     }
 
     @ViewBuilder
     private var contentView: some View {
         if !(step >= 0 && step < lesson.activities.count) {
-            Text("Lesson complete")
+            Text(L10n.Lessons.completeTitle)
         } else {
             switch lesson.activities[step] {
             case let .objective(text):
@@ -84,33 +125,85 @@ struct LessonRunnerView: View {
             case let .reading(prompt, items, answer):
                 ReadingView(prompt: prompt, items: items, answer: answer, selection: $selection)
             case .check:
-                CheckView(current: lessons.progress(for: lesson.id).stars) { stars in
-                    var p = lessons.progress(for: lesson.id)
-                    p.stars = stars
-                    p.completedAt = Date()
-                    p.lastStep = step
-                    lessons.updateProgress(p, for: lesson.id)
+                if let completedStars {
+                    lessonCompleteView(stars: completedStars)
+                } else {
+                    CheckView(current: lessons.progress(for: lesson.id).stars) { stars in
+                        finishLesson(stars: stars)
+                    }
                 }
             }
         }
     }
 
+    private func lessonCompleteView(stars: Int) -> some View {
+        VStack(spacing: Theme.Spacing.medium) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 56))
+                .foregroundStyle(Color.accentColor)
+                .accessibilityHidden(true)
+            Text(L10n.Lessons.completeTitle)
+                .font(.title2.bold())
+            Text(String(format: L10n.Lessons.completedStarsFmt, stars))
+                .font(.headline)
+                .foregroundStyle(.secondary)
+
+            if let nextLesson = lessons.nextLesson(), nextLesson.id != lesson.id {
+                Text("\(nextLesson.pathCode) \(nextLesson.title)")
+                    .font(.headline)
+                Text(nextLesson.canDo)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                NavigationLink {
+                    LessonRunnerView(lesson: nextLesson)
+                } label: {
+                    JBButton(L10n.Lessons.startNext)
+                }
+                .padding(.top, Theme.Spacing.small)
+            } else {
+                NavigationLink {
+                    LessonListView()
+                } label: {
+                    JBButton(L10n.Nav.lessons)
+                }
+                .padding(.top, Theme.Spacing.small)
+            }
+        }
+        .padding()
+        .frame(maxWidth: 520)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func finishLesson(stars: Int) {
+        var progress = lessons.progress(for: lesson.id)
+        progress.stars = stars
+        progress.completedAt = Date()
+        progress.lastStep = step
+        lessons.updateProgress(progress, for: lesson.id)
+        deck.logLessonCompletion()
+        completedStars = stars
+    }
+
     private func next() {
         guard hasNextStep else { return }
-        step += 1
-        var p = lessons.progress(for: lesson.id)
-        p.lastStep = step
-        lessons.updateProgress(p, for: lesson.id)
-        selection = nil
+        move(to: step + 1)
     }
 
     private func back() {
         guard hasPrevStep else { return }
-        step -= 1
-        var p = lessons.progress(for: lesson.id)
-        p.lastStep = step
-        lessons.updateProgress(p, for: lesson.id)
+        move(to: step - 1)
+    }
+
+    private func move(to targetStep: Int) {
+        let clampedStep = min(max(0, targetStep), max(lesson.activities.count - 1, 0))
+        guard clampedStep != step else { return }
+        step = clampedStep
+        var progress = lessons.progress(for: lesson.id)
+        progress.lastStep = step
+        lessons.updateProgress(progress, for: lesson.id)
         selection = nil
+        completedStars = nil
     }
 
     private var isCheck: Bool {

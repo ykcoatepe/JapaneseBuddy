@@ -6,13 +6,15 @@
   - `Models/`: core types (Card, SRS, Lesson, Goal)
   - `Services/`: persistence, speech, drawing, notifications, logging
   - `Resources/lessons/`: seed lesson JSONs (e.g., `A1-05-Prices.json`)
-- `JapaneseBuddyTests/`: XCTest targets (unit/UI). Keep test helpers here.
+- `JapaneseBuddyProj/JapaneseBuddyProjTests/`: active Xcode unit/Swift Testing target.
+- `JapaneseBuddyProj/JapaneseBuddyProjUITests/`: UI smoke tests.
+- `JapaneseBuddyTests/`: legacy/helper tests. Keep target-critical regression coverage in the active Xcode test folder.
 - `docs/`, `prompts/`, `scripts/`: notes, briefs, local utilities.
 - `.codex/`: lightweight in-repo memory (state, sessions, sanity snapshot).
 
 ## Build, Test, and Development Commands
-- `make build`: build via Xcode (`-project JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj`).
-- `make test`: run XCTest for the same scheme on iOS Simulator.
+- `make build`: build via Xcode (`-project JapaneseBuddyProj/JapaneseBuddyProj.xcodeproj -scheme JapaneseBuddyProj`).
+- `make test`: run XCTest for the same scheme, preferring an available iPad simulator. Override with `SIM_DEVICE='iPad Air 13-inch (M4)' make test`.
 - `make lint`: run SwiftLint (non-failing locally).
 - `make format`: apply SwiftFormat to the repo.
 Example: `make format && make lint && make test` before opening a PR.
@@ -25,7 +27,7 @@ Example: `make format && make lint && make test` before opening a PR.
 
 ## Testing Guidelines
 - Frameworks: XCTest unit tests; minimal UI smoke as needed.
-- Location: `JapaneseBuddyTests/*.swift` (e.g., `SRSProgressionTests.swift`).
+- Location: active target tests live in `JapaneseBuddyProj/JapaneseBuddyProjTests/*.swift` and UI smoke tests live in `JapaneseBuddyProj/JapaneseBuddyProjUITests/*.swift`.
 - Scope: prioritize SRS progression, deck persistence, lesson decoding, simple navigation.
 - Run: `make test`. Name tests `*Tests.swift` and keep them deterministic.
 

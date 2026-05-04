@@ -1,6 +1,6 @@
 # Sanity Snapshot
 
-- Updated: 2026-05-04T05:23:50Z
+- Updated: 2026-05-04T13:31:37Z
 
 ## Project
 - xcodeproj: present
@@ -11,5 +11,5 @@
 - A1-04 present via folder reference
 
 ## Loader Checks
-17:        let fromFolder = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
-18:        let fromRoot = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil)
+27:        let folderURLs = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "lessons")
+28:        let rootURLs = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil)

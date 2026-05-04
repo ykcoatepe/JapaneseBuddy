@@ -18,10 +18,26 @@ struct ListeningView: View {
                     .padding()
                     .background(background(item.id))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .accessibilityHint(accessibilityHint(item.id))
+            }
+            if let feedback {
+                Text(feedback)
+                    .font(.subheadline.bold())
+                    .foregroundStyle(selection == answer ? Color.accentColor : .secondary)
             }
             Spacer()
         }
         .padding()
+    }
+
+    private var feedback: String? {
+        guard let selection else { return nil }
+        return selection == answer ? L10n.Lessons.correctChoice : L10n.Lessons.tryAgainChoice
+    }
+
+    private func accessibilityHint(_ idx: Int) -> String {
+        guard let selection, selection == idx else { return "" }
+        return idx == answer ? L10n.Lessons.correctChoice : L10n.Lessons.tryAgainChoice
     }
 
     private func background(_ idx: Int) -> Color {
@@ -35,4 +51,3 @@ struct ListeningView: View {
         }
     }
 }
-

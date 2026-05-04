@@ -9,9 +9,9 @@ struct BackupSection: View {
     @State private var alert: AlertInfo?
 
     var body: some View {
-        Section("Backup & Restore") {
-            Button("Export deck.json") { showExporter = true }
-            Button("Import deck.json") { showImporter = true }
+        Section(L10n.Settings.backupRestore) {
+            Button(L10n.Settings.exportDeck) { showExporter = true }
+            Button(L10n.Settings.importDeck) { showImporter = true }
         }
         .sheet(isPresented: $showExporter) {
             ActivityController(url: BackupService.exportURL)
@@ -20,16 +20,16 @@ struct BackupSection: View {
             DocumentPicker { url in
                 do {
                     try BackupService.importDeck(from: url, into: store)
-                    alert = AlertInfo(title: "Import Complete")
+                    alert = AlertInfo(title: L10n.Settings.importComplete)
                 } catch {
-                    alert = AlertInfo(title: "Import Failed", message: error.localizedDescription)
+                    alert = AlertInfo(title: L10n.Settings.importFailed, message: error.localizedDescription)
                 }
             }
         }
         .alert(item: $alert) { info in
             Alert(title: Text(info.title),
                   message: Text(info.message ?? ""),
-                  dismissButton: .default(Text("OK")))
+                  dismissButton: .default(Text(L10n.Common.okay)))
         }
     }
 }
@@ -45,7 +45,7 @@ private struct ActivityController: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIActivityViewController {
         UIActivityViewController(activityItems: [url], applicationActivities: nil)
     }
-    func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }
 
 private struct DocumentPicker: UIViewControllerRepresentable {
@@ -57,7 +57,7 @@ private struct DocumentPicker: UIViewControllerRepresentable {
         picker.delegate = context.coordinator
         return picker
     }
-    func updateUIViewController(_ vc: UIDocumentPickerViewController, context: Context) {}
+    func updateUIViewController(_ controller: UIDocumentPickerViewController, context: Context) {}
     final class Coordinator: NSObject, UIDocumentPickerDelegate {
         let onPick: (URL) -> Void
         init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
@@ -67,4 +67,3 @@ private struct DocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
-

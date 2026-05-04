@@ -1,0 +1,39 @@
+{
+  "id": "A1-08",
+  "title": "Asking Directions",
+  "canDo": "Ask where a place is and follow a simple answer",
+  "activities": [
+    { "objective": { "text": "Ask where a station or shop is and understand left, right, and straight ahead." } },
+    { "shadow": { "segments": [
+      "すみません、駅は どこですか。",
+      "まっすぐ 行って、右です。",
+      "コンビニは 左に あります。"
+    ] } },
+    { "listening": {
+      "prompt": "Where should the learner turn after going straight?",
+      "choices": ["Left", "Right", "Back"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that asks where the station is.",
+      "choices": [
+        "駅は どこですか。",
+        "駅は いくらですか。",
+        "駅を おねがいします。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "どこですか asks where something is.",
+    "まっすぐ means straight ahead.",
+    "右 and 左 are useful first direction words."
+  ],
+  "kanjiWords": [
+    { "id": "A1-08-駅", "kanji": "駅", "reading": "えき", "meaning": "station" },
+    { "id": "A1-08-右", "kanji": "右", "reading": "みぎ", "meaning": "right" },
+    { "id": "A1-08-左", "kanji": "左", "reading": "ひだり", "meaning": "left" },
+    { "id": "A1-08-行", "kanji": "行", "reading": "い", "meaning": "go" }
+  ]
+}
