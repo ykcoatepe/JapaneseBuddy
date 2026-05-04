@@ -16,6 +16,24 @@ struct GoalProgressSpec {
         #expect(progress.totalDone == 1)
     }
 
+    @Test func repeatLessonCompletionsCountTowardDailyGoal() {
+        let now = Date(timeIntervalSince1970: 1_700_000_000)
+        let entries = [
+            SessionLogEntry(date: now, kind: .lesson, cardID: nil, durationSec: nil),
+            SessionLogEntry(date: now.addingTimeInterval(600), kind: .lesson, cardID: nil, durationSec: nil)
+        ]
+
+        let progress = GoalProgress.compute(
+            entries: entries,
+            on: now,
+            goal: DailyGoal(newTarget: 0, reviewTarget: 0, lessonTarget: 2),
+            cal: Calendar(identifier: .gregorian)
+        )
+
+        #expect(progress.lessonDone == 2)
+        #expect(progress.ratio == 1)
+    }
+
     @Test func lessonStudyDurationDoesNotCountAsLessonCompletion() {
         let now = Date(timeIntervalSince1970: 1_700_000_000)
         let entries = [

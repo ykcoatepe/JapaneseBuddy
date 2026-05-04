@@ -177,14 +177,11 @@ struct LessonRunnerView: View {
 
     private func finishLesson(stars: Int) {
         var progress = lessons.progress(for: lesson.id)
-        let wasCompleted = progress.isCompleted
         progress.stars = stars
         progress.completedAt = Date()
         progress.lastStep = step
         lessons.updateProgress(progress, for: lesson.id)
-        if !wasCompleted {
-            deck.logLessonCompletion()
-        }
+        deck.logLessonCompletion()
         completedStars = stars
     }
 
