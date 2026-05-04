@@ -1,0 +1,38 @@
+{
+  "id": "A2-02",
+  "title": "Returns and Exchanges",
+  "canDo": "Explain a problem and ask for an exchange",
+  "activities": [
+    { "objective": { "text": "Explain that an item has a problem and ask for an exchange politely." } },
+    { "shadow": { "segments": [
+      "すみません、この シャツは サイズが 合いません。",
+      "べつの サイズに 交換できますか。",
+      "レシートは こちらです。よろしく おねがいします。"
+    ] } },
+    { "listening": {
+      "prompt": "What is the problem with the shirt?",
+      "choices": ["The color is wrong", "The size does not fit", "The price is too high"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that politely asks for an exchange.",
+      "choices": [
+        "べつの サイズに 交換できますか。",
+        "この 店は どこですか。",
+        "シャツを 食べます。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "合いません means something does not fit or does not match.",
+    "交換できますか is a polite way to ask whether an exchange is possible."
+  ],
+  "kanjiWords": [
+    { "id": "A2-02-合", "kanji": "合", "reading": "あ", "meaning": "fit / match" },
+    { "id": "A2-02-交", "kanji": "交", "reading": "こう", "meaning": "exchange" },
+    { "id": "A2-02-換", "kanji": "換", "reading": "かん", "meaning": "replace / exchange" },
+    { "id": "A2-02-店", "kanji": "店", "reading": "みせ", "meaning": "shop" }
+  ]
+}

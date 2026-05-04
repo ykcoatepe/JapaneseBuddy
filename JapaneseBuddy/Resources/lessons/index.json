@@ -1,10 +1,21 @@
 {
   "A1": [
     "A1-01-Greetings",
+    "A1-02-ClassroomPhrases",
+    "A1-03-FamilyPeople",
     "A1-04-WhereYouLive",
     "A1-05-Prices",
     "A1-06-TimeDate",
-    "A1-07-Ordering"
+    "A1-07-Ordering",
+    "A1-08-AskingDirections"
+  ],
+  "A2": [
+    "A2-01-Appointments",
+    "A2-02-ReturnsExchanges",
+    "A2-03-Tickets",
+    "A2-04-ClinicVisit",
+    "A2-05-RentingHome",
+    "A2-06-Invitations"
   ],
   "B1": [
     "B1-01-InvitationsPlans",
@@ -12,6 +23,8 @@
     "B1-03-TravelIssues",
     "B1-04-AdviceRequests",
     "B1-05-WeekendPlans",
-    "B1-06-ErrandsReservations"
+    "B1-06-ErrandsReservations",
+    "B1-07-GivingOpinions",
+    "B1-08-FollowingUp"
   ]
 }

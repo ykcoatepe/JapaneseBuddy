@@ -1,0 +1,39 @@
+{
+  "id": "A2-04",
+  "title": "Clinic Visit",
+  "canDo": "Describe symptoms and understand simple advice",
+  "activities": [
+    { "objective": { "text": "Tell a clinic staff member what hurts, how long it has hurt, and understand basic advice." } },
+    { "shadow": { "segments": [
+      "きのうから 頭が 痛いです。",
+      "熱も すこし あります。",
+      "今日は 水を のんで、早く 休んでください。"
+    ] } },
+    { "listening": {
+      "prompt": "What symptom does the learner mention?",
+      "choices": ["A headache", "A toothache", "A stomachache"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that gives simple advice.",
+      "choices": [
+        "今日は 水を のんで、早く 休んでください。",
+        "切符を 一枚 おねがいします。",
+        "べつの サイズに 交換できますか。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "から can mark when a condition started: きのうから means since yesterday.",
+    "痛いです describes pain in a polite way.",
+    "休んでください is a gentle instruction to rest."
+  ],
+  "kanjiWords": [
+    { "id": "A2-04-頭", "kanji": "頭", "reading": "あたま", "meaning": "head" },
+    { "id": "A2-04-痛", "kanji": "痛", "reading": "いた", "meaning": "pain / hurt" },
+    { "id": "A2-04-熱", "kanji": "熱", "reading": "ねつ", "meaning": "fever / heat" },
+    { "id": "A2-04-休", "kanji": "休", "reading": "やす", "meaning": "rest" }
+  ]
+}

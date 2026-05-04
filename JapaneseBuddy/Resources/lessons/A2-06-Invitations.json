@@ -1,0 +1,39 @@
+{
+  "id": "A2-06",
+  "title": "Invitations",
+  "canDo": "Invite someone, accept politely, and decline with a reason",
+  "activities": [
+    { "objective": { "text": "Make a casual invitation, accept with enthusiasm, and decline politely when you already have plans." } },
+    { "shadow": { "segments": [
+      "土曜日に 一緒に 昼ごはんを 食べませんか。",
+      "いいですね。ぜひ 行きたいです。",
+      "すみません、その日は 予定が あります。"
+    ] } },
+    { "listening": {
+      "prompt": "Why does the speaker decline?",
+      "choices": ["They already have plans", "They lost a ticket", "They have a fever"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the polite invitation.",
+      "choices": [
+        "土曜日に 一緒に 昼ごはんを 食べませんか。",
+        "返品したいです。",
+        "駅から 歩いて 十分です。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "ませんか is a polite invitation pattern.",
+    "ぜひ adds warmth when accepting an invitation.",
+    "その日は 予定が あります gives a simple reason when declining."
+  ],
+  "kanjiWords": [
+    { "id": "A2-06-土曜", "kanji": "土曜", "reading": "どよう", "meaning": "Saturday" },
+    { "id": "A2-06-一緒", "kanji": "一緒", "reading": "いっしょ", "meaning": "together" },
+    { "id": "A2-06-昼", "kanji": "昼", "reading": "ひる", "meaning": "noon / lunch" },
+    { "id": "A2-06-予定", "kanji": "予定", "reading": "よてい", "meaning": "plan / schedule" }
+  ]
+}

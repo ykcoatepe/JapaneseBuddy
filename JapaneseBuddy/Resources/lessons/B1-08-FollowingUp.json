@@ -1,0 +1,39 @@
+{
+  "id": "B1-08",
+  "title": "Following Up",
+  "canDo": "Explain a small problem and ask for a follow-up",
+  "activities": [
+    { "objective": { "text": "Report that something has not arrived, explain what you already checked, and ask for a follow-up." } },
+    { "shadow": { "segments": [
+      "先週 注文しましたが、まだ 届いていません。",
+      "メールと 住所は もう 確認しました。",
+      "確認してから、もう一度 連絡していただけますか。"
+    ] } },
+    { "listening": {
+      "prompt": "What has the learner already checked?",
+      "choices": ["Email and address", "The train ticket", "The clinic time"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that asks for a follow-up.",
+      "choices": [
+        "確認してから、もう一度 連絡していただけますか。",
+        "水を のんで、早く 休んでください。",
+        "日当たりが よくて、静かな 部屋です。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "まだ ... ていません means something has not happened yet.",
+    "もう marks something already completed.",
+    "ていただけますか is a polite way to ask for help."
+  ],
+  "kanjiWords": [
+    { "id": "B1-08-注文", "kanji": "注文", "reading": "ちゅうもん", "meaning": "order" },
+    { "id": "B1-08-届", "kanji": "届", "reading": "とど", "meaning": "arrive / deliver" },
+    { "id": "B1-08-確認", "kanji": "確認", "reading": "かくにん", "meaning": "confirmation" },
+    { "id": "B1-08-連絡", "kanji": "連絡", "reading": "れんらく", "meaning": "contact" }
+  ]
+}

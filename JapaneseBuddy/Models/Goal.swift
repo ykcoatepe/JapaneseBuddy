@@ -3,10 +3,28 @@ import Foundation
 struct DailyGoal: Codable {
     var newTarget: Int = 10
     var reviewTarget: Int = 10
+    var lessonTarget: Int = 1
+
+    init(newTarget: Int = 10, reviewTarget: Int = 10, lessonTarget: Int = 1) {
+        self.newTarget = newTarget
+        self.reviewTarget = reviewTarget
+        self.lessonTarget = lessonTarget
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case newTarget, reviewTarget, lessonTarget
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        newTarget = try container.decodeIfPresent(Int.self, forKey: .newTarget) ?? 10
+        reviewTarget = try container.decodeIfPresent(Int.self, forKey: .reviewTarget) ?? 10
+        lessonTarget = try container.decodeIfPresent(Int.self, forKey: .lessonTarget) ?? 1
+    }
 }
 
 enum SessionKind: String, Codable {
-    case new, review, study
+    case new, review, study, lesson
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -17,7 +35,7 @@ enum SessionKind: String, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .new, .review:
+        case .new, .review, .lesson:
             try container.encode(rawValue)
         case .study:
             // Keep persisted values backward-compatible for older app versions.
@@ -36,7 +54,21 @@ struct SessionLogEntry: Codable {
 struct GoalProgress {
     let newDone: Int
     let reviewDone: Int
+    let lessonDone: Int
     let target: DailyGoal
+
+    var totalDone: Int {
+        newDone + reviewDone + lessonDone
+    }
+
+    var totalTarget: Int {
+        target.newTarget + target.reviewTarget + target.lessonTarget
+    }
+
+    var ratio: Double {
+        guard totalTarget > 0 else { return 1 }
+        return min(1, Double(totalDone) / Double(totalTarget))
+    }
 }
 
 extension GoalProgress {
@@ -44,6 +76,7 @@ extension GoalProgress {
         let today = entries.filter { cal.isDate($0.date, inSameDayAs: day) }
         let newDone = today.filter { $0.kind == .new }.count
         let reviewDone = today.filter { $0.kind == .review && $0.durationSec == nil }.count
-        return GoalProgress(newDone: newDone, reviewDone: reviewDone, target: goal)
+        let lessonDone = today.filter { $0.kind == .lesson && $0.durationSec == nil }.count
+        return GoalProgress(newDone: newDone, reviewDone: reviewDone, lessonDone: lessonDone, target: goal)
     }
 }

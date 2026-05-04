@@ -25,7 +25,7 @@ Apply theme: `.applyTheme(store.themeMode)` at root; keep sidebar labels short.
 
 ## 4) Page Specs
 - **Home:** Greeting, `DailyGoalCard`, three Quick Actions; VO order: greeting → goal → actions  
-- **Lessons:** Filter chips (All/A1/A2); row shows title, can-do, ★ count, `step/total`  
+- **Lessons:** Filter chips (All/A1/A2/B1); section progress, locked/next/completed state, can-do, and lesson progress
 - **Runner:** Segmented header (Objective/Shadow/Listening/Reading/Kanji/Check)  
 - **Trace:** Fixed bottom bar (Clear/Hint/Speak/Check); guard preview when `UIAccessibility.isReduceMotionEnabled`  
 - **SRS:** Centered card; Speak; Hard/Good/Easy with haptic; large tap targets  

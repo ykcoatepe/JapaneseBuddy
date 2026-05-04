@@ -14,8 +14,7 @@ struct ProgressBar: View {
             }
         }
         .frame(height: 8)
-        .accessibilityLabel("Progress")
-        .accessibilityValue("\(Int(value * 100)) percent")
+        .accessibilityLabel(L10n.Common.progress)
+        .accessibilityValue(String(format: L10n.Common.percentFmt, Int(value * 100)))
     }
 }
-

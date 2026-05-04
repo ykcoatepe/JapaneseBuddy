@@ -7,89 +7,109 @@ struct OnboardingView: View {
     @State private var deckChoice: DeckOption = .hiragana
     @State private var newGoal = 5
     @State private var reviewGoal = 20
+    @State private var lessonGoal = 1
     @State private var name = ""
-    @State private var debugHotspot = false
 
     var body: some View {
         TabView(selection: $tab) {
-            // Full-screen hero with tappable "Get Started" hotspot
-            GeometryReader { proxy in
-                ZStack {
-                    if let hero = loadHeroImage() {
-                        Image(uiImage: hero)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                            .ignoresSafeArea()
-                            .accessibilityLabel("Welcome")
-
-                        // Proportional hotspot overlay mapped to the image coordinate space
-                        hotspotOverlay(in: proxy.size, imageSize: hero.size) {
-                            finish()
-                        }
-
-                        if debugHotspot {
-                            hotspotOverlay(in: proxy.size, imageSize: hero.size, debug: true) {}
-                        }
-                    } else {
-                        // Fallback simple welcome if image missing
-                        VStack(spacing: 16) {
-                            Text("Welcome").font(.largeTitle).bold()
-                            Button("Get Started") { finish() }
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                }
-            }
-            .tag(0)
-            VStack(spacing: 20) {
-                Text("Pick deck")
-                Picker("Deck", selection: $deckChoice) {
-                    Text("Hiragana").tag(DeckOption.hiragana)
-                    Text("Katakana").tag(DeckOption.katakana)
-                    Text("Both").tag(DeckOption.both)
+            heroPage.tag(0)
+            setupPage(icon: "map.fill", title: L10n.Onboarding.pathTitle, text: L10n.Onboarding.pathText) { tab = 2 }.tag(1)
+            setupPage(icon: "rectangle.stack.fill", title: L10n.Onboarding.deckTitle, text: L10n.Onboarding.deckText) {
+                Picker(L10n.Home.deck, selection: $deckChoice) {
+                    Text(L10n.Onboarding.hiragana).tag(DeckOption.hiragana)
+                    Text(L10n.Onboarding.katakana).tag(DeckOption.katakana)
                 }
                 .pickerStyle(.segmented)
-            }
-            .tag(1)
-            VStack(spacing: 20) {
-                Text("Tracing tips")
-                Text("Pass with 60% overlap and right stroke count. Use Play to preview.")
-                    .multilineTextAlignment(.center)
-            }
+            } action: { tab = 3 }
             .tag(2)
-            VStack(spacing: 20) {
-                Text("Daily goals")
-                Stepper("New \(newGoal)", value: $newGoal, in: 0...50)
-                Stepper("Review \(reviewGoal)", value: $reviewGoal, in: 0...200)
-            }
+            setupPage(icon: "pencil.and.outline", title: L10n.Onboarding.traceTitle, text: L10n.Onboarding.traceText) { tab = 4 }
             .tag(3)
-            VStack(spacing: 20) {
-                Text("Your name (optional)")
-                TextField("Name", text: $name)
-                    .textContentType(.name)
-                Button("Get Started") { finish() }
-            }
+            setupPage(icon: "target", title: L10n.Onboarding.goalsTitle, text: L10n.Onboarding.goalsText) {
+                VStack(spacing: Theme.Spacing.small) {
+                    goalStepper(L10n.Settings.newCards, value: $newGoal, range: 0...50)
+                    goalStepper(L10n.Settings.reviewCards, value: $reviewGoal, range: 0...200)
+                    goalStepper(L10n.Settings.lessons, value: $lessonGoal, range: 0...10)
+                }
+            } action: { tab = 5 }
             .tag(4)
+            setupPage(icon: "person.crop.circle", title: L10n.Onboarding.nameTitle, text: L10n.Onboarding.nameText) {
+                TextField(L10n.Settings.name, text: $name)
+                    .textContentType(.name)
+                    .textFieldStyle(.roundedBorder)
+            } action: { finish() }
+            .tag(5)
         }
         .tabViewStyle(.page)
         .indexViewStyle(.page)
         .dynamicTypeSize(.xSmall ... .xxxLarge)
+        .background(Color.washi.ignoresSafeArea())
     }
 
-    private func page(icon: String, title: String, text: String) -> some View {
-        VStack(spacing: 20) {
-            Image(systemName: icon).font(.system(size: 80))
-            Text(title).font(.title)
-            Text(text).multilineTextAlignment(.center)
+    private var heroPage: some View {
+        GeometryReader { proxy in
+            ZStack {
+                if let hero = loadHeroImage() {
+                    Image(uiImage: hero)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .ignoresSafeArea()
+                        .accessibilityLabel(L10n.Onboarding.welcome)
+                } else {
+                    Color.washi.ignoresSafeArea()
+                }
+                VStack(spacing: Theme.Spacing.medium) {
+                    Spacer()
+                    Typography.title(L10n.Onboarding.welcome)
+                    Text(L10n.Onboarding.welcomeText)
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    JBButton(L10n.Onboarding.getStarted) { tab = 1 }
+                        .frame(maxWidth: 360)
+                }
+                .padding(Theme.Spacing.large)
+            }
         }
-        .padding()
     }
 
-    // Load hero image. Prefers an asset named "onboarding_hero" from the art/ folder,
-    // falls back to the existing wellcome_1.png if present.
+    private func setupPage<Content: View>(
+        icon: String,
+        title: String,
+        text: String,
+        @ViewBuilder content: () -> Content = { EmptyView() },
+        action: @escaping () -> Void
+    ) -> some View {
+        VStack(spacing: Theme.Spacing.large) {
+            Image(systemName: icon)
+                .font(.system(size: 72))
+                .foregroundStyle(Color.accentColor)
+            VStack(spacing: Theme.Spacing.small) {
+                Text(title).font(.title.bold())
+                Text(text)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            content()
+                .frame(maxWidth: 460)
+            JBButton(tab == 5 ? L10n.Onboarding.getStarted : L10n.Onboarding.continueButton, action: action)
+                .frame(maxWidth: 360)
+        }
+        .padding(Theme.Spacing.large)
+        .frame(maxWidth: 760)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func goalStepper(_ title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {
+        Stepper(value: value, in: range) {
+            Text("\(title) \(value.wrappedValue)")
+        }
+        .accessibilityLabel(title)
+        .accessibilityValue(String(value.wrappedValue))
+    }
+
     private func loadHeroImage() -> UIImage? {
-        // Try onboarding_hero.* under art/
         let candidates: [(String, String?)] = [
             ("onboarding_hero", "png"),
             ("onboarding_hero", "jpg"),
@@ -98,72 +118,26 @@ struct OnboardingView: View {
         ]
         for (name, ext) in candidates {
             if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "art"),
-               let img = UIImage(contentsOfFile: url.path) {
-                return img
+               let image = UIImage(contentsOfFile: url.path) {
+                return image
             }
         }
         return nil
     }
 
-    // Normalized hotspot rect where the "Get Started" appears on the image (0-1 in both axes).
-    // Adjust these values to align with your artwork.
-    private var heroHotspotNormalized: CGRect {
-        // Default: centered near bottom; width 60%, height 12%
-        CGRect(x: 0.20, y: 0.80, width: 0.60, height: 0.12)
-    }
-
-    // Overlay that maps the normalized hotspot to the actual displayed frame
-    @ViewBuilder
-    private func hotspotOverlay(in containerSize: CGSize, imageSize: CGSize, debug: Bool = false, action: @escaping () -> Void = {}) -> some View {
-        let W = containerSize.width
-        let H = containerSize.height
-        let w = imageSize.width
-        let h = imageSize.height
-        // Aspect-fit: ensure the entire image is visible without cropping
-        let scale = min(W / max(w, 1), H / max(h, 1))
-        let displayedW = w * scale
-        let displayedH = h * scale
-        let offsetX = (W - displayedW) / 2
-        let offsetY = (H - displayedH) / 2
-
-        let r = heroHotspotNormalized
-        let x = offsetX + r.origin.x * displayedW
-        let y = offsetY + r.origin.y * displayedH
-        let width = r.size.width * displayedW
-        let height = r.size.height * displayedH
-
-        Group {
-            if debug {
-                Rectangle()
-                    .strokeBorder(Color.red.opacity(0.8), lineWidth: 2)
-                    .background(Color.red.opacity(0.15))
-            } else {
-                Button(action: action) {
-                    Color.clear
-                }
-                .accessibilityLabel("Get Started")
-                .contentShape(Rectangle())
-            }
-        }
-        .frame(width: width, height: height)
-        .position(x: x + width / 2, y: y + height / 2)
-        .allowsHitTesting(true)
-    }
-
     private func finish() {
         store.currentType = deckChoice.cardType
-        store.dailyGoal = DailyGoal(newTarget: newGoal, reviewTarget: reviewGoal)
+        store.dailyGoal = DailyGoal(newTarget: newGoal, reviewTarget: reviewGoal, lessonTarget: lessonGoal)
         store.displayName = name.isEmpty ? nil : name
         store.hasOnboarded = true
     }
 
     enum DeckOption: Hashable {
-        case hiragana, katakana, both
+        case hiragana, katakana
         var cardType: CardType {
             switch self {
             case .hiragana: return .hiragana
             case .katakana: return .katakana
-            case .both: return .hiragana
             }
         }
     }

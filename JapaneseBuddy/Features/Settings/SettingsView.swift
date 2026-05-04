@@ -7,39 +7,40 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Profile") {
-                TextField("Name", text: nameBinding)
+            Section(L10n.Settings.profile) {
+                TextField(L10n.Settings.name, text: nameBinding)
                     .textContentType(.name)
             }
-            Section("Daily Goal") {
-                Stepper("New \(store.dailyGoal.newTarget)", value: $store.dailyGoal.newTarget, in: 0...100)
-                Stepper("Review \(store.dailyGoal.reviewTarget)", value: $store.dailyGoal.reviewTarget, in: 0...500)
+            Section(L10n.Home.dailyGoal) {
+                goalStepper(L10n.Settings.newCards, value: $store.dailyGoal.newTarget, range: 0...100)
+                goalStepper(L10n.Settings.reviewCards, value: $store.dailyGoal.reviewTarget, range: 0...500)
+                goalStepper(L10n.Settings.lessons, value: $store.dailyGoal.lessonTarget, range: 0...10)
             }
-            Section("Reminders") {
+            Section(L10n.Settings.reminders) {
                 Toggle(L10n.Settings.enableReminder, isOn: $store.notificationsEnabled)
                 DatePicker(L10n.Settings.time, selection: timeBinding, displayedComponents: .hourAndMinute)
                     .disabled(!store.notificationsEnabled)
             }
-            Section("Tracing") {
+            Section(L10n.Settings.tracing) {
                 Toggle(L10n.Settings.showStrokeHints, isOn: $store.showStrokeHints)
             }
-            Section("Audio") {
-                Toggle("Play Speech in Silent Mode", isOn: $store.playSpeechInSilentMode)
+            Section(L10n.Settings.audio) {
+                Toggle(L10n.Settings.playSpeechInSilentMode, isOn: $store.playSpeechInSilentMode)
             }
             Section(L10n.Settings.appearance) {
-                Picker("Theme", selection: $store.themeMode) {
+                Picker(L10n.Settings.theme, selection: $store.themeMode) {
                     Text(L10n.Settings.system).tag(ThemeMode.system)
                     Text(L10n.Settings.light).tag(ThemeMode.light)
                     Text(L10n.Settings.dark).tag(ThemeMode.dark)
                 }
                 .pickerStyle(.segmented)
-                .accessibilityLabel("App theme")
+                .accessibilityLabel(L10n.Settings.theme)
             }
             SettingsBackupSection()
-            Section("Developer") {
-                Button("Reset Onboarding") { store.hasOnboarded = false }
-                .accessibilityLabel("Reset onboarding")
-                .accessibilityHint("Shows the welcome flow on next render")
+            Section(L10n.Settings.developer) {
+                Button(L10n.Settings.resetOnboarding) { store.hasOnboarded = false }
+                .accessibilityLabel(L10n.Settings.resetOnboarding)
+                .accessibilityHint(L10n.Settings.resetOnboardingHint)
             }
         }
         .navigationTitle(L10n.Nav.settings)
@@ -51,7 +52,9 @@ struct SettingsView: View {
     private var timeBinding: Binding<Date> {
         Binding<Date>(
             get: {
-                if let comps = store.reminderTime, let d = Calendar.current.date(from: comps) { return d }
+                if let components = store.reminderTime, let date = Calendar.current.date(from: components) {
+                    return date
+                }
                 return Calendar.current.date(from: DateComponents(hour: 20)) ?? Date()
             },
             set: { store.reminderTime = Calendar.current.dateComponents([.hour, .minute], from: $0) }
@@ -74,6 +77,14 @@ struct SettingsView: View {
             get: { store.displayName ?? "" },
             set: { store.displayName = $0.isEmpty ? nil : $0 }
         )
+    }
+
+    private func goalStepper(_ title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {
+        Stepper(value: value, in: range) {
+            Text("\(title) \(value.wrappedValue)")
+        }
+        .accessibilityLabel(title)
+        .accessibilityValue(String(value.wrappedValue))
     }
 }
 
@@ -106,16 +117,16 @@ struct SettingsBackupSection: View {
             DocumentPicker { url in
                 do {
                     try Self.importDeck(from: url, into: store)
-                    alert = AlertInfo(title: "Import Complete")
+                    alert = AlertInfo(title: L10n.Settings.importComplete)
                 } catch {
-                    alert = AlertInfo(title: "Import Failed", message: error.localizedDescription)
+                    alert = AlertInfo(title: L10n.Settings.importFailed, message: error.localizedDescription)
                 }
             }
         }
         .alert(item: $alert) { info in
             Alert(title: Text(info.title),
                   message: Text(info.message ?? ""),
-                  dismissButton: .default(Text("OK")))
+                  dismissButton: .default(Text(L10n.Common.okay)))
         }
     }
 
@@ -148,26 +159,27 @@ struct SettingsBackupSection: View {
         func makeUIViewController(context: Context) -> UIActivityViewController {
             UIActivityViewController(activityItems: [url], applicationActivities: nil)
         }
-        func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
+        func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
     }
 
     private struct DocumentPicker: UIViewControllerRepresentable {
         var onPick: (URL) -> Void
-        func makeCoordinator() -> Coordinator { Coordinator(onPick: onPick) }
+        func makeCoordinator() -> DocumentPickerCoordinator { DocumentPickerCoordinator(onPick: onPick) }
         func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
             let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
             picker.allowsMultipleSelection = false
             picker.delegate = context.coordinator
             return picker
         }
-        func updateUIViewController(_ vc: UIDocumentPickerViewController, context: Context) {}
-        final class Coordinator: NSObject, UIDocumentPickerDelegate {
-            let onPick: (URL) -> Void
-            init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
-            func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-                guard let url = urls.first else { return }
-                onPick(url)
-            }
+        func updateUIViewController(_ controller: UIDocumentPickerViewController, context: Context) {}
+    }
+
+    private final class DocumentPickerCoordinator: NSObject, UIDocumentPickerDelegate {
+        let onPick: (URL) -> Void
+        init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            guard let url = urls.first else { return }
+            onPick(url)
         }
     }
 }

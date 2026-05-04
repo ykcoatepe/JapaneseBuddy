@@ -1,0 +1,39 @@
+{
+  "id": "A2-05",
+  "title": "Renting a Home",
+  "canDo": "Ask about rent, station distance, and room conditions",
+  "activities": [
+    { "objective": { "text": "Ask a simple housing question, compare monthly rent, and understand a basic viewing answer." } },
+    { "shadow": { "segments": [
+      "この 部屋の 家賃は いくらですか。",
+      "駅から 歩いて 十分ぐらいです。",
+      "日当たりが よくて、静かな 部屋です。"
+    ] } },
+    { "listening": {
+      "prompt": "How far is the room from the station?",
+      "choices": ["About ten minutes on foot", "About thirty minutes by bus", "Next to the clinic"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that asks about monthly rent.",
+      "choices": [
+        "この 部屋の 家賃は いくらですか。",
+        "週末に 映画を 見ませんか。",
+        "頭が 痛いです。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "家賃 means monthly rent and is common in apartment listings.",
+    "駅から marks the starting point from the station.",
+    "よくて connects a positive description before another detail."
+  ],
+  "kanjiWords": [
+    { "id": "A2-05-部屋", "kanji": "部屋", "reading": "へや", "meaning": "room" },
+    { "id": "A2-05-家賃", "kanji": "家賃", "reading": "やちん", "meaning": "rent" },
+    { "id": "A2-05-駅", "kanji": "駅", "reading": "えき", "meaning": "station" },
+    { "id": "A2-05-静", "kanji": "静", "reading": "しず", "meaning": "quiet" }
+  ]
+}

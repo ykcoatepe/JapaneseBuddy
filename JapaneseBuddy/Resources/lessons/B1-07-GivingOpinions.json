@@ -1,0 +1,39 @@
+{
+  "id": "B1-07",
+  "title": "Giving Opinions",
+  "canDo": "Share an opinion and explain a simple reason",
+  "activities": [
+    { "objective": { "text": "Say what you think about an idea, give a reason, and soften disagreement politely." } },
+    { "shadow": { "segments": [
+      "私は その考えに 賛成です。",
+      "便利ですが、少し 高すぎると 思います。",
+      "もう少し 安い方法を 探したほうが いいです。"
+    ] } },
+    { "listening": {
+      "prompt": "What concern does the speaker mention?",
+      "choices": ["It is too expensive", "It is too far", "It starts too early"],
+      "answer": 0
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that gives a softened opinion.",
+      "choices": [
+        "便利ですが、少し 高すぎると 思います。",
+        "切符を 一枚 おねがいします。",
+        "きのうから 頭が 痛いです。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "と思います softens an opinion and sounds less direct.",
+    "ですが connects agreement with a concern.",
+    "ほうがいい suggests a better option."
+  ],
+  "kanjiWords": [
+    { "id": "B1-07-考", "kanji": "考", "reading": "かんが", "meaning": "think / idea" },
+    { "id": "B1-07-賛成", "kanji": "賛成", "reading": "さんせい", "meaning": "agreement" },
+    { "id": "B1-07-便利", "kanji": "便利", "reading": "べんり", "meaning": "convenient" },
+    { "id": "B1-07-方法", "kanji": "方法", "reading": "ほうほう", "meaning": "method" }
+  ]
+}

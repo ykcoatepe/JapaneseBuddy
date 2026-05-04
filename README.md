@@ -45,7 +45,8 @@ Open in Xcode, select the `JapaneseBuddyProj` scheme, pick an iPad simulator or 
 
 ### Run & Test
 - Build: `make build` (uses `xcodebuild -scheme JapaneseBuddyProj`)
-- Tests: `make test`
+- Tests: `make test` (prefers an available iPad simulator; set `SIM_DEVICE` to override)
+- Sanity gates: `make sanity`
 
 ## Architecture
 - `JapaneseBuddy/`: App source (Features, Models, Services, Resources, UI, App). Reusable and project-agnostic.
@@ -109,7 +110,7 @@ First launch presents a short onboarding flow to choose decks, learn the tracing
 ## UX at a glance
 
 - **Home:** greeting (“こんにちは, <Name>!”), Daily Goal, quick actions (Continue Lesson / Start Trace / Review)  
-- **Lessons:** A1/A2 filter chips, star rating + step progress; runner with segmented header (Objective / Shadow / Listening / Reading / Kanji / Check)  
+- **Lessons:** A1/A2/B1 filter chips, level progress, locked/next/completed states; runner with segmented header (Objective / Shadow / Listening / Reading / Kanji / Check)
 - **Practice (Trace):** responsive square board, hint overlay (toggle), fixed bottom toolbar (Clear / Hint / Speak / Check)  
 - **Review (SRS):** large card (front/back, Speak), grade buttons (Hard/Good/Easy), haptic on tap  
 - **Stats:** streak, 7-day bars (falls back to EmptyState)  
@@ -117,18 +118,18 @@ First launch presents a short onboarding flow to choose decks, learn the tracing
 
 ## Pedagogy (Can-do + Shadowing)
 
-Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1–A2 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.
+Lessons implement a Can-do → Activity → Check loop with short shadowing steps and self-rating (★☆☆/★★☆/★★★), aligned to A1-B1 daily-life Japanese. We adapt the **structure** and keep all lesson text/audio **original**.
 → See: [docs/UI_DESIGN_SYSTEM.md](docs/UI_DESIGN_SYSTEM.md) · [docs/LESSONS_PEDAGOGY.md](docs/LESSONS_PEDAGOGY.md)
 
 ## Content Provenance
-- All B1 lessons (B1-01…B1-06) are original content created for this app. If dictionary readings are ever incorporated, see THIRDPARTY-LICENSES.md for attribution guidance.
+- All B1 lessons (B1-01…B1-08) are original content created for this app. If dictionary readings are ever incorporated, see THIRDPARTY-LICENSES.md for attribution guidance.
 
 ## Localization
 
-String keys live in `L10n.swift` using the `JB.<Area>.<Name>` format. Add new keys there and reference them with `NSLocalizedString`.
+String accessors and fallback values live in `JapaneseBuddy/Services/Speaker.swift` using the `JB.<Area>.<Name>` key format. Add new keys there and mirror them in every `JapaneseBuddy/Resources/L10n/*/Localized.strings` file.
 
 To add a language, create a new `*.lproj/Localized.strings` under `JapaneseBuddy/Resources/L10n/` and copy keys from `Base.lproj`.
 
 After adding a strings file, ensure it is part of the app target via the Xcode file inspector.
 
-- Added `JB.Stats.StreakFmt` for the Home streak label (Base/en/tr/ja).
+Run `python3 scripts/postmerge_sanity.py` after localization changes; it reports missing/extra keys for Base/en/tr/ja.

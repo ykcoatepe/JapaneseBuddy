@@ -12,6 +12,7 @@ struct DeckStoreStateTests {
         store.displayName = "Taro"
         var goal = store.dailyGoal
         goal.newTarget = 7
+        goal.lessonTarget = 2
         store.dailyGoal = goal
 
         // Short debounce (50 ms) + small buffer
@@ -20,5 +21,6 @@ struct DeckStoreStateTests {
         let reload = DeckStore(stateURL: stateURL)
         #expect(reload.displayName == "Taro")
         #expect(reload.dailyGoal.newTarget == 7)
+        #expect(reload.dailyGoal.lessonTarget == 2)
     }
 }

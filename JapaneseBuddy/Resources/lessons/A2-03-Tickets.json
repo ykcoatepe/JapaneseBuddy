@@ -1,0 +1,39 @@
+{
+  "id": "A2-03",
+  "title": "Buying Tickets",
+  "canDo": "Buy a ticket and confirm the platform",
+  "activities": [
+    { "objective": { "text": "Ask for a train ticket, confirm the time, and check the platform politely." } },
+    { "shadow": { "segments": [
+      "新宿までの 切符を 一枚 おねがいします。",
+      "この 電車は 何番線から 出ますか。",
+      "十時二十分の 電車ですね。ありがとうございます。"
+    ] } },
+    { "listening": {
+      "prompt": "What does the learner want to buy?",
+      "choices": ["A meal ticket", "A train ticket", "A museum ticket"],
+      "answer": 1
+    } },
+    { "reading": {
+      "prompt": "Choose the sentence that asks which platform the train leaves from.",
+      "choices": [
+        "この 電車は 何番線から 出ますか。",
+        "この 店は 何時に 開きますか。",
+        "この シャツは いくらですか。"
+      ],
+      "answer": 0
+    } },
+    { "check": {} }
+  ],
+  "tips": [
+    "まで marks the destination: 新宿まで means to Shinjuku.",
+    "何番線 asks which numbered platform or track.",
+    "一枚 is a counter for flat items such as tickets."
+  ],
+  "kanjiWords": [
+    { "id": "A2-03-切", "kanji": "切", "reading": "きっ", "meaning": "cut / ticket" },
+    { "id": "A2-03-符", "kanji": "符", "reading": "ぷ", "meaning": "token / ticket mark" },
+    { "id": "A2-03-電", "kanji": "電", "reading": "でん", "meaning": "electric / train" },
+    { "id": "A2-03-番", "kanji": "番", "reading": "ばん", "meaning": "number / turn" }
+  ]
+}

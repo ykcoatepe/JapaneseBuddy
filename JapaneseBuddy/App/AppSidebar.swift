@@ -40,7 +40,7 @@ struct AppSidebar: View {
                 }
             }
             .listStyle(.sidebar)
-            .navigationTitle("JapaneseBuddy")
+            .navigationTitle(L10n.Common.appName)
             .background(Color.washi.ignoresSafeArea())
             .navigationDestination(for: NavItem.self) { item in
                 destinationView(item)
@@ -61,7 +61,7 @@ struct AppSidebar: View {
         switch item {
         case .home: HomeView()
         case .lessons: LessonListView()
-        case .practice: KanaTraceView()
+        case .practice: PracticeView()
         case .review: SRSView()
         case .stats: StatsView()
         case .settings: SettingsView()

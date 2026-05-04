@@ -7,3 +7,6 @@ struct LessonProgress: Codable {
     var completedAt: Date?
 }
 
+extension LessonProgress {
+    var isCompleted: Bool { stars > 0 }
+}

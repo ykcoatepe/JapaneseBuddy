@@ -150,6 +150,10 @@ final class DeckStore: ObservableObject {
         sessionLog.append(SessionLogEntry(date: date, kind: .review, cardID: card.id, durationSec: nil))
     }
 
+    func logLessonCompletion(date: Date = .now) {
+        sessionLog.append(SessionLogEntry(date: date, kind: .lesson, cardID: nil, durationSec: nil))
+    }
+
     func progressToday(now: Date = .now, cal: Calendar = .current) -> GoalProgress {
         GoalProgress.compute(entries: sessionLog, on: now, goal: dailyGoal, cal: cal)
     }
