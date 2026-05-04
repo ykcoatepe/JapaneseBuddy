@@ -4,6 +4,7 @@ import SwiftUI
 struct LessonRunnerView: View {
     @EnvironmentObject var lessons: LessonStore
     @EnvironmentObject var deck: DeckStore
+    @Environment(\.scenePhase) private var scenePhase
     let lesson: Lesson
 
     @State private var step = 0
@@ -44,6 +45,16 @@ struct LessonRunnerView: View {
         }
         .onDisappear {
             deck.endStudy(kind: .study)
+        }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .inactive, .background:
+                deck.endStudy(kind: .study)
+            case .active:
+                deck.beginStudy()
+            @unknown default:
+                break
+            }
         }
     }
 
