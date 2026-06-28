@@ -1,3 +1,8 @@
+---
+title: JapaneseBuddy v0.1.0 (RC1) — Release Notes
+type: note
+---
+
 # JapaneseBuddy v0.1.0 (RC1) — Release Notes
 
 This release delivers the core learning loop, practice flows, and offline persistence with a lightweight settings experience.

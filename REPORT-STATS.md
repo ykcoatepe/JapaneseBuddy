@@ -1,3 +1,8 @@
+---
+title: Stats Feature Audit
+type: note
+---
+
 # Stats Feature Audit
 
 ## $ rg -n 'beginStudy\(|endStudy\(' JapaneseBuddy/Features || true

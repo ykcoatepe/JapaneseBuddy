@@ -1,3 +1,8 @@
+---
+title: PR BODY
+type: note
+---
+
 Summary
 
 This PR expands JapaneseBuddy into a guided iPad-first Japanese learning app. It adds a 22-lesson A1/A2/B1 path, next-lesson progression, daily lesson goals, refreshed iPad navigation, local audio fallback, localization parity, and regression coverage for the new course path and goal logic.

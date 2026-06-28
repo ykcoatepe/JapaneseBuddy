@@ -1,3 +1,8 @@
+---
+title: Accessibility Notes
+type: note
+---
+
 # Accessibility Notes
 
 - Added labels and hints for tracing and SRS controls.

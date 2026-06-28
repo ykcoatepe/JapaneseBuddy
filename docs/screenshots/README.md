@@ -1,3 +1,8 @@
+---
+title: Screenshots
+type: note
+---
+
 # Screenshots
 
 This folder holds screenshots used in the README.

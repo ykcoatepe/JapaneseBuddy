@@ -1,3 +1,8 @@
+---
+title: Contributing
+type: note
+---
+
 # Contributing
 
 **Style:** small, focused PRs; Conventional Commits (`feat(ui): …`, `docs: …`).

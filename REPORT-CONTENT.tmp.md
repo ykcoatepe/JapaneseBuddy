@@ -1,3 +1,8 @@
+---
+title: Content Audit Report
+type: note
+---
+
 # Content Audit Report
 
 **Acceptance Gate**

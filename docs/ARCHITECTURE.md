@@ -1,3 +1,8 @@
+---
+title: Architecture
+type: note
+---
+
 # Architecture
 
 JapaneseBuddy uses a layered structure:

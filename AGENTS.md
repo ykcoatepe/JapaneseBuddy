@@ -1,3 +1,8 @@
+---
+title: Repository Guidelines
+type: note
+---
+
 # Repository Guidelines
 
 ## Project Structure & Module Organization

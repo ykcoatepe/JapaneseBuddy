@@ -1,3 +1,8 @@
+---
+title: Documentation Index
+type: note
+---
+
 # Documentation Index
 
 - [Architecture](./ARCHITECTURE.md)

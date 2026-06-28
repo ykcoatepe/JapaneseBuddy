@@ -1,3 +1,8 @@
+---
+title: Front-End Audit Report
+type: note
+---
+
 # Front-End Audit Report
 
 Date: 2025-09-11

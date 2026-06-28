@@ -1,3 +1,8 @@
+---
+title: Performance Notes
+type: note
+---
+
 # Performance Notes
 
 - Trace overlap calculation now runs on a background task using a shared `CIContext`.

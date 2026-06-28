@@ -1,8 +1,8 @@
 ---
 id: JP-APP-001
 style: elegant,minimal,typed,teach
-constraints: ["≤150 LOC/file","SwiftLint/SwiftFormat"]
-deliverables: ["diff","tests","README snippet"]
+constraints: ['≤150 LOC/file', 'SwiftLint/SwiftFormat']
+deliverables: ['diff', 'tests', 'README snippet']
 ---
 # Goal
 Implement the Swift sources for JapaneseBuddy: Kana tracing (PencilKit), simplified SM-2 SRS, ja-JP TTS, and local JSON persistence. Target iPadOS 17+.

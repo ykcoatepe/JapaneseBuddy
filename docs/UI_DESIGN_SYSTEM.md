@@ -1,3 +1,8 @@
+---
+title: UI Design System — JapaneseBuddy (iPad)
+type: note
+---
+
 # UI Design System — JapaneseBuddy (iPad)
 
 ## 0) Principles

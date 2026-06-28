@@ -1,3 +1,8 @@
+---
+title: Audio Packs
+type: note
+---
+
 # Audio Packs
 
 Shadowing can use local audio files when present, and falls back to built‑in ja‑JP text‑to‑speech (TTS) otherwise.

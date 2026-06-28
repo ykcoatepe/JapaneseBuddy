@@ -1,3 +1,8 @@
+---
+title: Lessons Feature Design Notes
+type: note
+---
+
 # Lessons Feature Design Notes
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+title: RELEASE NOTES v0.3.0 rc1
+type: note
+---
+
 Release v0.3.0-rc1
 
 Highlights

@@ -1,3 +1,8 @@
+---
+title: Lessons Pedagogy — Can-do → Activity → Check
+type: note
+---
+
 # Lessons Pedagogy — Can-do → Activity → Check
 
 ## A1-B1 scope

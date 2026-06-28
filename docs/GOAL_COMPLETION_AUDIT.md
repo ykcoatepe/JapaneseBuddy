@@ -1,3 +1,8 @@
+---
+title: Goal Completion Audit
+type: note
+---
+
 # Goal Completion Audit
 
 Date: 2026-05-04

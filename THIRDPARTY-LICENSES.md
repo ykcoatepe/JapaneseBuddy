@@ -1,3 +1,8 @@
+---
+title: Third-Party Licenses
+type: note
+---
+
 # Third-Party Licenses
 
 - **EDRDG JMdict / KANJIDIC** — dictionary data; © EDRDG.  

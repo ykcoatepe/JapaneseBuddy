@@ -1,3 +1,8 @@
+---
+title: JapaneseBuddy
+type: note
+---
+
 # JapaneseBuddy
 
 ## Table of Contents

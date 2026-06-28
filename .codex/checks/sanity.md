@@ -1,3 +1,8 @@
+---
+title: Sanity Snapshot
+type: note
+---
+
 # Sanity Snapshot
 
 - Updated: 2026-05-04T13:31:37Z
