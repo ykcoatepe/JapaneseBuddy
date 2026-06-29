@@ -130,6 +130,10 @@ final class DeckStore: ObservableObject {
         }
     }
 
+    func persistNow() {
+        save()
+    }
+
     func update(_ card: Card) {
         if let idx = cards.firstIndex(where: { $0.id == card.id }) { cards[idx] = card }
     }

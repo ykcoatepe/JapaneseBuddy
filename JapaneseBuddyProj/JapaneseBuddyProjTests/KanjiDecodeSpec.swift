@@ -3,7 +3,7 @@ import Testing
 @testable import JapaneseBuddyProj
 
 struct KanjiDecodeTests {
-    @Test func decodeAndPersist() async throws {
+    @Test func decodeAndPersist() throws {
         // fresh store
         let stateURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("deck-kanji-\(UUID().uuidString).json")
@@ -27,10 +27,9 @@ struct KanjiDecodeTests {
         if let word = lesson.kanjiWords?.first {
             store.markKanjiCorrect(word, in: lessonID)
         }
-        // allow debounce save (50 ms debounce + buffer)
-        try await Task.sleep(nanoseconds: 200_000_000)
         let after = store.kanjiProgress[lessonID]?.correct ?? 0
         #expect(after == before + 1)
+        store.persistNow()
 
         let reloaded = DeckStore(stateURL: stateURL)
         let persisted = reloaded.kanjiProgress[lessonID]?.correct ?? 0
@@ -96,4 +95,3 @@ struct KanjiDecodeTests {
         #expect(store.weeklyTotalMinutes(now: now, cal: cal) == 6)
     }
 }
-

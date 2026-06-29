@@ -3,7 +3,7 @@ import Testing
 @testable import JapaneseBuddyProj
 
 struct DeckStoreStateTests {
-    @Test func nameAndGoalPersist() async throws {
+    @Test func nameAndGoalPersist() throws {
         let stateURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("deck-state-\(UUID().uuidString).json")
         try? FileManager.default.removeItem(at: stateURL)
@@ -14,9 +14,7 @@ struct DeckStoreStateTests {
         goal.newTarget = 7
         goal.lessonTarget = 2
         store.dailyGoal = goal
-
-        // Short debounce (50 ms) + small buffer
-        try await Task.sleep(nanoseconds: 200_000_000)
+        store.persistNow()
 
         let reload = DeckStore(stateURL: stateURL)
         #expect(reload.displayName == "Taro")
