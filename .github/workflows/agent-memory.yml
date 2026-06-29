@@ -32,7 +32,7 @@ jobs:
 
       - name: Commit memory updates
         # Avoid pushing on pull_request events (detached HEAD / no push perms for forks)
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref_name != 'dev_yordamv2'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
